@@ -34,7 +34,8 @@ function on_client_tx(data) {
 			break;
 
 		case 'host-data' :
-			log(data.host.host.short+' event: '+data.event);
+			log(data.host.host.short+' '+data.event);
+			console.log(data);
 			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_percent);
 
 			gauges.cpuload1.redraw(data.host.cpu.load_percent);
@@ -58,7 +59,8 @@ function on_client_tx(data) {
 function on_daemon_tx(data) {
 	switch (data.event) {
 		case 'host-data' :
-			log(data.host.host.short+' event: '+data.event);
+			log(data.host.host.short+' '+data.event);
+			console.log(data);
 			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_percent);
 
 			gauges.cpuload2.redraw(data.host.cpu.load_percent);
