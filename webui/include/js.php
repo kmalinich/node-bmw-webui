@@ -7,3 +7,4 @@
 <script src="/js/ripples.js"></script>
 <script src="/js/nouislider.js"></script>
 <script src="/js/node-bmw.js"></script>
+<script src="/js/dash.js"></script>

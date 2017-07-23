@@ -23,10 +23,16 @@
 						<li><a href="/lcm">LCM</a></li>
 					</ul>
 				</li>
+				<li><a href="/dash">Dash</a></li>
 				<li><a href="/status">Status</a></li>
 				<li><a href="/ws-bus">Data bus</a></li>
 				<li><a href="/ws-log">Log</a></li>
 			</ul>
+			<div class="navbar-div navbar-right">
+				<div                        class="btn btn-raised btn-danger">Disconnected</div>
+				<div style="display: none;" class="btn btn-raised btn-warning">Connecting</div>
+				<div style="display: none;" class="btn btn-raised btn-success">Connected</div>
+			</div>
 		</div>
 	</div>
 </div>
