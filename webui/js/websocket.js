@@ -26,8 +26,8 @@ function on_client_tx(data) {
 					gauges.coolant.redraw(data.data.temperature.coolant.c);
 				}
 
-				if (typeof data.data.dme !== 'undefined' && data.data.dme !== null) {
-					gauges.throttle.redraw(data.data.dme.throttle);
+				if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
+					gauges.throttle.redraw(data.data.engine.throttle);
 				}
 			}
 			break;
