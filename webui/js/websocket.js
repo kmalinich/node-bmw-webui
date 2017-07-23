@@ -33,9 +33,13 @@ function on_client_tx(data) {
 			break;
 
 		case 'host-data' :
-			gauges.cputemp1.redraw(data.host.temperature);
 			log(data.host.host.short+' event: '+data.event);
 			log(data.host.host.short+' temp: '+data.host.temperature+' C');
+
+			let cpu_load = Math.round(data.host.cpu.load[0]/4);
+
+			gauges.cputemp1.redraw(data.host.temperature);
+			gauges.cpuload1.redraw(cpu_load);
 			break;
 
 		case 'host-data-request' : break;
@@ -57,7 +61,11 @@ function on_daemon_tx(data) {
 		case 'host-data' :
 			log(data.host.host.short+' temp: '+data.host.temperature+' C');
 			log(data.host.host.short+' event: '+data.event);
+
+			let cpu_load = Math.round(data.host.cpu.load[0]/4);
+
 			gauges.cputemp2.redraw(data.host.temperature);
+			gauges.cpuload2.redraw(cpu_load);
 			break;
 
 		case 'host-data-request' : break;
@@ -154,11 +162,15 @@ gauges = [];
 
 function init_dash() {
 	log('init_dash()');
-	gauge_create('cputemp1', 'Pi #1', 10, 100);
-	gauge_create('cputemp2', 'Pi #2', 10, 100);
-	gauge_create('coolant', 'Coolant', 0, 110);
+	gauge_create('cputemp1', 'P1 temp', 20, 85);
+	gauge_create('cputemp2', 'P2 temp', 20, 85);
+
+	gauge_create('cpuload1', 'P1 load', 0, 100);
+	gauge_create('cpuload2', 'P2 load', 0, 100);
+
+	gauge_create('coolant',  'Coolant',  0, 110);
 	gauge_create('throttle', 'Throttle', 0, 100);
-	gauge_create('rpm', 'RPM', 0, 7000, 10);
+	gauge_create('rpm',      'RPM',      0, 7000, 10);
 }
 
 function gauge_update() {

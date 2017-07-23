@@ -7,6 +7,9 @@
 	<body>
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
+			<span id="cpuload1-container"></span>
+			<span id="cpuload2-container"></span>
+			<hr>
 			<span id="cputemp1-container"></span>
 			<span id="cputemp2-container"></span>
 			<hr>
