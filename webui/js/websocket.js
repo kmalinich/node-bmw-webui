@@ -20,7 +20,8 @@ function on_client_tx(data) {
 	switch (data.event) {
 		case 'status':
 			log(data.host.host.short+' '+data.event);
-			if (data.data.system.type === 'client') {
+
+			if (data.host.type === 'client') {
 				if (typeof data.data.temperature !== 'undefined' && data.data.temperature !== null) {
 					gauges.coolant.redraw(data.data.temperature.coolant.c);
 				}
@@ -98,7 +99,7 @@ function ws_init() {
 	socket.on('connect', () => {
 		ws_set_status('connect');
 		log('connected');
-		send('status-request');
+		send('status-request', 'all');
 	});
 
 	socket.on('error', (error) => {
