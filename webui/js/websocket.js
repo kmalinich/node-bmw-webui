@@ -34,9 +34,10 @@ function on_client_tx(data) {
 
 		case 'host-data' :
 			log(data.host.host.short+' event: '+data.event);
-			log(data.host.host.short+' temp: '+data.host.temperature+' C');
 
-			let cpu_load = Math.round(data.host.cpu.load[0]/4);
+			let cpu_load = Math.round((data.host.cpu.load[0]/4)*100);
+
+			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+cpu_load);
 
 			gauges.cputemp1.redraw(data.host.temperature);
 			gauges.cpuload1.redraw(cpu_load);
@@ -59,10 +60,11 @@ function on_client_tx(data) {
 function on_daemon_tx(data) {
 	switch (data.event) {
 		case 'host-data' :
-			log(data.host.host.short+' temp: '+data.host.temperature+' C');
 			log(data.host.host.short+' event: '+data.event);
 
-			let cpu_load = Math.round(data.host.cpu.load[0]/4);
+			let cpu_load = Math.round((data.host.cpu.load[0]/4)*100);
+
+			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+cpu_load);
 
 			gauges.cputemp2.redraw(data.host.temperature);
 			gauges.cpuload2.redraw(cpu_load);
