@@ -23,10 +23,11 @@
 	"dependencies": {
 		"bootstrap": "^3.3.7",
 		"bootstrap-material-design": "^0.5.10",
+		"d3": "^4.10.0",
 		"datatables": "^1.10.13",
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
-		"jquery": "^3.2.1",
+		"jquery": "^2.2.4",
 		"moment": "^2.18.1",
 		"nouislider": "^10.0.0"
 	}

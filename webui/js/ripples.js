@@ -1,1 +1,1 @@
-ripples.min.js
+../../node_modules/bootstrap-material-design/dist/js/ripples.min.js

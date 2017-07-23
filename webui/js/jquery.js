@@ -1,1 +1,1 @@
-jquery-2.2.4.min.js
+../../node_modules/jquery/dist/jquery.min.js

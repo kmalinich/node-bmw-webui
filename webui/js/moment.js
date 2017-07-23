@@ -1,1 +1,1 @@
-moment-locale-2.14.1.min.js
+../../node_modules/moment/min/moment-with-locales.min.js

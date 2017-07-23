@@ -1,1 +1,1 @@
-moment-tz-0.5.4.min.js
+../../node_modules/moment/min/moment.min.js
