@@ -20,10 +20,10 @@ function on_client_tx(data) {
 	switch (data.event) {
 		case 'status':
 			log(data.host.host.short+' '+data.event);
-
-			// Could maybe be a loop?
-			gauges.coolant.redraw(data.data.dme1.coolant);
-			gauges.throttle.redraw(data.data.dme1.throttle);
+			if (data.data.system.type === 'client') {
+				gauges.coolant.redraw(data.data.dme1.coolant);
+				gauges.throttle.redraw(data.data.dme1.throttle);
+			}
 			break;
 
 		case 'host-data' :
