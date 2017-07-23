@@ -27,6 +27,7 @@ function on_client_tx(data) {
 				}
 
 				if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
+					gauges.speed.redraw(data.data.engine.speed);
 					gauges.throttle.redraw(data.data.engine.throttle);
 				}
 			}
@@ -34,13 +35,10 @@ function on_client_tx(data) {
 
 		case 'host-data' :
 			log(data.host.host.short+' event: '+data.event);
+			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_percent);
 
-			let cpu_load = Math.round((data.host.cpu.load[0]/4)*100);
-
-			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+cpu_load);
-
+			gauges.cpuload1.redraw(data.host.cpu.load_percent);
 			gauges.cputemp1.redraw(data.host.temperature);
-			gauges.cpuload1.redraw(cpu_load);
 			break;
 
 		case 'host-data-request' : break;
@@ -61,13 +59,10 @@ function on_daemon_tx(data) {
 	switch (data.event) {
 		case 'host-data' :
 			log(data.host.host.short+' event: '+data.event);
+			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_percent);
 
-			let cpu_load = Math.round((data.host.cpu.load[0]/4)*100);
-
-			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+cpu_load);
-
+			gauges.cpuload2.redraw(data.host.cpu.load_percent);
 			gauges.cputemp2.redraw(data.host.temperature);
-			gauges.cpuload2.redraw(cpu_load);
 			break;
 
 		case 'host-data-request' : break;
@@ -164,11 +159,11 @@ gauges = [];
 
 function init_dash() {
 	log('init_dash()');
-	gauge_create('cputemp1', 'P1 temp', 20, 85, 5, 200);
-	gauge_create('cputemp2', 'P2 temp', 20, 85, 5, 200);
+	gauge_create('cputemp1', 'P1 temp', 20, 85, 5, 250);
+	gauge_create('cputemp2', 'P2 temp', 20, 85, 5, 250);
 
-	gauge_create('cpuload1', 'P1 load', 0, 100, 5, 200);
-	gauge_create('cpuload2', 'P2 load', 0, 100, 5, 200);
+	gauge_create('cpuload1', 'P1 load', 0, 100, 5, 250);
+	gauge_create('cpuload2', 'P2 load', 0, 100, 5, 250);
 
 	gauge_create('coolant',  'Coolant',  0, 110);
 	gauge_create('throttle', 'Throttle', 0, 100);
