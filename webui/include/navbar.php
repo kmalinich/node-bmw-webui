@@ -29,9 +29,9 @@
 				<li><a href="/ws-log">Log</a></li>
 			</ul>
 			<div class="navbar-div navbar-right">
-				<div                        class="btn btn-raised btn-danger">Disconnected</div>
-				<div style="display: none;" class="btn btn-raised btn-warning">Connecting</div>
-				<div style="display: none;" class="btn btn-raised btn-success">Connected</div>
+				<div id="status-ws-disconnected" class="btn btn-raised btn-danger hidden"  >Disconnected</div>
+				<div id="status-ws-connecting"   class="btn btn-raised btn-warning hidden" >Connecting</div>
+				<div id="status-ws-connected"    class="btn btn-raised btn-success hidden" >Connected</div>
 			</div>
 		</div>
 	</div>

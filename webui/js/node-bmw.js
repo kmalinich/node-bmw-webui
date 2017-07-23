@@ -620,4 +620,5 @@ function ws_ibus() {
 
 $(() => {
 	$.material.init();
+	ws_init();
 });

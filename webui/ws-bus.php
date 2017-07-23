@@ -7,8 +7,6 @@
 	<body onload="javascript:ws_ibus();">
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
-			<p id="ws-bus-header" class="text-warning">Socket connecting</p>
-			<hr>
 			<div class="table-live">
 				<table class="table table-condensed table-hover table-bordered table-striped text-center" id="ws-bus-table">
 					<thead>
