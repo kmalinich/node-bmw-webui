@@ -11,6 +11,7 @@
 			<span id="cputemp1-container"></span>
 			<span id="cputemp2-container"></span>
 			<span id="cpuload2-container"></span>
+			<hr>
 			<span id="coolant-container"></span>
 			<span id="throttle-container"></span>
 			<span id="rpm-container"></span>

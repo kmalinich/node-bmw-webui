@@ -134,9 +134,9 @@ function ws_init() {
 	init_dash();
 }
 
-function gauge_create(name, label, min = 0, max = 100, ticks = 20) {
+function gauge_create(name, label, min = 0, max = 100, ticks = 20, size = 320) {
 	var config = {
-		size       : 320,
+		size       : size,
 		label      : label,
 		min        : min,
 		max        : max,
@@ -164,11 +164,11 @@ gauges = [];
 
 function init_dash() {
 	log('init_dash()');
-	gauge_create('cputemp1', 'P1 temp', 20, 85);
-	gauge_create('cputemp2', 'P2 temp', 20, 85);
+	gauge_create('cputemp1', 'P1 temp', 20, 85, 5, 200);
+	gauge_create('cputemp2', 'P2 temp', 20, 85, 5, 200);
 
-	gauge_create('cpuload1', 'P1 load', 0, 100);
-	gauge_create('cpuload2', 'P2 load', 0, 100);
+	gauge_create('cpuload1', 'P1 load', 0, 100, 5, 200);
+	gauge_create('cpuload2', 'P2 load', 0, 100, 5, 200);
 
 	gauge_create('coolant',  'Coolant',  0, 110);
 	gauge_create('throttle', 'Throttle', 0, 100);
