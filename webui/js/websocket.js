@@ -8,32 +8,50 @@ function ws_set_status(status) {
 	$('#status-ws-connecting').addClass('hidden');
 
 	switch (status) {
-		case 'connect':
-			$('#status-ws-connected').removeClass('hidden');
-			break;
-		case 'error':
-			$('#status-ws-disconnected').removeClass('hidden');
-			break;
-		case 'disconnect':
-			$('#status-ws-disconnected').removeClass('hidden');
-			break;
+		case 'connect'    : $('#status-ws-connected').removeClass('hidden'); break;
+		case 'error'      : $('#status-ws-disconnected').removeClass('hidden'); break;
+		case 'disconnect' : $('#status-ws-disconnected').removeClass('hidden'); break;
 		default:
 			$('#status-ws-connecting').removeClass('hidden');
 	}
 }
 
 function on_client_tx(data) {
-	log(data.host.host.short+' event: '+data.event);
-	log(data.host.host.short+' temp: '+data.host.temperature+' C');
-
-	gauges.cputemp1.redraw(data.host.temperature);
-
 	switch (data.event) {
-		case 'stats':
-			switch (data.data.key) {
-				case 'coolant'  : gauges.coolant.redraw(data.data.value); break;
-				case 'throttle' : gauges.throttle.redraw(data.data.value); break;
-			}
+		case 'status':
+			log(data.host.host.short+' '+data.event);
+
+			// Could maybe be a loop?
+			gauges.coolant.redraw(data.data.dme1.coolant);
+			gauges.throttle.redraw(data.data.dme1.throttle);
+			break;
+
+		case 'host-data' :
+			gauges.cputemp1.redraw(data.host.temperature);
+			log(data.host.host.short+' event: '+data.event);
+			log(data.host.host.short+' temp: '+data.host.temperature+' C');
+			break;
+
+		case 'host-data-request' : break;
+
+		case 'bus-rx'      : break;
+		case 'bus-tx'      : break;
+		case 'lcd-color'   : break;
+		case 'lcd-command' : break;
+		case 'lcd-text'    : break;
+
+		case 'log-bus'     : break;
+		case 'log-msg'     : break;
+		case 'host-data'   : break;
+	}
+}
+
+function on_daemon_tx(data) {
+	switch (data.event) {
+		case 'host-data' :
+			log(data.host.host.short+' temp: '+data.host.temperature+' C');
+			log(data.host.host.short+' event: '+data.event);
+			gauges.cputemp2.redraw(data.host.temperature);
 			break;
 
 		case 'host-data-request' : break;
@@ -51,6 +69,18 @@ function on_client_tx(data) {
 
 }
 
+var socket;
+
+// Send data over WebSocket
+function send(event, data = null) {
+	let message = {
+		event : event,
+		data  : data,
+	};
+
+	socket.emit('client-tx', message);
+}
+
 // Dashboard websocket
 function ws_init() {
 	log('init_websocket()');
@@ -58,11 +88,12 @@ function ws_init() {
 	ws_set_status('connecting');
 
 	// Open WebSocket
-	var socket = io();
+	socket = io();
 
 	socket.on('connect', () => {
 		ws_set_status('connect');
 		log('connected');
+		send('status-request');
 	});
 
 	socket.on('error', (error) => {
@@ -81,9 +112,7 @@ function ws_init() {
 	});
 
 	socket.on('daemon-tx', (data) => {
-		log(data.host.host.short+' event: '+data.event);
-		log(data.host.host.short+' temp: '+data.host.temperature+' C');
-		gauges.cputemp2.redraw(data.host.temperature);
+		on_daemon_tx(data);
 	});
 
 	init_dash();
