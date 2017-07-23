@@ -21,8 +21,13 @@ function on_client_tx(data) {
 		case 'status':
 			log(data.host.host.short+' '+data.event);
 			if (data.data.system.type === 'client') {
-				gauges.coolant.redraw(data.data.dme1.coolant);
-				gauges.throttle.redraw(data.data.dme1.throttle);
+				if (typeof data.data.temperature !== 'undefined' && data.data.temperature !== null) {
+					gauges.coolant.redraw(data.data.temperature.coolant.c);
+				}
+
+				if (typeof data.data.dme !== 'undefined' && data.data.dme !== null) {
+					gauges.throttle.redraw(data.data.dme.throttle);
+				}
 			}
 			break;
 
