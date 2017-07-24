@@ -1,9 +1,9 @@
 // Convert integer to hex string
 function i2s(data, prefix = true) {
 	var hexstr = data.toString(16).toUpperCase();
-  var hexstr = hexstr.length === 1 && '0'+hexstr || hexstr;
-  var string = prefix === true && '0x'+hexstr || hexstr;
-  return string;
+	var hexstr = hexstr.length === 1 && '0'+hexstr || hexstr;
+	var string = prefix === true && '0x'+hexstr || hexstr;
+	return string;
 }
 
 // Clean all the text strings
@@ -102,11 +102,11 @@ function form_ike_get() {
 }
 
 function form_ike_reset() {
-  var input_data = $('#form-ike-reset').serializeArray().map((v) => {
-    return v.value;
-  });
+	var input_data = $('#form-ike-reset').serializeArray().map((v) => {
+		return v.value;
+	});
 
-  var post_data = {
+	var post_data = {
 		command : 'obc-reset',
 		value   : input_data[0],
 	};

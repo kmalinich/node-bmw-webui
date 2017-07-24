@@ -20,23 +20,27 @@ function on_client_tx(data) {
 	switch (data.event) {
 		case 'status':
 			log(data.host.host.short+' '+data.event);
+			console.log(data);
 
 			if (data.host.type === 'client') {
+				if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
+					gauges.rpm.redraw(data.data.engine.speed);
+					gauges.throttle.redraw(data.data.engine.throttle);
+				}
+
 				if (typeof data.data.temperature !== 'undefined' && data.data.temperature !== null) {
 					gauges.coolant.redraw(data.data.temperature.coolant.c);
 				}
 
-				if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
-					gauges.speed.redraw(data.data.engine.speed);
-					gauges.throttle.redraw(data.data.engine.throttle);
+				if (typeof data.data.lcm !== 'undefined' && data.data.lcm !== null) {
+					gauges.battery.redraw(data.data.lcm.voltage.terminal_30);
 				}
 			}
 			break;
 
 		case 'host-data' :
-			log(data.host.host.short+' '+data.event);
-			console.log(data);
-			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
+			// log(data.host.host.short+' '+data.event);
+			// log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
 
 			gauges.cpuload1.redraw(data.host.cpu.load_pct);
 			gauges.cputemp1.redraw(data.host.temperature);
@@ -59,9 +63,8 @@ function on_client_tx(data) {
 function on_daemon_tx(data) {
 	switch (data.event) {
 		case 'host-data' :
-			log(data.host.host.short+' '+data.event);
-			console.log(data);
-			log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
+			// log(data.host.host.short+' '+data.event);
+			// log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
 
 			gauges.cpuload2.redraw(data.host.cpu.load_pct);
 			gauges.cputemp2.redraw(data.host.temperature);
@@ -161,15 +164,16 @@ gauges = [];
 
 function init_dash() {
 	log('init_dash()');
-	gauge_create('cputemp1', 'P1 temp', 20, 85, 5, 250);
-	gauge_create('cputemp2', 'P2 temp', 20, 85, 5, 250);
 
-	gauge_create('cpuload1', 'P1 load', 0, 100, 5, 250);
-	gauge_create('cpuload2', 'P2 load', 0, 100, 5, 250);
+	gauge_create('battery',  '12v+',     8,   15, 10, 250);
+	gauge_create('coolant',  'Coolant',  0,  110, 10, 250);
+	gauge_create('throttle', 'Throttle', 0,  100, 10, 250);
+	gauge_create('rpm',      'RPM',      0, 7000, 10, 250);
 
-	gauge_create('coolant',  'Coolant',  0, 110);
-	gauge_create('throttle', 'Throttle', 0, 100);
-	gauge_create('rpm',      'RPM',      0, 7000, 10);
+	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
+	gauge_create('cpuload2', 'P2 load',  0, 100, 10, 200);
+	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);
+	gauge_create('cputemp2', 'P2 temp', 20,  85, 10, 200);
 }
 
 function gauge_update() {
