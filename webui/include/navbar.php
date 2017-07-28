@@ -16,17 +16,17 @@
 						<b class="caret"></b>
 					</a>
 					<ul class="dropdown-menu">
-						<li><a href="/dsp">DSP</a></li>
-						<li><a href="/gm">GM</a></li>
-						<li><a href="/hdmi">HDMI</a></li>
-						<li><a href="/ike">IKE</a></li>
-						<li><a href="/lcm">LCM</a></li>
+						<li><a href="dsp.html">DSP</a></li>
+						<li><a href="gm.html">GM</a></li>
+						<li><a href="hdmi.html">HDMI</a></li>
+						<li><a href="ike.html">IKE</a></li>
+						<li><a href="lcm.html">LCM</a></li>
 					</ul>
 				</li>
-				<li><a href="/dash">Dash</a></li>
-				<li><a href="/status">Status</a></li>
-				<li><a href="/ws-bus">Data bus</a></li>
-				<li><a href="/ws-log">Log</a></li>
+				<li><a href="dash.html">Dash</a></li>
+				<li><a href="status.html">Status</a></li>
+				<li><a href="ws-bus.html">Data bus</a></li>
+				<li><a href="ws-log.html">Log</a></li>
 			</ul>
 			<div class="navbar-div navbar-right">
 				<div id="status-ws-disconnected" class="btn btn-raised btn-danger hidden"  >Disconnected</div>
