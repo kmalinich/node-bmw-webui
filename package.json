@@ -27,7 +27,7 @@
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
 		"moment": "^2.18.1",
-		"nouislider": "^10.0.0",
+		"nouislider": "^10.1.0",
 		"socket.io": "^2.0.3"
 	}
 }
