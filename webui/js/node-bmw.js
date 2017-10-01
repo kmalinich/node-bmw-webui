@@ -1,8 +1,14 @@
+/* eslint no-console     : 0 */
+/* eslint no-unused-vars : 0 */
+
 // Convert integer to hex string
 function i2s(data, prefix = true) {
-	var hexstr = data.toString(16).toUpperCase();
-	var hexstr = hexstr.length === 1 && '0'+hexstr || hexstr;
-	var string = prefix === true && '0x'+hexstr || hexstr;
+	var hexstr;
+	var string;
+
+	hexstr = data.toString(16).toUpperCase();
+	hexstr = hexstr.length === 1 && '0' + hexstr || hexstr;
+	string = prefix === true && '0x' + hexstr || hexstr;
 	return string;
 }
 
@@ -54,7 +60,7 @@ function clean_class_all() {
 	clean_class('#windows-rear-left');
 	clean_class('#windows-rear-right');
 	clean_class('#windows-roof');
-	//clean_class('');
+	// clean_class('');
 }
 
 // Remove all color-coded CSS classes from a text id
@@ -72,7 +78,7 @@ function hdmi_command(command) {
 		},
 		success : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -85,7 +91,7 @@ function form_gm() {
 		data     : $('#form-gm').serialize(),
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -97,7 +103,7 @@ function form_ike_get() {
 		data     : $('#form-ike-get').serialize(),
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -119,7 +125,7 @@ function form_ike_reset() {
 		data     : post_data,
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -132,9 +138,9 @@ function ike_text() {
 			command : 'ike-text',
 			value   : $('#ike-text').val(),
 		},
-		success  : (return_data) => {
+		success : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -146,7 +152,7 @@ function form_lcm() {
 		data     : $('#form-lcm').serialize(),
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -159,12 +165,12 @@ function gm_cl(action) {
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
-'command'        : 'locks',
-'command-action' : action,
+			'command'        : 'locks',
+			'command-action' : action,
 		},
 		success : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -174,10 +180,10 @@ function gm_interior_light(value) {
 		url      : '/api/gm',
 		type     : 'POST',
 		dataType : 'json',
-		data     : 'interior-light='+value,
+		data     : 'interior-light=' + value,
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -190,12 +196,12 @@ function gm_windows(window, action) {
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
-'window'        : window,
-'window-action' : action,
+			'window'        : window,
+			'window-action' : action,
 		},
-		success  : (return_data) => {
+		success : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -207,10 +213,10 @@ function ike_backlight(value) {
 		url      : '/api/ike',
 		type     : 'POST',
 		dataType : 'json',
-		data     : 'ike-backlight='+value,
+		data     : 'ike-backlight=' + value,
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -221,7 +227,7 @@ function ike_set_clock() {
 		dataType : 'json',
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -233,10 +239,10 @@ function lcm_dimmer(value) {
 		url      : '/api/lcm',
 		type     : 'POST',
 		dataType : 'json',
-		data     : 'lcm-dimmer='+value,
+		data     : 'lcm-dimmer=' + value,
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -249,11 +255,11 @@ function gm_get() {
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
-'command' : 'door-status',
+			'command' : 'door-status',
 		},
 		success : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 
 	$.ajax({
@@ -261,11 +267,11 @@ function gm_get() {
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
-'command' : 'io-status',
+			'command' : 'io-status',
 		},
 		success : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -280,7 +286,7 @@ function lcm_get() {
 		data     : 'lcm-get=true',
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
@@ -296,11 +302,11 @@ function prepare_gm_interior_light() {
 	noUiSlider.create(slider, {
 		start   : 0,
 		step    : 1,
-		connect : [true, false],
+		connect : [ true, false ],
 		range   : {
-'min': 0,
-'max': 255
-		}
+			'min' : 0,
+			'max' : 255,
+		},
 	});
 
 	slider.noUiSlider.on('update', (data) => {
@@ -339,11 +345,11 @@ function prepare_lcm_dimmer() {
 	noUiSlider.create(slider, {
 		start   : 0,
 		step    : 1,
-		connect : [true, false],
+		connect : [ true, false ],
 		range   : {
-'min': 0,
-'max': 255
-		}
+			'min' : 0,
+			'max' : 255,
+		},
 	});
 
 	slider.noUiSlider.on('change', (data) => {
@@ -385,7 +391,7 @@ function status() {
 			}
 
 			$('#temperature-coolant-unit').text(return_data.coding.unit.temp.toUpperCase());
-			$('#obc-temp-exterior-unit'  ).text(return_data.coding.unit.temp.toUpperCase());
+			$('#obc-temp-exterior-unit').text(return_data.coding.unit.temp.toUpperCase());
 
 			if (return_data.coding.unit.temp == 'c') {
 				$('#temperature-coolant').text(return_data.temperature.coolant.c);
@@ -393,7 +399,7 @@ function status() {
 			}
 			else if (return_data.coding.unit.temp == 'f') {
 				$('#temperature-coolant').text(return_data.temperature.coolant.f);
-				$('#obc-temp-exterior'  ).text(return_data.temperature.exterior.obc.f);
+				$('#obc-temp-exterior').text(return_data.temperature.exterior.obc.f);
 			}
 
 			$('#vehicle-odometer-mi').text(return_data.vehicle.odometer.mi);
@@ -436,46 +442,59 @@ function status() {
 			}
 
 			// Doors (doors) and window status
-			if (return_data.doors.front_left)    { $('#doors-front-left').text('Door open');      } else { $('#doors-front-left').text('Door closed');      }
-			if (return_data.doors.front_right)   { $('#doors-front-right').text('Door open');     } else { $('#doors-front-right').text('Door closed');     }
-			if (return_data.doors.hood)          { $('#doors-hood').text('Hood open');            } else { $('#doors-hood').text('Hood closed');            }
-			if (return_data.doors.rear_left)     { $('#doors-rear-left').text('Door open');       } else { $('#doors-rear-left').text('Door closed');       }
-			if (return_data.doors.rear_right)    { $('#doors-rear-right').text('Door open');      } else { $('#doors-rear-right').text('Door closed');      }
-			if (return_data.doors.trunk)         { $('#doors-trunk').text('Trunk open');          } else { $('#doors-trunk').text('Trunk closed');          }
-			if (return_data.windows.front_left)  { $('#windows-front-left').text('Window open');  } else { $('#windows-front-left').text('Window closed');  }
-			if (return_data.windows.front_right) { $('#windows-front-right').text('Window open'); } else { $('#windows-front-right').text('Window closed'); }
-			if (return_data.windows.rear_left)   { $('#windows-rear-left').text('Window open');   } else { $('#windows-rear-left').text('Window closed');   }
-			if (return_data.windows.rear_right)  { $('#windows-rear-right').text('Window open');  } else { $('#windows-rear-right').text('Window closed');  }
-			if (return_data.windows.roof)        { $('#windows-roof').text('Moonroof open');      } else { $('#windows-roof').text('Moonroof closed');      }
+			if (return_data.doors.front_left)    { $('#doors-front-left').text('Door open');      }
+			else { $('#doors-front-left').text('Door closed');      }
+			if (return_data.doors.front_right)   { $('#doors-front-right').text('Door open');     }
+			else { $('#doors-front-right').text('Door closed');     }
+			if (return_data.doors.hood)          { $('#doors-hood').text('Hood open');            }
+			else { $('#doors-hood').text('Hood closed');            }
+			if (return_data.doors.rear_left)     { $('#doors-rear-left').text('Door open');       }
+			else { $('#doors-rear-left').text('Door closed');       }
+			if (return_data.doors.rear_right)    { $('#doors-rear-right').text('Door open');      }
+			else { $('#doors-rear-right').text('Door closed');      }
+			if (return_data.doors.trunk)         { $('#doors-trunk').text('Trunk open');          }
+			else { $('#doors-trunk').text('Trunk closed');          }
+			if (return_data.windows.front_left)  { $('#windows-front-left').text('Window open');  }
+			else { $('#windows-front-left').text('Window closed');  }
+			if (return_data.windows.front_right) { $('#windows-front-right').text('Window open'); }
+			else { $('#windows-front-right').text('Window closed'); }
+			if (return_data.windows.rear_left)   { $('#windows-rear-left').text('Window open');   }
+			else { $('#windows-rear-left').text('Window closed');   }
+			if (return_data.windows.rear_right)  { $('#windows-rear-right').text('Window open');  }
+			else { $('#windows-rear-right').text('Window closed');  }
+			if (return_data.windows.roof)        { $('#windows-roof').text('Moonroof open');      }
+			else { $('#windows-roof').text('Moonroof closed');      }
 
 			// Lighting status
-			if (return_data.lights.interior) { $('#lights-interior').text('interior lights on'); } else { $('#lights-interior').text('interior lights off'); }
+			if (return_data.lights.interior) { $('#lights-interior').text('interior lights on'); }
+			else { $('#lights-interior').text('interior lights off'); }
 
 			// Central locking status
-			if (return_data.vehicle.locked) { $('#vehicle-locked').text('Locked'); } else { $('#vehicle-locked').text('Unlocked'); }
+			if (return_data.vehicle.locked) { $('#vehicle-locked').text('Locked'); }
+			else { $('#vehicle-locked').text('Unlocked'); }
 
 			// Current, average, and limit speed
 			if (return_data.coding.unit.speed === null) {
 				return_data.coding.unit.speed = 'mph';
 			}
 
-			$('#vehicle-speed-unit' ).text(return_data.coding.unit.speed.toUpperCase());
-			$('#obc-speedavg-unit'  ).text(return_data.coding.unit.speed.toUpperCase());
+			$('#vehicle-speed-unit').text(return_data.coding.unit.speed.toUpperCase());
+			$('#obc-speedavg-unit').text(return_data.coding.unit.speed.toUpperCase());
 			$('#obc-speedlimit-unit').text(return_data.coding.unit.speed.toUpperCase());
-			$('#obc-speedlimit'     ).text(return_data.obc.speedlimit);
+			$('#obc-speedlimit').text(return_data.obc.speedlimit);
 
 			if (return_data.coding.unit.speed == 'kmh') {
-				$('#vehicle-speed' ).text(return_data.vehicle.speed.kmh);
-				$('#obc-speedavg'  ).text(return_data.obc.speedavg.kmh);
+				$('#vehicle-speed').text(return_data.vehicle.speed.kmh);
+				$('#obc-speedavg').text(return_data.obc.speedavg.kmh);
 			}
 			else if (return_data.coding.unit.speed == 'mph') {
-				$('#vehicle-speed' ).text(return_data.vehicle.speed.mph);
-				$('#obc-speedavg'  ).text(return_data.obc.speedavg.mph);
+				$('#vehicle-speed').text(return_data.vehicle.speed.mph);
+				$('#obc-speedavg').text(return_data.obc.speedavg.mph);
 			}
 
 			// Distance to arrival and range to empty
 			$('#obc-distance-unit').text(return_data.coding.unit.distance);
-			$('#obc-range-unit'   ).text(return_data.coding.unit.distance);
+			$('#obc-range-unit').text(return_data.coding.unit.distance);
 			$('#obc-distance').text(return_data.obc.distance);
 
 			if (return_data.coding.unit.distance == 'mi') {
@@ -495,7 +514,7 @@ function status() {
 				$('#obc-consumption-2').text(return_data.obc.consumption.c2.mpg);
 			}
 
-			else if ( return_data.coding.unit.cons == 'l100') {
+			else if (return_data.coding.unit.cons == 'l100') {
 				$('#obc-consumption-1').text(return_data.obc.consumption.c1.l100);
 				$('#obc-consumption-2').text(return_data.obc.consumption.c2.l100);
 			}
@@ -503,16 +522,16 @@ function status() {
 			// Stopwatch, timer, aux heat timers
 			$('#obc-aux-heat-timer-1').text(return_data.obc.aux_heat_timer.t1);
 			$('#obc-aux-heat-timer-2').text(return_data.obc.aux_heat_timer.t2);
-			$('#obc-stopwatch'       ).text(return_data.obc.stopwatch);
-			$('#obc-timer'           ).text(return_data.obc.timer);
+			$('#obc-stopwatch').text(return_data.obc.stopwatch);
+			$('#obc-timer').text(return_data.obc.timer);
 
 			// Coding data
-			$('#obc-coding-unit-cons'    ).text(return_data.coding.unit.cons    );
+			$('#obc-coding-unit-cons').text(return_data.coding.unit.cons);
 			$('#obc-coding-unit-distance').text(return_data.coding.unit.distance);
-			$('#obc-coding-unit-speed'   ).text(return_data.coding.unit.speed   );
-			$('#obc-coding-unit-temp'    ).text(return_data.coding.unit.temp    );
-			$('#obc-coding-unit-time'    ).text(return_data.coding.unit.time    );
-		}
+			$('#obc-coding-unit-speed').text(return_data.coding.unit.speed);
+			$('#obc-coding-unit-temp').text(return_data.coding.unit.temp);
+			$('#obc-coding-unit-time').text(return_data.coding.unit.time);
+		},
 	});
 }
 
@@ -528,7 +547,7 @@ function obc_refresh(callback) {
 			if (typeof callback === 'function') {
 				callback();
 			}
-		}
+		},
 	});
 }
 
@@ -541,15 +560,15 @@ function lcm_pulse() {
 		data     : 'clamp_15=on&clamp_30a=on&clamp_30b=on',
 		success  : (return_data) => {
 			console.log(return_data);
-		}
+		},
 	});
 }
 
 // Convert a string to hex
 function str2hex(str) {
 	var hex = '';
-	for(var i=0; i<str.length; i++) {
-		hex += ''+str.charCodeAt(i).toString(16);
+	for (var i = 0; i < str.length; i++) {
+		hex += '' + str.charCodeAt(i).toString(16);
 	}
 	return hex;
 }
@@ -579,17 +598,17 @@ function ws_ibus() {
 		// Format the message
 		data.msg.forEach((bit) => {
 			// Convert it to hexadecimal
-			msg_fmt += i2s(bit, false)+' ';
+			msg_fmt += i2s(bit, false) + ' ';
 		});
 
 		// Add a new row to the table
 		var tr = '';
 		tr += '<tr>';
-		tr += '<td>'+timestamp+'</td>';
-		tr += '<td>'+data.bus+'</td>';
-		tr += '<td>'+data.src.name+'</td>';
-		tr += '<td>'+data.dst.name+'</td>';
-		tr += '<td>'+msg_fmt+'</td>';
+		tr += '<td>' + timestamp + '</td>';
+		tr += '<td>' + data.bus + '</td>';
+		tr += '<td>' + data.src.name + '</td>';
+		tr += '<td>' + data.dst.name + '</td>';
+		tr += '<td>' + msg_fmt + '</td>';
 		tr += '</tr>';
 
 		$('#ws-bus-table tbody').prepend(tr);

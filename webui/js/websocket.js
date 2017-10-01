@@ -1,3 +1,5 @@
+/* eslint no-console: 0 */
+
 function log(msg) {
 	console.log('[websocket] %s', msg);
 }
@@ -19,7 +21,7 @@ function ws_set_status(status) {
 function on_client_tx(data) {
 	switch (data.event) {
 		case 'status':
-			log(data.host.host.short+' '+data.event);
+			log(data.host.host.short + ' ' + data.event);
 			console.log(data);
 
 			if (data.host.type === 'client') {
@@ -56,7 +58,6 @@ function on_client_tx(data) {
 
 		case 'log-bus'     : break;
 		case 'log-msg'     : break;
-		case 'host-data'   : break;
 	}
 }
 
@@ -80,9 +81,7 @@ function on_daemon_tx(data) {
 
 		case 'log-bus'     : break;
 		case 'log-msg'     : break;
-		case 'host-data'   : break;
 	}
-
 }
 
 var socket;
@@ -141,21 +140,21 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 20, size = 320) {
 		min        : min,
 		max        : max,
 		minorTicks : ticks,
-	}
+	};
 
-	var range = config.max-config.min;
+	var range = config.max - config.min;
 
-	config.yellowZones = [{
-		from : config.min+range*0.75,
-		to   : config.min+range*0.9,
-	}];
+	config.yellowZones = [ {
+		from : config.min + range * 0.75,
+		to   : config.min + range * 0.9,
+	} ];
 
-	config.redZones = [{
-		from : config.min+range*0.9,
+	config.redZones = [ {
+		from : config.min + range * 0.9,
 		to   : config.max,
-	}];
+	} ];
 
-	log('[gauge_create] '+name);
+	log('[gauge_create] ' + name);
 	gauges[name] = new Gauge(name + '-container', config);
 	gauges[name].render();
 }
@@ -174,12 +173,4 @@ function init_dash() {
 	gauge_create('cpuload2', 'P2 load',  0, 100, 10, 200);
 	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);
 	gauge_create('cputemp2', 'P2 temp', 20,  85, 10, 200);
-}
-
-function gauge_update() {
-	for (var key in gauges) {
-		log('[gauge_update] '+key);
-		var value = get_random_val(gauges[key])
-		gauges[key].redraw(value);
-	}
 }

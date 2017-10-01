@@ -4,3 +4,12 @@
 /node_modules
 /protocol/test*
 /test/*
+/webui/js/bootstrap.js
+/webui/js/datatables.js
+/webui/js/jquery.js
+/webui/js/material.js
+/webui/js/moment-tz.js
+/webui/js/moment.js
+/webui/js/nouislider.js
+/webui/js/ripples.js
+/webui/js/socket.io.js

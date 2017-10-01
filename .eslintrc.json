@@ -1,14 +1,23 @@
 {
 	"env": {
 		"browser": true,
-		"es6": true,
+		"es6": false,
 		"jquery": true,
-		"node": true,
+		"node": false,
 		"worker": true
 	},
 	"extends": [
 		"eslint:recommended"
 	],
+	"globals": {
+		"Gauge": false,
+		"d3": false,
+		"gauges": true,
+		"io": false,
+		"moment": false,
+		"noUiSlider": false,
+		"ws_init": true
+	},
 	"parserOptions": {
 		"ecmaVersion": 6,
 		"sourceType": "module"
