@@ -12,6 +12,7 @@
 		"glyphicons": "^0.2.0",
 		"moment": "^2.18.1",
 		"nouislider": "^10.1.0",
+		"popper.js": "^1.12.5",
 		"socket.io": "^2.0.3"
 	},
 	"description": "node-bmw webUI code",
