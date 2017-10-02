@@ -22,27 +22,28 @@ function ws_set_status(status) {
 	}
 }
 
+function on_status_tx(data) {
+	log(data.host.host.short + ' ' + data.event);
+	console.log(data);
+
+	if (data.host.type === 'client') {
+		if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
+			gauges.rpm.redraw(data.data.engine.speed);
+			gauges.throttle.redraw(data.data.engine.throttle);
+		}
+
+		if (typeof data.data.temperature !== 'undefined' && data.data.temperature !== null) {
+			gauges.coolant.redraw(data.data.temperature.coolant.c);
+		}
+
+		if (typeof data.data.lcm !== 'undefined' && data.data.lcm !== null) {
+			gauges.battery.redraw(data.data.lcm.voltage.terminal_30);
+		}
+	}
+}
+
 function on_client_tx(data) {
 	switch (data.event) {
-		case 'status':
-			log(data.host.host.short + ' ' + data.event);
-			console.log(data);
-
-			if (data.host.type === 'client') {
-				if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
-					gauges.rpm.redraw(data.data.engine.speed);
-					gauges.throttle.redraw(data.data.engine.throttle);
-				}
-
-				if (typeof data.data.temperature !== 'undefined' && data.data.temperature !== null) {
-					gauges.coolant.redraw(data.data.temperature.coolant.c);
-				}
-
-				if (typeof data.data.lcm !== 'undefined' && data.data.lcm !== null) {
-					gauges.battery.redraw(data.data.lcm.voltage.terminal_30);
-				}
-			}
-			break;
 
 		case 'host-data' :
 			// log(data.host.host.short+' '+data.event);
@@ -132,6 +133,10 @@ function ws_init() {
 
 	socket.on('daemon-tx', (data) => {
 		on_daemon_tx(data);
+	});
+
+	socket.on('status-tx', (data) => {
+		on_status_tx(data);
 	});
 
 	init_dash();
