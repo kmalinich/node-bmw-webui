@@ -25,7 +25,12 @@ function ws_set_status(status) {
 function on_status_tx(data) {
 	console.log(data);
 
-	// log(data.host.host.short + ' ' + data.event);
+	switch (data.key) {
+		case 'system':
+			gauges.cpuload1.redraw(data.value.cpu.load_pct);
+			gauges.cputemp1.redraw(data.value.temperature);
+			break;
+	}
 
 	if (typeof data.engine !== 'undefined' && data.engine !== null) {
 		gauges.rpm.redraw(data.engine.speed);
@@ -43,15 +48,6 @@ function on_status_tx(data) {
 
 function on_client_tx(data) {
 	switch (data.event) {
-
-		case 'host-data' :
-			// log(data.host.host.short+' '+data.event);
-			// log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
-
-			gauges.cpuload1.redraw(data.host.cpu.load_pct);
-			gauges.cputemp1.redraw(data.host.temperature);
-			break;
-
 		case 'host-data-request' : break;
 
 		case 'bus-rx'      : break;
