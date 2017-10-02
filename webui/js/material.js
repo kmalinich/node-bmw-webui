@@ -1,1 +1,1 @@
-../../node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js/dist/js/bootstrap-material-design.js
+../../node_modules/bootstrap-material-design/dist/js/bootstrap-material-design.min.js
