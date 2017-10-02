@@ -23,26 +23,26 @@ function ws_set_status(status) {
 }
 
 function on_status_tx(data) {
-	console.log(data);
+	// console.log(data);
 
 	switch (data.key) {
+		case 'engine':
+			gauges.rpm.redraw(data.speed);
+			gauges.throttle.redraw(data.throttle.pedal);
+			break;
+
+		case 'lcm':
+			gauges.battery.redraw(data.value.voltage.terminal_30);
+			break;
+
+		case 'temperature':
+			gauges.coolant.redraw(data.coolant.c);
+			break;
+
 		case 'system':
 			gauges.cpuload1.redraw(data.value.cpu.load_pct);
 			gauges.cputemp1.redraw(data.value.temperature);
 			break;
-	}
-
-	if (typeof data.engine !== 'undefined' && data.engine !== null) {
-		gauges.rpm.redraw(data.engine.speed);
-		gauges.throttle.redraw(data.engine.throttle);
-	}
-
-	if (typeof data.temperature !== 'undefined' && data.temperature !== null) {
-		gauges.coolant.redraw(data.temperature.coolant.c);
-	}
-
-	if (typeof data.lcm !== 'undefined' && data.lcm !== null) {
-		gauges.battery.redraw(data.lcm.voltage.terminal_30);
 	}
 }
 
