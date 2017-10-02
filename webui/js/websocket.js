@@ -5,16 +5,20 @@ function log(msg) {
 }
 
 function ws_set_status(status) {
-	$('#status-ws-disconnected').addClass('hidden');
-	$('#status-ws-connected').addClass('hidden');
-	$('#status-ws-connecting').addClass('hidden');
+	switch (status) {
+		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
+		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
+		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
+		default:
+			$('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
+	}
 
 	switch (status) {
-		case 'connect'    : $('#status-ws-connected').removeClass('hidden'); break;
-		case 'error'      : $('#status-ws-disconnected').removeClass('hidden'); break;
-		case 'disconnect' : $('#status-ws-disconnected').removeClass('hidden'); break;
+		case 'connect'    : $('#status-ws').text('Connected'); break;
+		case 'error'      : $('#status-ws').text('Error'); break;
+		case 'disconnect' : $('#status-ws').text('Disconnected'); break;
 		default:
-			$('#status-ws-connecting').removeClass('hidden');
+			$('#status-ws').text('Connecting');
 	}
 }
 

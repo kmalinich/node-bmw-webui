@@ -1,38 +1,43 @@
-<div class="navbar navbar-primary">
-	<div class="container-fluid">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-primary-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="/">node-bmw</a>
-		</div>
-		<div class="navbar-collapse collapse navbar-primary-collapse" id="navbar">
-			<ul class="nav navbar-nav">
-				<li class="dropdown">
-					<a data-target="#" class="dropdown-toggle" data-toggle="dropdown">
-						Modules
-						<b class="caret"></b>
-					</a>
-					<ul class="dropdown-menu">
-						<li><a href="dsp.html">DSP</a></li>
-						<li><a href="gm.html">GM</a></li>
-						<li><a href="hdmi.html">HDMI</a></li>
-						<li><a href="ike.html">IKE</a></li>
-						<li><a href="lcm.html">LCM</a></li>
-					</ul>
-				</li>
-				<li><a href="dash.html">Dash</a></li>
-				<li><a href="status.html">Status</a></li>
-				<li><a href="ws-bus.html">Data bus</a></li>
-				<li><a href="ws-log.html">Log</a></li>
-			</ul>
-			<div class="navbar-div navbar-right">
-				<div id="status-ws-disconnected" class="btn btn-raised btn-danger hidden"  >Disconnected</div>
-				<div id="status-ws-connecting"   class="btn btn-raised btn-warning hidden" >Connecting</div>
-				<div id="status-ws-connected"    class="btn btn-raised btn-success hidden" >Connected</div>
-			</div>
-		</div>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+	<a class="navbar-brand" href="/">node-bmw</a>
+
+	<button class="navbar-toggler" type="button" data-toggle="colla:wpse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active">
+				<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+			</li>
+
+			<li class="nav-item dropdown">
+				<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Modules
+				</a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+					<a class="dropdown-item" href="dsp.html">DSP</a>
+					<a class="dropdown-item" href="gm.html">GM</a>
+					<a class="dropdown-item" href="hdmi.html">HDMI</a>
+					<a class="dropdown-item" href="ike.html">IKE</a>
+					<a class="dropdown-item" href="lcm.html">LCM</a>
+				</div>
+			</li>
+
+			<li class="nav-item">
+				<a class="nav-link" href="dash.html">Dash</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="status.html">Status</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="ws-bus.html">Data bus</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="ws-log.html">Log</a>
+			</li>
+		</ul>
+
+		<div id="status-ws" class="mr-2 btn btn-raised btn-warning">Connecting</div>
 	</div>
-</div>
+</nav>
