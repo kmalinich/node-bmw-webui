@@ -638,6 +638,6 @@ function ws_ibus() {
 }
 
 $(() => {
-	$.material.init();
+	$('body').bootstrapMaterialDesign();
 	ws_init();
 });
