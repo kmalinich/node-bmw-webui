@@ -28,7 +28,7 @@ function on_status_tx(data) {
 	switch (data.key) {
 		case 'engine':
 			gauges.rpm.redraw(data.speed);
-			gauges.throttle.redraw(data.throttle.pedal);
+			gauges.throttle.redraw(data.value.throttle.pedal);
 			break;
 
 		case 'lcm':
@@ -36,7 +36,7 @@ function on_status_tx(data) {
 			break;
 
 		case 'temperature':
-			gauges.coolant.redraw(data.coolant.c);
+			gauges.coolant.redraw(data.value.coolant.c);
 			break;
 
 		case 'system':
