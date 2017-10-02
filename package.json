@@ -4,8 +4,8 @@
 		"url": "https://github.com/kmalinich/node-bmw-webui/issues"
 	},
 	"dependencies": {
-		"bootstrap-material-design": "^0.5.10",
-		"d3": "^4.10.0",
+		"bootstrap-material-design": "^4.0.0-beta.3",
+		"d3": "^4.10.2",
 		"datatables": "^1.10.13",
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
