@@ -23,22 +23,21 @@ function ws_set_status(status) {
 }
 
 function on_status_tx(data) {
-	log(data.host.host.short + ' ' + data.event);
 	console.log(data);
 
-	if (data.host.type === 'client') {
-		if (typeof data.data.engine !== 'undefined' && data.data.engine !== null) {
-			gauges.rpm.redraw(data.data.engine.speed);
-			gauges.throttle.redraw(data.data.engine.throttle);
-		}
+	// log(data.host.host.short + ' ' + data.event);
 
-		if (typeof data.data.temperature !== 'undefined' && data.data.temperature !== null) {
-			gauges.coolant.redraw(data.data.temperature.coolant.c);
-		}
+	if (typeof data.engine !== 'undefined' && data.engine !== null) {
+		gauges.rpm.redraw(data.engine.speed);
+		gauges.throttle.redraw(data.engine.throttle);
+	}
 
-		if (typeof data.data.lcm !== 'undefined' && data.data.lcm !== null) {
-			gauges.battery.redraw(data.data.lcm.voltage.terminal_30);
-		}
+	if (typeof data.temperature !== 'undefined' && data.temperature !== null) {
+		gauges.coolant.redraw(data.temperature.coolant.c);
+	}
+
+	if (typeof data.lcm !== 'undefined' && data.lcm !== null) {
+		gauges.battery.redraw(data.lcm.voltage.terminal_30);
 	}
 }
 
