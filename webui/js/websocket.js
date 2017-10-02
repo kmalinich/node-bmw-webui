@@ -23,7 +23,7 @@ function ws_set_status(status) {
 }
 
 function on_status_tx(data) {
-	// console.log(data);
+	console.log(data);
 
 	switch (data.key) {
 		case 'engine':
