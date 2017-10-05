@@ -27,21 +27,21 @@ function on_status_tx(data) {
 
 	switch (data.key.stub) {
 		case 'engine':
-			gauges.rpm.redraw(data.value.stub.speed);
-			gauges.throttle.redraw(data.value.stub.throttle.pedal);
+			gauges.rpm.redraw(data.value.full.speed);
+			gauges.throttle.redraw(data.value.full.throttle.pedal);
 			break;
 
 		case 'lcm':
-			gauges.battery.redraw(data.value.stub.voltage.terminal_30);
+			gauges.battery.redraw(data.value.full.voltage.terminal_30);
 			break;
 
 		case 'temperature':
-			gauges.coolant.redraw(data.value.stub.coolant.c);
+			gauges.coolant.redraw(data.value.full.coolant.c);
 			break;
 
 		case 'system':
-			gauges.cpuload1.redraw(data.value.stub.cpu.load_pct);
-			gauges.cputemp1.redraw(data.value.stub.temperature);
+			gauges.cpuload1.redraw(data.value.full.cpu.load_pct);
+			gauges.cputemp1.redraw(data.value.full.temperature);
 			break;
 	}
 }
