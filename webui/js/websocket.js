@@ -25,23 +25,23 @@ function ws_set_status(status) {
 function on_status_tx(data) {
 	console.log(data);
 
-	switch (data.key) {
+	switch (data.key.stub) {
 		case 'engine':
-			gauges.rpm.redraw(data.speed);
-			gauges.throttle.redraw(data.value.throttle.pedal);
+			gauges.rpm.redraw(data.value.stub.speed);
+			gauges.throttle.redraw(data.value.stub.throttle.pedal);
 			break;
 
 		case 'lcm':
-			gauges.battery.redraw(data.value.voltage.terminal_30);
+			gauges.battery.redraw(data.value.stub.voltage.terminal_30);
 			break;
 
 		case 'temperature':
-			gauges.coolant.redraw(data.value.coolant.c);
+			gauges.coolant.redraw(data.value.stub.coolant.c);
 			break;
 
 		case 'system':
-			gauges.cpuload1.redraw(data.value.cpu.load_pct);
-			gauges.cputemp1.redraw(data.value.temperature);
+			gauges.cpuload1.redraw(data.value.stub.cpu.load_pct);
+			gauges.cputemp1.redraw(data.value.stub.temperature);
 			break;
 	}
 }
