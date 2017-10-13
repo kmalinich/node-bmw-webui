@@ -22,7 +22,7 @@
 
 			<hr>
 
-			<i class="material-icons">donut_small</i>
+			<i class="material-icons float-right">donut_small</i>
 			<span id="vehicle-steering-angle-container"></span>
 			<span id="vehicle-steering-velocity-container"></span>
 

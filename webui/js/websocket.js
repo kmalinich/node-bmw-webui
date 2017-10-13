@@ -136,20 +136,20 @@ gauges = [];
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('battery',  '12v+',     8,   15, 10, 200);
-	gauge_create('coolant',  'Coolant',  0,  110, 10, 200);
-	gauge_create('throttle', 'Throttle', 0,  100, 10, 200);
-	gauge_create('rpm',      'RPM',      0, 7000, 10, 200);
-	gauge_create('psi',      'PSI',      8,   16, 10, 200);
+	gauge_create('battery',  '12v+',  8,   15, 10, 200);
+	gauge_create('coolant',  'CLNT',  0,  110, 10, 200);
+	gauge_create('throttle', 'THRTL', 0,  100, 10, 200);
+	gauge_create('rpm',      'RPM',   0, 7000, 10, 200);
+	gauge_create('psi',      'PSI',   8,   16, 10, 200);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 10, 200);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 10, 200);
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 10, 200);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 10, 200);
 
-	gauge_create('vehicle-steering-angle',    '°',     -700, 700, 10, 200);
-	gauge_create('vehicle-steering-velocity', 'Force', -700, 700, 10, 200);
+	gauge_create('vehicle-steering-angle',    'STR °', -700, 700, 10, 200);
+	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700, 10, 200);
 
-	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
-	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);
+	gauge_create('cpuload1', 'CPU LD',  0, 100, 10, 200);
+	gauge_create('cputemp1', 'CPU °', 20,  85, 10, 200);
 }
