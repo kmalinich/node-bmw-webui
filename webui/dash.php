@@ -12,6 +12,16 @@
 			<span id="throttle-container"></span>
 			<span id="rpm-container"></span>
 			<span id="psi-container"></span>
+
+			<hr>
+
+			<span id="vehicle.wheel_speed.front.left-container"></span>
+			<span id="vehicle.wheel_speed.front.right-container"></span>
+			<span id="vehicle.wheel_speed.rear.left-container"></span>
+			<span id="vehicle.wheel_speed.rear.right-container"></span>
+
+			<hr>
+
 			<span id="cputemp1-container"></span>
 			<span id="cpuload1-container"></span>
 		</div>

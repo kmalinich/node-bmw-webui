@@ -1,4 +1,5 @@
-/* eslint no-console: 0 */
+/* eslint no-console     : 0 */
+/* eslint no-unused-vars : 0 */
 
 function log(msg) {
 	console.log('[websocket] %s', msg);
@@ -23,13 +24,20 @@ function ws_set_status(status) {
 }
 
 function on_status_tx(data) {
-	console.log(data);
+	if (window.socket_debug === true) console.log(data);
 
 	switch (data.key.stub) {
 		case 'engine':
 			gauges.rpm.redraw(data.value.full.speed);
 			gauges.throttle.redraw(data.value.full.throttle.pedal);
 			gauges.psi.redraw(data.value.full.atmospheric_pressure.psi);
+			break;
+
+		case 'vehicle':
+			gauges['vehicle.wheel_speed.front.left'].redraw(data.value.full.wheel_speed.front.left);
+			gauges['vehicle.wheel_speed.front.right'].redraw(data.value.full.wheel_speed.front.right);
+			gauges['vehicle.wheel_speed.rear.left'].redraw(data.value.full.wheel_speed.front.left);
+			gauges['vehicle.wheel_speed.rear.right'].redraw(data.value.full.wheel_speed.front.right);
 			break;
 
 		case 'lcm':
@@ -47,42 +55,7 @@ function on_status_tx(data) {
 	}
 }
 
-function on_client_tx(data) {
-	switch (data.event) {
-		case 'host-data-request' : break;
-
-		case 'bus-rx'      : break;
-		case 'bus-tx'      : break;
-		case 'lcd-color'   : break;
-		case 'lcd-command' : break;
-		case 'lcd-text'    : break;
-
-		case 'log-bus'     : break;
-		case 'log-msg'     : break;
-	}
-}
-
-function on_daemon_tx(data) {
-	switch (data.event) {
-		case 'host-data' :
-			// log(data.host.host.short+' '+data.event);
-			// log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
-
-			gauges.cputemp2.redraw(data.host.temperature);
-			break;
-
-		case 'host-data-request' : break;
-
-		case 'bus-rx'      : break;
-		case 'bus-tx'      : break;
-		case 'lcd-color'   : break;
-		case 'lcd-command' : break;
-		case 'lcd-text'    : break;
-
-		case 'log-bus'     : break;
-		case 'log-msg'     : break;
-	}
-}
+window.socket_debug = false;
 
 var socket;
 
@@ -120,14 +93,6 @@ function ws_init() {
 	socket.on('disconnect', () => {
 		log('disconnected');
 		ws_set_status('disconnect');
-	});
-
-	socket.on('client-tx', (data) => {
-		on_client_tx(data);
-	});
-
-	socket.on('daemon-tx', (data) => {
-		on_daemon_tx(data);
 	});
 
 	socket.on('status-tx', (data) => {
@@ -172,9 +137,12 @@ function init_dash() {
 	gauge_create('coolant',  'Coolant',  0,  110, 10, 200);
 	gauge_create('throttle', 'Throttle', 0,  100, 10, 200);
 	gauge_create('rpm',      'RPM',      0, 7000, 10, 200);
+	gauge_create('psi',      'PSI',      8,   16, 10, 200);
 
-	gauge_create('psi', 'PSI',  8, 16, 10, 200);
-	// gauge_create('cputemp2', 'P2 temp', 20,  85, 10, 200);
+	gauge_create('vehicle.wheel_speed.front.left',  'WS RL', 0, 240, 10, 200);
+	gauge_create('vehicle.wheel_speed.front.right', 'WS RR', 0, 240, 10, 200);
+	gauge_create('vehicle.wheel_speed.rear.left',   'WS RL', 0, 240, 10, 200);
+	gauge_create('vehicle.wheel_speed.rear.right',  'WS RR', 0, 240, 10, 200);
 
 	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
 	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);
