@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">node-bmw</a>
-	<div id="status-ws" class="mr-2 btn btn-raised btn-warning">Connecting</div>
+	<div id="status-ws" class="mr-2 btn btn-raised btn-warning" style="margin-bottom: 0;">Connecting</div>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
