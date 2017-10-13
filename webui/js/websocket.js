@@ -34,10 +34,10 @@ function on_status_tx(data) {
 			break;
 
 		case 'vehicle':
-			gauges['vehicle.wheel_speed.front.left'].redraw(data.value.full.wheel_speed.front.left);
-			gauges['vehicle.wheel_speed.front.right'].redraw(data.value.full.wheel_speed.front.right);
-			gauges['vehicle.wheel_speed.rear.left'].redraw(data.value.full.wheel_speed.front.left);
-			gauges['vehicle.wheel_speed.rear.right'].redraw(data.value.full.wheel_speed.front.right);
+			gauges['vehicle-wheel_speed-front-left'].redraw(data.value.full.wheel_speed.front.left);
+			gauges['vehicle-wheel_speed-front-right'].redraw(data.value.full.wheel_speed.front.right);
+			gauges['vehicle-wheel_speed-rear-left'].redraw(data.value.full.wheel_speed.front.left);
+			gauges['vehicle-wheel_speed-rear-right'].redraw(data.value.full.wheel_speed.front.right);
 			break;
 
 		case 'lcm':
@@ -139,10 +139,10 @@ function init_dash() {
 	gauge_create('rpm',      'RPM',      0, 7000, 10, 200);
 	gauge_create('psi',      'PSI',      8,   16, 10, 200);
 
-	gauge_create('vehicle.wheel_speed.front.left',  'WS RL', 0, 240, 10, 200);
-	gauge_create('vehicle.wheel_speed.front.right', 'WS RR', 0, 240, 10, 200);
-	gauge_create('vehicle.wheel_speed.rear.left',   'WS RL', 0, 240, 10, 200);
-	gauge_create('vehicle.wheel_speed.rear.right',  'WS RR', 0, 240, 10, 200);
+	gauge_create('vehicle-wheel_speed-front-left',  'WS RL', 0, 240, 10, 200);
+	gauge_create('vehicle-wheel_speed-front-right', 'WS RR', 0, 240, 10, 200);
+	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 10, 200);
+	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 10, 200);
 
 	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
 	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);

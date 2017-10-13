@@ -15,10 +15,10 @@
 
 			<hr>
 
-			<span id="vehicle.wheel_speed.front.left-container"></span>
-			<span id="vehicle.wheel_speed.front.right-container"></span>
-			<span id="vehicle.wheel_speed.rear.left-container"></span>
-			<span id="vehicle.wheel_speed.rear.right-container"></span>
+			<span id="vehicle-wheel_speed-front-left-container"></span>
+			<span id="vehicle-wheel_speed-front-right-container"></span>
+			<span id="vehicle-wheel_speed-rear-left-container"></span>
+			<span id="vehicle-wheel_speed-rear-right-container"></span>
 
 			<hr>
 
