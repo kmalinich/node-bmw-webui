@@ -116,13 +116,13 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
 
-	gauge_create('obc-average_speed-mph', 'AVG MPH');
-	gauge_create('obc-consumption-c1',    'CON1 MPG', 0, 35);
-	gauge_create('obc-range-mi',          'RNG MI',   0, 500);
-	gauge_create('fuel-level',            'FUEL %',   0, 100, 2);
+	gauge_create('obc-average_speed-mph',  'AVG MPH');
+	gauge_create('obc-consumption-c1-mpg', 'CON1 MPG', 0, 35);
+	gauge_create('obc-range-mi',           'RNG MI',   0, 500);
+	gauge_create('fuel-level',             'FUEL %',   0, 100, 2);
 
-	gauge_create('vehicle-dsc-torque_reduction_1');
-	gauge_create('vehicle-dsc-torque_reduction_2');
+	gauge_create('vehicle-dsc-torque_reduction_1', 'TQ RD1 %');
+	gauge_create('vehicle-dsc-torque_reduction_2', 'TQ RD2 %');
 
 	gauge_create('vehicle-steering-angle',    'STR °', -700, 700);
 	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700);
@@ -136,9 +136,10 @@ function on_status_tx(data) {
 
 	switch (data.key.stub) {
 		case 'engine':
+			gauges.psi.redraw(data.value.full.atmospheric_pressure.psi);
 			gauges.rpm.redraw(data.value.full.speed);
 			gauges.throttle.redraw(data.value.full.throttle.pedal);
-			gauges.psi.redraw(data.value.full.atmospheric_pressure.psi);
+			gauges['engine-torque-output'].redraw(data.value.full.torque.output);
 			break;
 
 		case 'fuel':
@@ -147,6 +148,12 @@ function on_status_tx(data) {
 
 		case 'lcm':
 			gauges.battery.redraw(data.value.full.voltage.terminal_30);
+			break;
+
+		case 'obc':
+			gauges['obc-average_speed-mph'].redraw(data.value.full.average_speed.mph);
+			gauges['obc-consumption-c1-mpg'].redraw(data.value.full.consumption.c1.mpg);
+			gauges['obc-range-mi'].redraw(data.value.full.range.mi);
 			break;
 
 		case 'system':
@@ -166,6 +173,9 @@ function on_status_tx(data) {
 
 			gauges['vehicle-steering-angle'].redraw(data.value.full.steering.angle);
 			gauges['vehicle-steering-velocity'].redraw(data.value.full.steering.angle);
+
+			gauges['vehicle-dsc-torque_reduction_1'].redraw(data.value.full.dsc.torque_reduction_1);
+			gauges['vehicle-dsc-torque_reduction_2'].redraw(data.value.full.dsc.torque_reduction_2);
 			break;
 	}
 }

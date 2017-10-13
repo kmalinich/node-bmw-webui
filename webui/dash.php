@@ -41,7 +41,7 @@
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
 			<span id="obc-average_speed-mph-container"></span>
-			<span id="obc-consumption-c1-container"></span>
+			<span id="obc-consumption-c1-mpg-container"></span>
 			<span id="obc-range-mi-container"></span>
 			<span id="fuel-level-container"></span>
 			<hr>
