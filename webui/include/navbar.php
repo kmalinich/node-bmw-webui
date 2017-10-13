@@ -1,5 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 	<a class="navbar-brand" href="/">node-bmw</a>
+	<div id="status-ws" class="mr-2 btn btn-raised btn-warning">Connecting</div>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -16,20 +17,18 @@
 					Modules
 				</a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-					<a class="dropdown-item" href="dsp.html">DSP</a>
-					<a class="dropdown-item" href="gm.html">GM</a>
-					<a class="dropdown-item" href="hdmi.html">HDMI</a>
-					<a class="dropdown-item" href="ike.html">IKE</a>
-					<a class="dropdown-item" href="lcm.html">LCM</a>
+					<a class="dropdown-item" href="dsp">DSP</a>
+					<a class="dropdown-item" href="gm">GM</a>
+					<a class="dropdown-item" href="hdmi">HDMI</a>
+					<a class="dropdown-item" href="ike">IKE</a>
+					<a class="dropdown-item" href="lcm">LCM</a>
 				</div>
 			</li>
 
-			<li class="nav-item"><a class="nav-link" href="dash.html">Dash</a></li>
-			<li class="nav-item"><a class="nav-link" href="status.html">Status</a></li>
-			<li class="nav-item"><a class="nav-link" href="ws-bus.html">Data bus</a></li>
-			<li class="nav-item"><a class="nav-link" href="ws-log.html">Log</a></li>
+			<li class="nav-item"><a class="nav-link" href="dash">Dash</a></li>
+			<li class="nav-item"><a class="nav-link" href="status">Status</a></li>
+			<li class="nav-item"><a class="nav-link" href="ws-bus">Data bus</a></li>
+			<li class="nav-item"><a class="nav-link" href="ws-log">Log</a></li>
 		</ul>
-
-		<div id="status-ws" class="mr-2 btn btn-raised btn-warning">Connecting</div>
 	</div>
 </nav>
