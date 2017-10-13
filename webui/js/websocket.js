@@ -29,6 +29,7 @@ function on_status_tx(data) {
 		case 'engine':
 			gauges.rpm.redraw(data.value.full.speed);
 			gauges.throttle.redraw(data.value.full.throttle.pedal);
+			gauges.psi.redraw(data.value.full.atmospheric_pressure.psi);
 			break;
 
 		case 'lcm':
@@ -67,7 +68,6 @@ function on_daemon_tx(data) {
 			// log(data.host.host.short+' '+data.event);
 			// log(data.host.host.short+' temp/load: '+data.host.temperature+' C/'+data.host.cpu.load_pct);
 
-			gauges.cpuload2.redraw(data.host.cpu.load_pct);
 			gauges.cputemp2.redraw(data.host.temperature);
 			break;
 
@@ -168,13 +168,14 @@ gauges = [];
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('battery',  '12v+',     8,   15, 10, 250);
-	gauge_create('coolant',  'Coolant',  0,  110, 10, 250);
-	gauge_create('throttle', 'Throttle', 0,  100, 10, 250);
-	gauge_create('rpm',      'RPM',      0, 7000, 10, 250);
+	gauge_create('battery',  '12v+',     8,   15, 10, 200);
+	gauge_create('coolant',  'Coolant',  0,  110, 10, 200);
+	gauge_create('throttle', 'Throttle', 0,  100, 10, 200);
+	gauge_create('rpm',      'RPM',      0, 7000, 10, 200);
+
+	gauge_create('psi', 'PSI',  0, 100, 10, 200);
+	// gauge_create('cputemp2', 'P2 temp', 20,  85, 10, 200);
 
 	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
-	gauge_create('cpuload2', 'P2 load',  0, 100, 10, 200);
 	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);
-	gauge_create('cputemp2', 'P2 temp', 20,  85, 10, 200);
 }
