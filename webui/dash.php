@@ -8,11 +8,11 @@
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
 			<i class="material-icons position-absolute">power_settings_new</i>
-			<span id="battery-container"></span>
-			<span id="coolant-container"></span>
-			<span id="throttle-container"></span>
 			<span id="rpm-container"></span>
+			<span id="throttle-container"></span>
+			<span id="coolant-container"></span>
 			<span id="psi-container"></span>
+			<span id="battery-container"></span>
 			<span id="fuel-level-container"></span>
 
 			<hr>
