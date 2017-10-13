@@ -70,7 +70,7 @@ function ws_init() {
 	init_dash();
 }
 
-function gauge_create(name, label, min = 0, max = 100, ticks = 20, size = 320) {
+function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 	var config = {
 		size       : size,
 		label      : label,
@@ -101,23 +101,25 @@ gauges = [];
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('rpm',        'RPM',     0, 7000,  1, 200);
-	gauge_create('throttle',   'THRTL %', 0,  100, 10, 200);
-	gauge_create('coolant',    'CLNT °',  0,  110, 10, 200);
-	gauge_create('psi',        'PSI',     8,   16, 10, 200);
-	gauge_create('battery',    '12v+',    8,   15, 10, 200);
-	gauge_create('fuel-level', 'FUEL %',  0,  100,  2, 200);
+	let size = 200;
 
-	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 10, 200);
-	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 10, 200);
-	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 10, 200);
-	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 10, 200);
+	gauge_create('rpm',        'RPM', 0, 7000, 2);
+	gauge_create('throttle',   'THRTL %');
+	gauge_create('coolant',    'CLNT °C', 0,  110);
+	gauge_create('psi',        'PSI',     8,   16);
+	gauge_create('battery',    'BATT V',  8,   16);
+	gauge_create('fuel-level', 'FUEL %',  0, 100, 2);
 
-	gauge_create('vehicle-steering-angle',    'STR °', -700, 700, 10, 200);
-	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700, 10, 200);
+	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
+	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
+	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
+	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
 
-	gauge_create('cpuload1', 'CPU LD',  0, 100, 10, 200);
-	gauge_create('cputemp1', 'CPU °',  20,  85, 10, 200);
+	gauge_create('vehicle-steering-angle',    'STR °', -700, 700);
+	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700);
+
+	gauge_create('cpuload1', 'CPU %');
+	gauge_create('cputemp1', 'CPU °',  20,  85);
 }
 
 function on_status_tx(data) {

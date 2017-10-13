@@ -25,7 +25,10 @@
 
 			<hr>
 
-			<i class="material-icons position-absolute">donut_small</i>
+			<div class="position-absolute">
+				<i class="material-icons">donut_small</i>
+				<h5>Steering</h5>
+			</div>
 			<span id="vehicle-steering-angle-container"></span>
 			<span id="vehicle-steering-velocity-container"></span>
 
