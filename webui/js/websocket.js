@@ -137,7 +137,9 @@ function on_status_tx(data) {
 	let path_hyphen = data.key.full.replace(/\./g, '-');
 	console.log('path-dot : \'%s\', path-hyphen: \'%s\'', data.key.full, path_hyphen);
 
-	console.log(gauges[path_hyphen]);
+	if (typeof gauges[path_hyphen] !== 'undefined') {
+		console.log(gauges[path_hyphen]);
+	}
 
 	switch (data.key.full) {
 		case 'engine':
