@@ -22,6 +22,11 @@
 
 			<hr>
 
+			<span id="vehicle-steering-angle-container"></span>
+			<span id="vehicle-steering-velocity-container"></span>
+
+			<hr>
+
 			<span id="cputemp1-container"></span>
 			<span id="cpuload1-container"></span>
 		</div>
