@@ -101,7 +101,7 @@ gauges = [];
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('rpm',        'RPM',     0, 7000, 10, 200);
+	gauge_create('rpm',        'RPM',     0, 7000,  1, 200);
 	gauge_create('throttle',   'THRTL %', 0,  100, 10, 200);
 	gauge_create('coolant',    'CLNT °',  0,  110, 10, 200);
 	gauge_create('psi',        'PSI',     8,   16, 10, 200);
