@@ -7,6 +7,7 @@
 	<body>
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
+			<i class="material-icons position-absolute">power_settings_new</i>
 			<span id="battery-container"></span>
 			<span id="coolant-container"></span>
 			<span id="throttle-container"></span>
@@ -15,6 +16,7 @@
 
 			<hr>
 
+			<i class="material-icons position-absolute">toll</i>
 			<span id="vehicle-wheel_speed-front-left-container"></span>
 			<span id="vehicle-wheel_speed-front-right-container"></span>
 			<span id="vehicle-wheel_speed-rear-left-container"></span>
@@ -22,12 +24,13 @@
 
 			<hr>
 
-			<i class="material-icons float-right">donut_small</i>
+			<i class="material-icons position-absolute">donut_small</i>
 			<span id="vehicle-steering-angle-container"></span>
 			<span id="vehicle-steering-velocity-container"></span>
 
 			<hr>
 
+			<i class="material-icons position-absolute">hot_tub</i>
 			<span id="cputemp1-container"></span>
 			<span id="cpuload1-container"></span>
 		</div>
