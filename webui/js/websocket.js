@@ -108,12 +108,21 @@ function init_dash() {
 	gauge_create('coolant',    'CLNT °C', 0, 110);
 	gauge_create('psi',        'PSI',     8,  16);
 	gauge_create('battery',    'BATT V',  8,  16);
-	gauge_create('fuel-level', 'FUEL %',  0, 100, 2);
+
+	gauge_create('engine-torque-output', 'TQOUT %');
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
+
+	gauge_create('obc-average_speed-mph', 'AVG MPH');
+	gauge_create('obc-consumption-c1',    'CON1 MPG', 0, 35);
+	gauge_create('obc-range-mi',          'RNG MI',   0, 500);
+	gauge_create('fuel-level',            'FUEL %',   0, 100, 2);
+
+	gauge_create('vehicle-dsc-torque_reduction_1');
+	gauge_create('vehicle-dsc-torque_reduction_2');
 
 	gauge_create('vehicle-steering-angle',    'STR °', -700, 700);
 	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700);

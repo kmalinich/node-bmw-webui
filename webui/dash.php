@@ -33,10 +33,13 @@
 			<hr>
 
 			<!-- DSC data -->
-			<span id="vehicle-steering-angle-container"></span>
+			<i class="material-icons position-absolute">gavel</i>
+			<span id="vehicle-dsc-torque_reduction_1-container"></span>
+			<span id="vehicle-dsc-torque_reduction_2-container"></span>
 			<hr>
 
 			<!-- OBC data -->
+			<i class="material-icons position-absolute">computer</i>
 			<span id="obc-average_speed-mph-container"></span>
 			<span id="obc-consumption-c1-container"></span>
 			<span id="obc-range-mi-container"></span>
@@ -50,5 +53,6 @@
 
 		</div>
 	</body>
+
 	<?php include './include/js.php'; ?>
 </html>
