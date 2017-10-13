@@ -147,8 +147,8 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 10, 200);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 10, 200);
 
-	gauge_create('vehicle-steering-angle',    'Steering °',     -700, 700, 10, 200);
-	gauge_create('vehicle-steering-velocity', 'Steering force', -700, 700, 10, 200);
+	gauge_create('vehicle-steering-angle',    '<i class="material-icons">donut_small</i> °',     -700, 700, 10, 200);
+	gauge_create('vehicle-steering-velocity', '<i class="material-icons">donut_small</i> force', -700, 700, 10, 200);
 
 	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
 	gauge_create('cputemp1', 'P1 temp', 20,  85, 10, 200);
