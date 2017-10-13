@@ -13,6 +13,7 @@
 			<span id="throttle-container"></span>
 			<span id="rpm-container"></span>
 			<span id="psi-container"></span>
+			<span id="fuel-level-container"></span>
 
 			<hr>
 
