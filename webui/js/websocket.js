@@ -103,11 +103,11 @@ function init_dash() {
 
 	let size = 200;
 
-	gauge_create('rpm',        'RPM', 0, 7000, 5);
-	gauge_create('throttle',   'THRTL %');
-	gauge_create('coolant',    'CLNT °C', 0, 110);
-	gauge_create('psi',        'PSI',     8,  16);
-	gauge_create('battery',    'BATT V',  8,  16);
+	gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
+	gauge_create('engine-throttle-pedal',           'THRTL %');
+	gauge_create('temperature-coolant-c',           'CLNT °C', 0, 110);
+	gauge_create('engine-atmospheric_pressure-psi', 'PSI', 8,  16);
+	gauge_create('lcm-voltage-terminal_30',         'BATT V',  8,  16);
 
 	gauge_create('engine-torque-output', 'TQOUT %');
 
@@ -127,18 +127,18 @@ function init_dash() {
 	gauge_create('vehicle-steering-angle',    'STR °', -700, 700);
 	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700);
 
-	gauge_create('cpuload1', 'CPU %');
-	gauge_create('cputemp1', 'CPU °', 20, 85);
+	gauge_create('system-cpu-load_pct', 'CPU %');
+	gauge_create('system-temperature',  'CPU °', 20, 85);
 }
 
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 
-	switch (data.key.stub) {
+	switch (data.key.full) {
 		case 'engine':
-			gauges.psi.redraw(data.value.full.atmospheric_pressure.psi);
-			gauges.rpm.redraw(data.value.full.speed);
-			gauges.throttle.redraw(data.value.full.throttle.pedal);
+			gauges['engine-atmospheric_pressure-psi'].redraw(data.value.full.atmospheric_pressure.psi);
+			gauges['engine-speed'].redraw(data.value.full.speed);
+			gauges['engine-throttle-pedal'].redraw(data.value.full.throttle.pedal);
 			gauges['engine-torque-output'].redraw(data.value.full.torque.output);
 			break;
 
@@ -147,7 +147,7 @@ function on_status_tx(data) {
 			break;
 
 		case 'lcm':
-			gauges.battery.redraw(data.value.full.voltage.terminal_30);
+			gauges['lcm-voltage-terminal_30'].redraw(data.value.full.voltage.terminal_30);
 			break;
 
 		case 'obc':
@@ -157,12 +157,12 @@ function on_status_tx(data) {
 			break;
 
 		case 'system':
-			gauges.cpuload1.redraw(data.value.full.cpu.load_pct);
-			gauges.cputemp1.redraw(data.value.full.temperature);
+			gauges['system-cpu-load_pct'].redraw(data.value.full.cpu.load_pct);
+			gauges['system-temperature'].redraw(data.value.full.temperature);
 			break;
 
 		case 'temperature':
-			gauges.coolant.redraw(data.value.full.coolant.c);
+			gauges['temperature-coolant-c'].redraw(data.value.full.coolant.c);
 			break;
 
 		case 'vehicle':
