@@ -173,7 +173,7 @@ function init_dash() {
 	gauge_create('throttle', 'Throttle', 0,  100, 10, 200);
 	gauge_create('rpm',      'RPM',      0, 7000, 10, 200);
 
-	gauge_create('psi', 'PSI',  0, 100, 10, 200);
+	gauge_create('psi', 'PSI',  8, 16, 10, 200);
 	// gauge_create('cputemp2', 'P2 temp', 20,  85, 10, 200);
 
 	gauge_create('cpuload1', 'P1 load',  0, 100, 10, 200);
