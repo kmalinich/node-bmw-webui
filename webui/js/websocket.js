@@ -103,11 +103,11 @@ function init_dash() {
 
 	let size = 200;
 
-	gauge_create('rpm',        'RPM', 0, 7000, 2);
+	gauge_create('rpm',        'RPM', 0, 7000, 5);
 	gauge_create('throttle',   'THRTL %');
-	gauge_create('coolant',    'CLNT °C', 0,  110);
-	gauge_create('psi',        'PSI',     8,   16);
-	gauge_create('battery',    'BATT V',  8,   16);
+	gauge_create('coolant',    'CLNT °C', 0, 110);
+	gauge_create('psi',        'PSI',     8,  16);
+	gauge_create('battery',    'BATT V',  8,  16);
 	gauge_create('fuel-level', 'FUEL %',  0, 100, 2);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
@@ -119,7 +119,7 @@ function init_dash() {
 	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700);
 
 	gauge_create('cpuload1', 'CPU %');
-	gauge_create('cputemp1', 'CPU °',  20,  85);
+	gauge_create('cputemp1', 'CPU °', 20, 85);
 }
 
 function on_status_tx(data) {
