@@ -9,14 +9,11 @@
 		<div class="container-fluid">
 			<span id="battery-container"></span>
 			<span id="coolant-container"></span>
-			<hr>
 			<span id="throttle-container"></span>
 			<span id="rpm-container"></span>
-			<hr>
 			<span id="psi-container"></span>
 			<span id="cputemp1-container"></span>
-			<span id="cpuload2-container"></span>
-			<span id="cputemp2-container"></span>
+			<span id="cpuload1-container"></span>
 		</div>
 	</body>
 	<?php include './include/js.php'; ?>
