@@ -106,7 +106,7 @@ function init_dash() {
 	gauge_create('throttle',   'THRTL %', 0,  100, 10, 200);
 	gauge_create('rpm',        'RPM',     0, 7000, 10, 200);
 	gauge_create('psi',        'PSI',     8,   16, 10, 200);
-	gauge_create('fuel-level', 'FUEL %',  0,  100, 25, 200);
+	gauge_create('fuel-level', 'FUEL %',  0,  100,  5, 200);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 10, 200);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 10, 200);
