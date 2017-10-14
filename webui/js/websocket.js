@@ -150,8 +150,8 @@ function init_dash() {
 	gauge_create('vehicle-dsc-torque_reduction_1', 'TQ RD1 %');
 	gauge_create('vehicle-dsc-torque_reduction_2', 'TQ RD2 %');
 
-	gauge_create('vehicle-steering-angle',    'STR °', 675, -675);
-	gauge_create('vehicle-steering-velocity', 'STR V', 675, -675);
+	gauge_create('vehicle-steering-angle',    'STR °', 675, -675, 5);
+	gauge_create('vehicle-steering-velocity', 'STR V', 675, -675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
 	gauge_create('system-temperature',  'CPU °', 20, 85);
