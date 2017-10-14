@@ -134,58 +134,61 @@ function init_dash() {
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 
+	let v_full = data.value.full;
+
+	// Initial page load data
 	switch (data.key.full) {
 		case 'engine': {
-			gauges['engine-atmospheric_pressure-psi'].redraw(data.value.full.atmospheric_pressure.psi);
-			gauges['engine-speed'].redraw(data.value.full.speed);
-			gauges['engine-throttle-pedal'].redraw(data.value.full.throttle.pedal);
-			gauges['engine-torque-output'].redraw(data.value.full.torque.output);
+			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
+			gauges['engine-speed'].redraw(v_full.speed);
+			gauges['engine-throttle-pedal'].redraw(v_full.throttle.pedal);
+			gauges['engine-torque-output'].redraw(v_full.torque.output);
 			break;
 		}
 
 		case 'fuel': {
-			gauges['fuel-level'].redraw(data.value.full.level);
+			gauges['fuel-level'].redraw(v_full.level);
 			break;
 		}
 
 		case 'lcm': {
-			gauges['lcm-voltage-terminal_30'].redraw(data.value.full.voltage.terminal_30);
+			gauges['lcm-voltage-terminal_30'].redraw(v_full.voltage.terminal_30);
 			break;
 		}
 
 		case 'obc': {
-			gauges['obc-average_speed-mph'].redraw(data.value.full.average_speed.mph);
-			gauges['obc-consumption-c1-mpg'].redraw(data.value.full.consumption.c1.mpg);
-			gauges['obc-range-mi'].redraw(data.value.full.range.mi);
+			gauges['obc-average_speed-mph'].redraw(v_full.average_speed.mph);
+			gauges['obc-consumption-c1-mpg'].redraw(v_full.consumption.c1.mpg);
+			gauges['obc-range-mi'].redraw(v_full.range.mi);
 			break;
 		}
 
 		case 'system': {
-			gauges['system-cpu-load_pct'].redraw(data.value.full.cpu.load_pct);
-			gauges['system-temperature'].redraw(data.value.full.temperature);
+			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
+			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
 
 		case 'temperature': {
-			gauges['temperature-coolant-c'].redraw(data.value.full.coolant.c);
+			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
 			break;
 		}
 
 		case 'vehicle': {
-			gauges['vehicle-wheel_speed-front-left'].redraw(data.value.full.wheel_speed.front.left);
-			gauges['vehicle-wheel_speed-front-right'].redraw(data.value.full.wheel_speed.front.right);
-			gauges['vehicle-wheel_speed-rear-left'].redraw(data.value.full.wheel_speed.front.left);
-			gauges['vehicle-wheel_speed-rear-right'].redraw(data.value.full.wheel_speed.front.right);
+			gauges['vehicle-wheel_speed-front-left'].redraw(v_full.wheel_speed.front.left);
+			gauges['vehicle-wheel_speed-front-right'].redraw(v_full.wheel_speed.front.right);
+			gauges['vehicle-wheel_speed-rear-left'].redraw(v_full.wheel_speed.rear.left);
+			gauges['vehicle-wheel_speed-rear-right'].redraw(v_full.wheel_speed.rear.right);
 
-			gauges['vehicle-steering-angle'].redraw(data.value.full.steering.angle);
-			gauges['vehicle-steering-velocity'].redraw(data.value.full.steering.angle);
+			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
+			gauges['vehicle-steering-velocity'].redraw(v_full.steering.velocity);
 
-			gauges['vehicle-dsc-torque_reduction_1'].redraw(data.value.full.dsc.torque_reduction_1);
-			gauges['vehicle-dsc-torque_reduction_2'].redraw(data.value.full.dsc.torque_reduction_2);
+			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
+			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
 			break;
 		}
 
-		default: {
+		default: { // Delta updates
 			let path_hyphen = data.key.full.replace(/\./g, '-');
 
 			if (typeof gauges[path_hyphen] !== 'undefined') {
