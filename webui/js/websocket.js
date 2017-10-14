@@ -134,45 +134,44 @@ function init_dash() {
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 
-	let path_hyphen = data.key.full.replace(/\./g, '-');
-	console.log('path-dot : \'%s\', path-hyphen: \'%s\'', data.key.full, path_hyphen);
-
-	if (typeof gauges[path_hyphen] !== 'undefined') {
-		console.log(gauges[path_hyphen]);
-	}
-
 	switch (data.key.full) {
-		case 'engine':
+		case 'engine': {
 			gauges['engine-atmospheric_pressure-psi'].redraw(data.value.full.atmospheric_pressure.psi);
 			gauges['engine-speed'].redraw(data.value.full.speed);
 			gauges['engine-throttle-pedal'].redraw(data.value.full.throttle.pedal);
 			gauges['engine-torque-output'].redraw(data.value.full.torque.output);
 			break;
+		}
 
-		case 'fuel':
+		case 'fuel': {
 			gauges['fuel-level'].redraw(data.value.full.level);
 			break;
+		}
 
-		case 'lcm':
+		case 'lcm': {
 			gauges['lcm-voltage-terminal_30'].redraw(data.value.full.voltage.terminal_30);
 			break;
+		}
 
-		case 'obc':
+		case 'obc': {
 			gauges['obc-average_speed-mph'].redraw(data.value.full.average_speed.mph);
 			gauges['obc-consumption-c1-mpg'].redraw(data.value.full.consumption.c1.mpg);
 			gauges['obc-range-mi'].redraw(data.value.full.range.mi);
 			break;
+		}
 
-		case 'system':
+		case 'system': {
 			gauges['system-cpu-load_pct'].redraw(data.value.full.cpu.load_pct);
 			gauges['system-temperature'].redraw(data.value.full.temperature);
 			break;
+		}
 
-		case 'temperature':
+		case 'temperature': {
 			gauges['temperature-coolant-c'].redraw(data.value.full.coolant.c);
 			break;
+		}
 
-		case 'vehicle':
+		case 'vehicle': {
 			gauges['vehicle-wheel_speed-front-left'].redraw(data.value.full.wheel_speed.front.left);
 			gauges['vehicle-wheel_speed-front-right'].redraw(data.value.full.wheel_speed.front.right);
 			gauges['vehicle-wheel_speed-rear-left'].redraw(data.value.full.wheel_speed.front.left);
@@ -184,5 +183,15 @@ function on_status_tx(data) {
 			gauges['vehicle-dsc-torque_reduction_1'].redraw(data.value.full.dsc.torque_reduction_1);
 			gauges['vehicle-dsc-torque_reduction_2'].redraw(data.value.full.dsc.torque_reduction_2);
 			break;
+		}
+
+		default: {
+			let path_hyphen = data.key.full.replace(/\./g, '-');
+
+			if (typeof gauges[path_hyphen] !== 'undefined') {
+				if (window.socket_debug === true) console.log('Updating gauge \'%s\'', path_hyphen);
+				gauges[path_hyphen].redraw(data.value.stub);
+			}
+		}
 	}
 }
