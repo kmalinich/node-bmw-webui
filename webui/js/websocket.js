@@ -3,7 +3,9 @@
 
 
 window.socket_debug = false;
-var socket;
+
+let socket;
+let gauges = [];
 
 function log(msg) {
 	console.log('[websocket] %s', msg);
@@ -37,7 +39,7 @@ function send(event, data = null) {
 	socket.emit('client-tx', message);
 }
 
-// Dashboard websocket
+// Dashboard WebSocket
 function ws_init() {
 	log('init_websocket()');
 
@@ -63,15 +65,14 @@ function ws_init() {
 		ws_set_status('disconnect');
 	});
 
-	socket.on('status-tx', (data) => {
-		on_status_tx(data);
-	});
+	socket.on('status-tx', on_status_tx);
 
 	init_dash();
 }
 
+// For gauges where a high value is bad
 function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
-	var config = {
+	let config = {
 		size       : size,
 		label      : label,
 		min        : min,
@@ -79,7 +80,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 		minorTicks : ticks,
 	};
 
-	var range = config.max - config.min;
+	let range = config.max - config.min;
 
 	config.yellowZones = [ {
 		from : config.min + range * 0.75,
@@ -92,16 +93,41 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 	} ];
 
 	log('[gauge_create] ' + name);
+
 	gauges[name] = new Gauge(name + '-container', config);
 	gauges[name].render();
 }
 
-gauges = [];
+// For gauges where a low value is bad
+function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 200) {
+	let config = {
+		size       : size,
+		label      : label,
+		min        : min,
+		max        : max,
+		minorTicks : ticks,
+	};
+
+	let range = config.max - config.min;
+
+	config.yellowZones = [ {
+		from : config.max - range * 0.75,
+		to   : config.max - range * 0.9,
+	} ];
+
+	config.redZones = [ {
+		from : config.max - range * 0.9,
+		to   : config.min,
+	} ];
+
+	log('[gauge_create_reverse] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
 
 function init_dash() {
 	log('init_dash()');
-
-	let size = 200;
 
 	gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
 	gauge_create('engine-throttle-pedal',           'THRTL %');
@@ -117,16 +143,16 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
 
-	gauge_create('obc-average_speed-mph',  'AVG MPH');
-	gauge_create('obc-consumption-c1-mpg', 'CON1 MPG', 0, 35);
-	gauge_create('obc-range-mi',           'RNG MI',   0, 500);
-	gauge_create('fuel-level',             'FUEL %',   0, 100, 2);
+	gauge_create_reverse('obc-average_speed-mph',  'AVG MPH');
+	gauge_create_reverse('obc-consumption-c1-mpg', 'CON1 MPG', 0, 35);
+	gauge_create_reverse('obc-range-mi',           'RNG MI',   0, 500);
+	gauge_create_reverse('fuel-level',             'FUEL %',   0, 100, 2);
 
 	gauge_create('vehicle-dsc-torque_reduction_1', 'TQ RD1 %');
 	gauge_create('vehicle-dsc-torque_reduction_2', 'TQ RD2 %');
 
-	gauge_create('vehicle-steering-angle',    'STR °', -700, 700);
-	gauge_create('vehicle-steering-velocity', 'STR V', -700, 700);
+	gauge_create('vehicle-steering-angle',    'STR °', -675, 675, 5);
+	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
 	gauge_create('system-temperature',  'CPU °', 20, 85);
