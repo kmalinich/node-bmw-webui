@@ -106,7 +106,8 @@ function init_dash() {
 	gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
 	gauge_create('engine-throttle-pedal',           'THRTL %');
 	gauge_create('temperature-coolant-c',           'CLNT °C', 0, 110);
-	gauge_create('engine-atmospheric_pressure-psi', 'PSI', 8,  16);
+	gauge_create('engine-atmospheric_pressure-psi', 'PSI',     8,  16);
+	gauge_create('engine-aux_fan_speed',            'AUXFAN');
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',  8,  16);
 
 	gauge_create('engine-torque-output', 'TQOUT %');
@@ -140,6 +141,7 @@ function on_status_tx(data) {
 	switch (data.key.full) {
 		case 'engine': {
 			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
+			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
 			gauges['engine-speed'].redraw(v_full.speed);
 			gauges['engine-throttle-pedal'].redraw(v_full.throttle.pedal);
 			gauges['engine-torque-output'].redraw(v_full.torque.output);
@@ -175,16 +177,16 @@ function on_status_tx(data) {
 		}
 
 		case 'vehicle': {
-			gauges['vehicle-wheel_speed-front-left'].redraw(v_full.wheel_speed.front.left);
-			gauges['vehicle-wheel_speed-front-right'].redraw(v_full.wheel_speed.front.right);
-			gauges['vehicle-wheel_speed-rear-left'].redraw(v_full.wheel_speed.rear.left);
-			gauges['vehicle-wheel_speed-rear-right'].redraw(v_full.wheel_speed.rear.right);
+			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
+			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
 
 			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
 			gauges['vehicle-steering-velocity'].redraw(v_full.steering.velocity);
 
-			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
-			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
+			gauges['vehicle-wheel_speed-front-left'].redraw(v_full.wheel_speed.front.left);
+			gauges['vehicle-wheel_speed-front-right'].redraw(v_full.wheel_speed.front.right);
+			gauges['vehicle-wheel_speed-rear-left'].redraw(v_full.wheel_speed.rear.left);
+			gauges['vehicle-wheel_speed-rear-right'].redraw(v_full.wheel_speed.rear.right);
 			break;
 		}
 
@@ -193,6 +195,7 @@ function on_status_tx(data) {
 
 			if (typeof gauges[path_hyphen] !== 'undefined') {
 				if (window.socket_debug === true) console.log('Updating gauge \'%s\'', path_hyphen);
+				if (data.key.full == 'engine.speed') console.log(data.value.stub);
 				gauges[path_hyphen].redraw(data.value.stub);
 			}
 		}

@@ -16,6 +16,7 @@
 			<span id="engine-atmospheric_pressure-psi-container"></span>
 			<span id="lcm-voltage-terminal_30-container"></span>
 			<span id="engine-torque-output-container"></span>
+			<span id="engine-aux_fan_speed-container"></span>
 			<hr>
 
 			<!-- Wheel speeds -->
