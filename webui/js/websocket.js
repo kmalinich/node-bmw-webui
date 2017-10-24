@@ -129,7 +129,7 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
+	// gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
 	gauge_create('engine-throttle-pedal',           'THRTL %');
 	gauge_create('temperature-coolant-c',           'CLNT °C', 0, 110);
 	gauge_create('engine-atmospheric_pressure-psi', 'PSI',     8,  16);
@@ -168,7 +168,7 @@ function on_status_tx(data) {
 		case 'engine': {
 			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
 			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
-			gauges['engine-speed'].redraw(v_full.speed);
+			// gauges['engine-speed'].redraw(v_full.speed);
 			gauges['engine-throttle-pedal'].redraw(v_full.throttle.pedal);
 			gauges['engine-torque-output'].redraw(v_full.torque.output);
 			break;
