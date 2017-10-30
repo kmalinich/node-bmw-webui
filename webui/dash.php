@@ -51,6 +51,7 @@
 
 			<!-- RPi system stats -->
 			<i class="material-icons position-absolute">hot_tub</i>
+			<span id="system-cpu-speed-container"></span>
 			<span id="system-cpu-load_pct-container"></span>
 			<span id="system-temperature-container"></span>
 

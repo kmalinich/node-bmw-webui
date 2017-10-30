@@ -155,7 +155,8 @@ function init_dash() {
 	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
-	gauge_create('system-temperature',  'CPU °', 20, 85);
+	gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
+	gauge_create('system-temperature',  'CPU °',  20, 85);
 }
 
 function on_status_tx(data) {
@@ -193,6 +194,7 @@ function on_status_tx(data) {
 
 		case 'system': {
 			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
+			gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
 			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
