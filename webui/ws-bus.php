@@ -67,7 +67,6 @@
 						<option value="LWS">LWS</option>
 						<option value="MFL">MFL</option>
 						<option value="MID">MID</option>
-						<option value="MID1">MID1</option>
 						<option value="MM3">MM3</option>
 						<option value="MML">MML</option>
 						<option value="MMR">MMR</option>
@@ -136,7 +135,6 @@
 						<option value="LWS">LWS</option>
 						<option value="MFL">MFL</option>
 						<option value="MID">MID</option>
-						<option value="MID1">MID1</option>
 						<option value="MM3">MM3</option>
 						<option value="MML">MML</option>
 						<option value="MMR">MMR</option>
