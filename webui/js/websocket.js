@@ -16,16 +16,14 @@ function ws_set_status(status) {
 		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
 		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
 		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		default:
-			$('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
+		default           : $('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
 	}
 
 	switch (status) {
-		case 'connect'    : $('#status-ws').text('Connected'); break;
-		case 'error'      : $('#status-ws').text('Error'); break;
+		case 'connect'    : $('#status-ws').text('Connected');    break;
+		case 'error'      : $('#status-ws').text('Error');        break;
 		case 'disconnect' : $('#status-ws').text('Disconnected'); break;
-		default:
-			$('#status-ws').text('Connecting');
+		default           :	$('#status-ws').text('Connecting');
 	}
 }
 
@@ -130,13 +128,20 @@ function init_dash() {
 	log('init_dash()');
 
 	// gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
-	gauge_create('engine-throttle-pedal',           'THRTL %');
+	//
+	gauge_create('engine-throttle-pedal', 'THRTL %');
+	gauge_create('engine-aux_fan_speed',  'AUXFAN');
+
 	gauge_create('temperature-coolant-c',           'CLNT °C', 0, 110);
 	gauge_create('engine-atmospheric_pressure-psi', 'PSI',     8,  16);
-	gauge_create('engine-aux_fan_speed',            'AUXFAN');
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',  8,  16);
 
 	gauge_create('engine-torque-output', 'TQOUT %');
+
+	gauge_create('temperature-exterior-c', 'EXT °C', -30, 50);
+
+	gauge_create('gpio-relay_1', 'GPIO 1', 0, 1);
+	gauge_create('gpio-relay_2', 'GPIO 2', 0, 1);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
@@ -180,6 +185,12 @@ function on_status_tx(data) {
 			break;
 		}
 
+		case 'gpio': {
+			gauges['gpio_relay_1'].redraw(v_full.relay_1);
+			gauges['gpio_relay_2'].redraw(v_full.relay_2);
+			break;
+		}
+
 		case 'lcm': {
 			gauges['lcm-voltage-terminal_30'].redraw(v_full.voltage.terminal_30);
 			break;
@@ -201,6 +212,7 @@ function on_status_tx(data) {
 
 		case 'temperature': {
 			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
+			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
 			break;
 		}
 
@@ -223,7 +235,6 @@ function on_status_tx(data) {
 
 			if (typeof gauges[path_hyphen] !== 'undefined') {
 				if (window.socket_debug === true) console.log('Updating gauge \'%s\'', path_hyphen);
-				if (data.key.full == 'engine.speed') console.log(data.value.stub);
 				gauges[path_hyphen].redraw(data.value.stub);
 			}
 		}

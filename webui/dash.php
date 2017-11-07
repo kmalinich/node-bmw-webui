@@ -21,28 +21,9 @@
 			<span id="engine-aux_fan_speed-container"></span>
 			<hr>
 
-			<!-- Wheel speeds -->
-			<i class="material-icons position-absolute">toll</i>
-			<span id="vehicle-wheel_speed-front-left-container"></span>
-			<span id="vehicle-wheel_speed-front-right-container"></span>
-			<span id="vehicle-wheel_speed-rear-left-container"></span>
-			<span id="vehicle-wheel_speed-rear-right-container"></span>
-			<hr>
-
-			<!-- Steering -->
-			<i class="material-icons position-absolute">donut_small</i>
-			<span id="vehicle-steering-angle-container"></span>
-			<span id="vehicle-steering-velocity-container"></span>
-			<hr>
-
-			<!-- DSC data -->
-			<i class="material-icons position-absolute">gavel</i>
-			<span id="vehicle-dsc-torque_reduction_1-container"></span>
-			<span id="vehicle-dsc-torque_reduction_2-container"></span>
-			<hr>
-
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
+			<span id="temperature-exterior-c-container"></span>
 			<span id="obc-average_speed-mph-container"></span>
 			<span id="obc-consumption-c1-mpg-container"></span>
 			<span id="obc-range-mi-container"></span>
@@ -54,6 +35,26 @@
 			<span id="system-cpu-speed-container"></span>
 			<span id="system-cpu-load_pct-container"></span>
 			<span id="system-temperature-container"></span>
+			<span id="gpio-relay_1-container"></span>
+			<span id="gpio-relay_2-container"></span>
+			<hr>
+
+			<i class="material-icons position-absolute">toll</i>
+			<!-- DSC data -->
+			<span id="vehicle-dsc-torque_reduction_1-container"></span>
+			<span id="vehicle-dsc-torque_reduction_2-container"></span>
+			<!-- Wheel speeds -->
+			<span id="vehicle-wheel_speed-front-left-container"></span>
+			<span id="vehicle-wheel_speed-front-right-container"></span>
+			<span id="vehicle-wheel_speed-rear-left-container"></span>
+			<span id="vehicle-wheel_speed-rear-right-container"></span>
+			<hr>
+
+			<!-- Steering -->
+			<i class="material-icons position-absolute">donut_small</i>
+			<span id="vehicle-steering-angle-container"></span>
+			<span id="vehicle-steering-velocity-container"></span>
+			<hr>
 
 		</div>
 	</body>
