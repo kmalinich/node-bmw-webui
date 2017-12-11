@@ -7,65 +7,10 @@ window.socket_debug = false;
 let socket;
 let gauges = [];
 
-function log(msg) {
-	console.log('[websocket] %s', msg);
-}
-
-function ws_set_status(status) {
-	switch (status) {
-		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
-		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		default           : $('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
-	}
-
-	switch (status) {
-		case 'connect'    : $('#status-ws').text('Connected');    break;
-		case 'error'      : $('#status-ws').text('Error');        break;
-		case 'disconnect' : $('#status-ws').text('Disconnected'); break;
-		default           :	$('#status-ws').text('Connecting');
-	}
-}
-
-// Send data over WebSocket
-function send(event, data = null) {
-	let message = {
-		event : event,
-		data  : data,
-	};
-
-	socket.emit('client-tx', message);
-}
-
-// Dashboard WebSocket
-function ws_init() {
-	log('init_websocket()');
-
-	ws_set_status('connecting');
-
-	// Open WebSocket
-	socket = io();
-
-	socket.on('connect', () => {
-		ws_set_status('connect');
-		log('connected');
-		send('status-request', 'all');
-	});
-
-	socket.on('error', (error) => {
-		ws_set_status('error');
-		log('error');
-		console.error(error);
-	});
-
-	socket.on('disconnect', () => {
-		log('disconnected');
-		ws_set_status('disconnect');
-	});
-
-	socket.on('status-tx', on_status_tx);
-
-	init_dash();
+// Toggle debug console output on and off
+function debug_toggle() {
+	window.socket_debug = !window.socket_debug;
+	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
 }
 
 // For gauges where a high value is bad
@@ -124,6 +69,7 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 	gauges[name].render();
 }
 
+
 function init_dash() {
 	log('init_dash()');
 
@@ -164,6 +110,21 @@ function init_dash() {
 	gauge_create('system-temperature',  'CPU °',  20, 85);
 }
 
+function log(msg) {
+	console.log('[websocket] %s', msg);
+}
+
+
+function on_config_tx(data) {
+	if (window.socket_debug === true) console.log(data);
+}
+
+function on_log_tx(data) {
+	if (window.socket_debug === true) {
+		console.log(JSON.stringify(data, null, 2));
+	}
+}
+
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 
@@ -171,7 +132,7 @@ function on_status_tx(data) {
 
 	// Initial page load data
 	switch (data.key.full) {
-		case 'engine': {
+		case 'engine' : {
 			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
 			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
 			// gauges['engine-speed'].redraw(v_full.speed);
@@ -180,43 +141,43 @@ function on_status_tx(data) {
 			break;
 		}
 
-		case 'fuel': {
+		case 'fuel' : {
 			gauges['fuel-level'].redraw(v_full.level);
 			break;
 		}
 
-		case 'gpio': {
+		case 'gpio' : {
 			gauges['gpio-relay_1'].redraw(v_full.relay_1);
 			gauges['gpio-relay_2'].redraw(v_full.relay_2);
 			break;
 		}
 
-		case 'lcm': {
+		case 'lcm' : {
 			gauges['lcm-voltage-terminal_30'].redraw(v_full.voltage.terminal_30);
 			break;
 		}
 
-		case 'obc': {
+		case 'obc' : {
 			gauges['obc-average_speed-mph'].redraw(v_full.average_speed.mph);
 			gauges['obc-consumption-c1-mpg'].redraw(v_full.consumption.c1.mpg);
 			gauges['obc-range-mi'].redraw(v_full.range.mi);
 			break;
 		}
 
-		case 'system': {
+		case 'system' : {
 			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
 			gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
 			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
 
-		case 'temperature': {
+		case 'temperature' : {
 			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
 			break;
 		}
 
-		case 'vehicle': {
+		case 'vehicle' : {
 			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
 			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
 
@@ -230,7 +191,7 @@ function on_status_tx(data) {
 			break;
 		}
 
-		default: { // Delta updates
+		default : { // Delta updates
 			let path_hyphen = data.key.full.replace(/\./g, '-');
 
 			if (typeof gauges[path_hyphen] !== 'undefined') {
@@ -238,5 +199,66 @@ function on_status_tx(data) {
 				gauges[path_hyphen].redraw(data.value.stub);
 			}
 		}
+	}
+}
+
+
+// Send data over WebSocket
+function send(event, data = null) {
+	let message = {
+		event : event,
+		data  : data,
+	};
+
+	socket.emit('client-tx', message);
+}
+
+
+// Dashboard WebSocket
+function ws_init() {
+	log('init_websocket()');
+
+	ws_set_status('connecting');
+
+	// Open WebSocket
+	socket = io();
+
+	socket.on('connect', () => {
+		ws_set_status('connect');
+		log('connected');
+		send('status-request', 'all');
+	});
+
+	socket.on('error', (error) => {
+		ws_set_status('error');
+		log('error');
+		console.error(error);
+	});
+
+	socket.on('disconnect', () => {
+		log('disconnected');
+		ws_set_status('disconnect');
+	});
+
+	socket.on('config-tx', on_config_tx);
+	socket.on('log-tx',    on_log_tx);
+	socket.on('status-tx', on_status_tx);
+
+	init_dash();
+}
+
+function ws_set_status(status) {
+	switch (status) {
+		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
+		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
+		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
+		default           : $('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
+	}
+
+	switch (status) {
+		case 'connect'    : $('#status-ws').text('Connected');    break;
+		case 'error'      : $('#status-ws').text('Error');        break;
+		case 'disconnect' : $('#status-ws').text('Disconnected'); break;
+		default           :	$('#status-ws').text('Connecting');
 	}
 }
