@@ -54,17 +54,17 @@ function gauge_create_temp(name, label, min = -30, max = 110, ticks = 10, size =
 	let range = config.max - config.min;
 
 	config.blueZones = [ {
-		from : config.min + range * 0.1,
+		from : config.min,
 		to   : config.min + range * 0.2,
 	} ];
 
 	config.yellowZones = [ {
 		from : config.min + range * 0.8,
-		to   : config.min + range * 0.9,
+		to   : config.min + range * 0.95,
 	} ];
 
 	config.redZones = [ {
-		from : config.min + range * 0.9,
+		from : config.min + range * 0.95,
 		to   : config.max,
 	} ];
 
