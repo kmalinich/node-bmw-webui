@@ -60,7 +60,7 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 
 	config.redZones = [ {
 		from : config.min,
-		to   : config.max + range * 0.1,
+		to   : config.min + range * 0.1,
 	} ];
 
 	log('[gauge_create_reverse] ' + name);
@@ -87,8 +87,8 @@ function init_dash() {
 
 	gauge_create('temperature-exterior-c', 'EXT °C', -30, 50);
 
-	gauge_create('gpio-relay_0', 'GPIO 1', 0, 1);
-	gauge_create('gpio-relay_1', 'GPIO 2', 0, 1);
+	gauge_create('gpio-relay_0', 'AMP', 0, 1);
+	gauge_create('gpio-relay_1', 'FAN', 0, 1);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
