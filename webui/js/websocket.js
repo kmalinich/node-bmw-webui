@@ -26,7 +26,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 	let range = config.max - config.min;
 
 	config.yellowZones = [ {
-		from : config.min + range * 0.75,
+		from : config.min + range * 0.8,
 		to   : config.min + range * 0.9,
 	} ];
 
@@ -40,6 +40,40 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 	gauges[name] = new Gauge(name + '-container', config);
 	gauges[name].render();
 }
+
+// For temperature gauges
+function gauge_create_temp(name, label, min = -30, max = 110, ticks = 10, size = 200) {
+	let config = {
+		size       : size,
+		label      : label,
+		min        : min,
+		max        : max,
+		minorTicks : ticks,
+	};
+
+	let range = config.max - config.min;
+
+	config.blueZones = [ {
+		from : config.min + range * 0.1,
+		to   : config.min + range * 0.2,
+	} ];
+
+	config.yellowZones = [ {
+		from : config.min + range * 0.8,
+		to   : config.min + range * 0.9,
+	} ];
+
+	config.redZones = [ {
+		from : config.min + range * 0.9,
+		to   : config.max,
+	} ];
+
+	log('[gauge_create] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
+
 
 // For gauges where a low value is bad
 function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 200) {
@@ -55,7 +89,7 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 
 	config.yellowZones = [ {
 		from : config.min + range * 0.1,
-		to   : config.min + range * 0.25,
+		to   : config.min + range * 0.2,
 	} ];
 
 	config.redZones = [ {
@@ -78,14 +112,16 @@ function init_dash() {
 	gauge_create('engine-throttle-pedal', 'THRTL %');
 	gauge_create('engine-aux_fan_speed',  'AUXFAN');
 
-	gauge_create('temperature-coolant-c',           'CLNT °C', -30, 110);
-	gauge_create('temperature-oil-c',               'OIL °C',  -30, 110);
+	gauge_create_temp('system-temperature',     'CPU °');
+	gauge_create_temp('temperature-coolant-c',  'CLNT °C');
+	gauge_create_temp('temperature-exterior-c', 'EXT °C');
+	gauge_create_temp('temperature-oil-c',      'OIL °C');
+
 	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI',   8,  16);
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
 
 	gauge_create('engine-torque-output', 'TQOUT %');
 
-	gauge_create('temperature-exterior-c', 'EXT °C', -30, 50);
 
 	gauge_create('gpio-relay_0', 'AMP', 0, 1);
 	gauge_create('gpio-relay_1', 'FAN', 0, 1);
@@ -95,7 +131,7 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
 
-	gauge_create_reverse('obc-average_speed-mph',  'AVG MPH');
+	gauge_create_reverse('obc-average_speed-mph',  'AVG MPH',  0, 85);
 	gauge_create_reverse('obc-consumption-c1-mpg', 'CON1 MPG', 0, 35);
 	gauge_create_reverse('obc-range-mi',           'RNG MI',   0, 500);
 	gauge_create_reverse('fuel-level',             'FUEL %',   0, 100, 2);
@@ -108,7 +144,6 @@ function init_dash() {
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
 	gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
-	gauge_create('system-temperature',  'CPU °',  20, 85);
 }
 
 function log(msg) {

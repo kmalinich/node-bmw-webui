@@ -19,9 +19,11 @@ function Gauge(placeholderName, configuration) {
 		this.config.majorTicks = configuration.majorTicks || 5;
 		this.config.minorTicks = configuration.minorTicks || 2;
 
-		this.config.greenColor  = configuration.greenColor  || '#109618';
-		this.config.yellowColor = configuration.yellowColor || '#FF9900';
-		this.config.redColor    = configuration.redColor    || '#DC3912';
+		this.config.blueColor   = configuration.blueColor   || '#3498db';
+		this.config.greenColor  = configuration.greenColor  || '#2ecc71';
+		this.config.yellowColor = configuration.yellowColor || '#f1c40f';
+		this.config.orangeColor = configuration.orangeColor || '#e67e22';
+		this.config.redColor    = configuration.redColor    || '#e74c3c';
 
 		this.config.transitionDuration = configuration.transitionDuration || 500;
 	};
@@ -49,12 +51,20 @@ function Gauge(placeholderName, configuration) {
 			.style('stroke', '#111')
 			.style('stroke-width', '0.5px');
 
+		for (var index_blue in this.config.blueZones) {
+			this.drawBand(this.config.blueZones[index_blue].from, this.config.blueZones[index_blue].to, self.config.blueColor);
+		}
+
 		for (var index_green in this.config.greenZones) {
 			this.drawBand(this.config.greenZones[index_green].from, this.config.greenZones[index_green].to, self.config.greenColor);
 		}
 
 		for (var index_yellow in this.config.yellowZones) {
 			this.drawBand(this.config.yellowZones[index_yellow].from, this.config.yellowZones[index_yellow].to, self.config.yellowColor);
+		}
+
+		for (var index_orange in this.config.orangeZones) {
+			this.drawBand(this.config.orangeZones[index_orange].from, this.config.orangeZones[index_orange].to, self.config.orangeColor);
 		}
 
 		for (var index_red in this.config.redZones) {
