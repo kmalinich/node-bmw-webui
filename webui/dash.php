@@ -15,6 +15,7 @@
 			-->
 			<span id="engine-throttle-pedal-container"></span>
 			<span id="temperature-coolant-c-container"></span>
+			<span id="temperature-oil-c-container"></span>
 			<span id="engine-atmospheric_pressure-psi-container"></span>
 			<span id="lcm-voltage-terminal_30-container"></span>
 			<span id="engine-torque-output-container"></span>
@@ -35,8 +36,8 @@
 			<span id="system-cpu-speed-container"></span>
 			<span id="system-cpu-load_pct-container"></span>
 			<span id="system-temperature-container"></span>
+			<span id="gpio-relay_0-container"></span>
 			<span id="gpio-relay_1-container"></span>
-			<span id="gpio-relay_2-container"></span>
 			<hr>
 
 			<i class="material-icons position-absolute">toll</i>

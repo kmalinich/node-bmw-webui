@@ -54,13 +54,13 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 	let range = config.max - config.min;
 
 	config.yellowZones = [ {
-		from : config.max - range * 0.75,
-		to   : config.max - range * 0.9,
+		from : config.min + range * 0.1,
+		to   : config.min + range * 0.25,
 	} ];
 
 	config.redZones = [ {
-		from : config.max - range * 0.9,
-		to   : config.min,
+		from : config.min,
+		to   : config.max + range * 0.1,
 	} ];
 
 	log('[gauge_create_reverse] ' + name);
@@ -78,16 +78,17 @@ function init_dash() {
 	gauge_create('engine-throttle-pedal', 'THRTL %');
 	gauge_create('engine-aux_fan_speed',  'AUXFAN');
 
-	gauge_create('temperature-coolant-c',           'CLNT °C', 0, 110);
-	gauge_create('engine-atmospheric_pressure-psi', 'PSI',     8,  16);
-	gauge_create('lcm-voltage-terminal_30',         'BATT V',  8,  16);
+	gauge_create('temperature-coolant-c',           'CLNT °C', -30, 110);
+	gauge_create('temperature-oil-c',               'OIL °C',  -30, 110);
+	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI',   8,  16);
+	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
 
 	gauge_create('engine-torque-output', 'TQOUT %');
 
 	gauge_create('temperature-exterior-c', 'EXT °C', -30, 50);
 
-	gauge_create('gpio-relay_1', 'GPIO 1', 0, 1);
-	gauge_create('gpio-relay_2', 'GPIO 2', 0, 1);
+	gauge_create('gpio-relay_0', 'GPIO 1', 0, 1);
+	gauge_create('gpio-relay_1', 'GPIO 2', 0, 1);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
@@ -147,8 +148,8 @@ function on_status_tx(data) {
 		}
 
 		case 'gpio' : {
-			gauges['gpio-relay_1'].redraw(v_full.relay_1);
-			gauges['gpio-relay_2'].redraw(v_full.relay_2);
+			gauges['gpio-relay_0'].redraw(parseInt((v_full.relay_0 === true && 1 || 0)));
+			gauges['gpio-relay_1'].redraw(parseInt((v_full.relay_1 === true && 1 || 0)));
 			break;
 		}
 
@@ -174,6 +175,7 @@ function on_status_tx(data) {
 		case 'temperature' : {
 			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
+			gauges['temperature-oil-c'].redraw(v_full.oil.c);
 			break;
 		}
 
