@@ -42,7 +42,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 }
 
 // For temperature gauges
-function gauge_create_temp(name, label, min = -30, max = 110, ticks = 10, size = 200) {
+function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = 200) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -59,7 +59,7 @@ function gauge_create_temp(name, label, min = -30, max = 110, ticks = 10, size =
 	} ];
 
 	config.yellowZones = [ {
-		from : config.min + range * 0.8,
+		from : config.min + range * 0.9,
 		to   : config.min + range * 0.95,
 	} ];
 
