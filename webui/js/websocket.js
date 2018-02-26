@@ -76,7 +76,7 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size =
 
 
 // For gauges where a low value is bad
-function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 200) {
+function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 225) {
 	let config = {
 		size       : size,
 		label      : label,
