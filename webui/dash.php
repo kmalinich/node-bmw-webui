@@ -9,7 +9,7 @@
 		<div class="container-fluid">
 
 			<!-- Engine data -->
-			<i class="material-icons position-absolute">power_settings_new</i>
+			<i class="material-icons position-absolute">track_changes</i>
 			<span id="engine-speed-container"></span>
 			<span id="engine-torque-output-container"></span>
 			<span id="engine-throttle-pedal-container"></span>
@@ -19,9 +19,12 @@
 			<hr>
 
 			<!-- Ignition/voltage/etc -->
-			<span id="vehicle-ignition_level-container"></span>
+			<i class="material-icons position-absolute">power_settings_new</i>
 			<span id="lcm-voltage-terminal_30-container"></span>
+			<span id="vehicle-ignition_level-container"></span>
 			<span id="engine-aux_fan_speed-container"></span>
+			<span id="gpio-relay_0-container"></span>
+			<span id="gpio-relay_1-container"></span>
 
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
@@ -34,11 +37,11 @@
 
 			<!-- RPi system stats -->
 			<i class="material-icons position-absolute">hot_tub</i>
+			<!--
 			<span id="system-cpu-speed-container"></span>
+			-->
 			<span id="system-cpu-load_pct-container"></span>
 			<span id="system-temperature-container"></span>
-			<span id="gpio-relay_0-container"></span>
-			<span id="gpio-relay_1-container"></span>
 			<hr>
 
 			<i class="material-icons position-absolute">toll</i>

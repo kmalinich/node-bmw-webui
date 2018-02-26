@@ -121,9 +121,9 @@ function init_dash() {
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
 	gauge_create('engine-aux_fan_speed',            'AUXFAN');
 
-	gauge_create('vehicle-ignition_level', 'IGN', 0, 3);
-	gauge_create('gpio-relay_0',           'AMP', 0, 1);
-	gauge_create('gpio-relay_1',           'FAN', 0, 1);
+	gauge_create('vehicle-ignition_level', 'IGN', 0, 3, 1);
+	gauge_create('gpio-relay_0',           'AMP', 0, 1, 1);
+	gauge_create('gpio-relay_1',           'FAN', 0, 1, 1);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
@@ -142,7 +142,7 @@ function init_dash() {
 	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
-	gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
+	// gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
 }
 
 function log(msg) {
@@ -201,7 +201,7 @@ function on_status_tx(data) {
 
 		case 'system' : {
 			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
-			gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
+			// gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
 			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
