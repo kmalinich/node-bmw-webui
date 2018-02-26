@@ -13,9 +13,15 @@
 			<span id="engine-speed-container"></span>
 			<span id="engine-torque-output-container"></span>
 			<span id="engine-throttle-pedal-container"></span>
+			<hr>
+
+			<!-- Temperatures -->
+			<i class="material-icons position-absolute">hot_tub</i>
 			<span id="temperature-coolant-c-container"></span>
 			<span id="temperature-oil-c-container"></span>
+			<span id="temperature-exterior-c-container"></span>
 			<span id="engine-atmospheric_pressure-psi-container"></span>
+			<span id="system-temperature-container"></span>
 			<hr>
 
 			<!-- Ignition/voltage/etc -->
@@ -29,9 +35,9 @@
 
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
-			<span id="temperature-exterior-c-container"></span>
 			<span id="obc-average_speed-mph-container"></span>
 			<span id="obc-consumption-c1-mpg-container"></span>
+			<span id="obc-consumption-c2-mpg-container"></span>
 			<span id="obc-range-mi-container"></span>
 			<span id="fuel-level-container"></span>
 			<hr>
@@ -42,7 +48,6 @@
 			<span id="system-cpu-speed-container"></span>
 			-->
 			<span id="system-cpu-load_pct-container"></span>
-			<span id="system-temperature-container"></span>
 			<hr>
 
 			<i class="material-icons position-absolute">toll</i>

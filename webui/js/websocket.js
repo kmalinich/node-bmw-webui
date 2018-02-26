@@ -116,20 +116,21 @@ function init_dash() {
 	gauge_create_temp('temperature-exterior-c', 'Atm °C');
 	gauge_create_temp('temperature-oil-c',      'Oil °C');
 
-	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  5, 20);
+	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  5,  20);
 	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5);
-	gauge_create('gpio-relay_0',                    'AMP',      0, 1,   1);
-	gauge_create('gpio-relay_1',                    'Pi fan',   0, 1,   1);
-	gauge_create('lcm-voltage-terminal_30',         'Batt V',   8, 16);
-	gauge_create('vehicle-ignition_level',          'Ignition', 0, 7,   2);
+	gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
+	gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
+	gauge_create('lcm-voltage-terminal_30',         'Batt V',   8,  16);
+	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
 
-	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0, 85);
-	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0, 35);
+	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
+	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
+	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
 	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
 	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
 
@@ -193,6 +194,7 @@ function on_status_tx(data) {
 		case 'obc' : {
 			gauges['obc-average_speed-mph'].redraw(v_full.average_speed.mph);
 			gauges['obc-consumption-c1-mpg'].redraw(v_full.consumption.c1.mpg);
+			gauges['obc-consumption-c2-mpg'].redraw(v_full.consumption.c2.mpg);
 			gauges['obc-range-mi'].redraw(v_full.range.mi);
 			break;
 		}
