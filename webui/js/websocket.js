@@ -115,7 +115,7 @@ function init_dash() {
 	gauge_create('engine-torque-before_interventions', 'Before %');
 	gauge_create('engine-torque-after_interventions',  'After %');
 	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %');
-	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %');
+	gauge_create('vehicle-dsc-torque_reduction_2',     'R2 %');
 
 	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
@@ -215,7 +215,7 @@ function on_status_tx(data) {
 		case 'temperature' : {
 			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
-			gauges['temperature-oil-c'].redraw(v_full.oil.c);
+			gauges['temperature-oil-c'].redraw(Math.round(v_full.oil.c));
 			break;
 		}
 
