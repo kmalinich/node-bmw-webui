@@ -25,6 +25,7 @@
 			<span id="engine-aux_fan_speed-container"></span>
 			<span id="gpio-relay_0-container"></span>
 			<span id="gpio-relay_1-container"></span>
+			<hr>
 
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
