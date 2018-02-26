@@ -107,23 +107,21 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('engine-speed', 'RPM', 0, 7000, 5);
-
-	gauge_create('engine-torque-output', 'TQOUT %');
+	gauge_create('engine-speed',          'RPM', 0, 7000, 5);
 	gauge_create('engine-throttle-pedal', 'THRTL %');
+	gauge_create('engine-torque-output',  'TQOUT %');
 
 	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'CLNT °C');
 	gauge_create_temp('temperature-exterior-c', 'EXT °C');
 	gauge_create_temp('temperature-oil-c',      'OIL °C');
 
-	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI',   8,  16);
-	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
-	gauge_create('engine-aux_fan_speed',            'AUXFAN');
-
-	gauge_create('vehicle-ignition_level', 'IGN', 0, 7, 1);
-	gauge_create('gpio-relay_0',           'AMP', 0, 1, 0);
-	gauge_create('gpio-relay_1',           'FAN', 0, 1, 1);
+	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI', 5, 20);
+	gauge_create('engine-aux_fan_speed',            'AUXFAN',  0, 100, 5);
+	gauge_create('gpio-relay_0',                    'AMP',     0, 1,   1);
+	gauge_create('gpio-relay_1',                    'FAN',     0, 1,   1);
+	gauge_create('lcm-voltage-terminal_30',         'BATT V',  8, 16);
+	gauge_create('vehicle-ignition_level',          'IGN',     0, 7,   2);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);

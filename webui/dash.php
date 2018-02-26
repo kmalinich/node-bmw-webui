@@ -22,9 +22,9 @@
 			<i class="material-icons position-absolute">power_settings_new</i>
 			<span id="lcm-voltage-terminal_30-container"></span>
 			<span id="vehicle-ignition_level-container"></span>
-			<span id="engine-aux_fan_speed-container"></span>
 			<span id="gpio-relay_0-container"></span>
 			<span id="gpio-relay_1-container"></span>
+			<span id="engine-aux_fan_speed-container"></span>
 			<hr>
 
 			<!-- OBC data -->
