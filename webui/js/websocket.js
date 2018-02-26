@@ -14,7 +14,7 @@ function debug_toggle() {
 }
 
 // For gauges where a high value is bad
-function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 225) {
+function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 240) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -42,7 +42,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 225) {
 }
 
 // For temperature gauges
-function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = 225) {
+function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = 240) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -76,7 +76,7 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size =
 
 
 // For gauges where a low value is bad
-function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 225) {
+function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 240) {
 	let config = {
 		size       : size,
 		label      : label,
