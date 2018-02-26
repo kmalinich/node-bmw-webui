@@ -10,9 +10,7 @@
 
 			<!-- Engine data -->
 			<i class="material-icons position-absolute">power_settings_new</i>
-			<!--
 			<span id="engine-speed-container"></span>
-			-->
 			<span id="engine-throttle-pedal-container"></span>
 			<span id="temperature-coolant-c-container"></span>
 			<span id="temperature-oil-c-container"></span>
