@@ -119,10 +119,11 @@ function init_dash() {
 
 	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI',   8,  16);
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
-	gauge_create('engine-aux_fan_speed',  'AUXFAN');
+	gauge_create('engine-aux_fan_speed',            'AUXFAN');
 
-	gauge_create('gpio-relay_0', 'AMP', 0, 1);
-	gauge_create('gpio-relay_1', 'FAN', 0, 1);
+	gauge_create('vehicle-ignition_level', 'IGN', 0, 3);
+	gauge_create('gpio-relay_0',           'AMP', 0, 1);
+	gauge_create('gpio-relay_1',           'FAN', 0, 1);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);

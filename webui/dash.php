@@ -16,9 +16,12 @@
 			<span id="temperature-coolant-c-container"></span>
 			<span id="temperature-oil-c-container"></span>
 			<span id="engine-atmospheric_pressure-psi-container"></span>
+			<hr>
+
+			<!-- Ignition/voltage/etc -->
+			<span id="vehicle-ignition_level-container"></span>
 			<span id="lcm-voltage-terminal_30-container"></span>
 			<span id="engine-aux_fan_speed-container"></span>
-			<hr>
 
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
