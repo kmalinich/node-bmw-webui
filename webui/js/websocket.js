@@ -109,19 +109,17 @@ function init_dash() {
 
 	gauge_create('engine-speed', 'RPM', 0, 7000, 5);
 
+	gauge_create('engine-torque-output', 'TQOUT %');
 	gauge_create('engine-throttle-pedal', 'THRTL %');
-	gauge_create('engine-aux_fan_speed',  'AUXFAN');
 
-	gauge_create_temp('system-temperature',     'CPU °');
+	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'CLNT °C');
 	gauge_create_temp('temperature-exterior-c', 'EXT °C');
 	gauge_create_temp('temperature-oil-c',      'OIL °C');
 
 	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI',   8,  16);
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
-
-	gauge_create('engine-torque-output', 'TQOUT %');
-
+	gauge_create('engine-aux_fan_speed',  'AUXFAN');
 
 	gauge_create('gpio-relay_0', 'AMP', 0, 1);
 	gauge_create('gpio-relay_1', 'FAN', 0, 1);

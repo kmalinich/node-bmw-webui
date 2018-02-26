@@ -11,12 +11,12 @@
 			<!-- Engine data -->
 			<i class="material-icons position-absolute">power_settings_new</i>
 			<span id="engine-speed-container"></span>
+			<span id="engine-torque-output-container"></span>
 			<span id="engine-throttle-pedal-container"></span>
 			<span id="temperature-coolant-c-container"></span>
 			<span id="temperature-oil-c-container"></span>
 			<span id="engine-atmospheric_pressure-psi-container"></span>
 			<span id="lcm-voltage-terminal_30-container"></span>
-			<span id="engine-torque-output-container"></span>
 			<span id="engine-aux_fan_speed-container"></span>
 			<hr>
 
