@@ -121,8 +121,8 @@ function init_dash() {
 	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
 	gauge_create('engine-aux_fan_speed',            'AUXFAN');
 
-	gauge_create('vehicle-ignition_level', 'IGN', 0, 3, 1);
-	gauge_create('gpio-relay_0',           'AMP', 0, 1, 1);
+	gauge_create('vehicle-ignition_level', 'IGN', 0, 7, 1);
+	gauge_create('gpio-relay_0',           'AMP', 0, 1, 0);
 	gauge_create('gpio-relay_1',           'FAN', 0, 1, 1);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
