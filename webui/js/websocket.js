@@ -110,13 +110,12 @@ function init_dash() {
 	gauge_create('engine-speed',          'RPM', 0, 7000, 5);
 	gauge_create('engine-throttle-pedal', 'Thrtl %');
 
-	gauge_create('engine-torque-output',               'Torq O %');
-	gauge_create('engine-torque-loss',                 'Torq L %');
-	gauge_create('engine-torque-before_interventions', 'Torq B %');
-	gauge_create('engine-torque-after_interventions',  'Torq A %');
-
-	gauge_create('vehicle-dsc-torque_reduction_1', 'Torq R1 %');
-	gauge_create('vehicle-dsc-torque_reduction_2', 'Torq R2 %');
+	gauge_create('engine-torque-output',               'Out %');
+	gauge_create('engine-torque-loss',                 'Loss %');
+	gauge_create('engine-torque-before_interventions', 'Before %');
+	gauge_create('engine-torque-after_interventions',  'After %');
+	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %');
+	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %');
 
 	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');

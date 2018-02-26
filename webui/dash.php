@@ -7,11 +7,14 @@
 	<body>
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
+			<!-- Misc -->
+			<i class="material-icons position-absolute">toll</i>
+			<span id="engine-speed-container"></span>
+			<span id="engine-throttle-pedal-container"></span>
+			<hr>
 
 			<!-- Engine data -->
 			<i class="material-icons position-absolute">track_changes</i>
-			<span id="engine-speed-container"></span>
-			<span id="engine-throttle-pedal-container"></span>
 			<span id="engine-torque-output-container"></span>
 			<span id="engine-torque-loss-container"></span>
 			<span id="engine-torque-before_interventions-container"></span>
@@ -30,7 +33,7 @@
 			<span id="system-temperature-container"></span>
 			<hr>
 
-			<!-- Ignition/voltage/etc -->
+			<!-- Ignition/power/voltage/etc -->
 			<i class="material-icons position-absolute">power_settings_new</i>
 			<span id="lcm-voltage-terminal_30-container"></span>
 			<span id="vehicle-ignition_level-container"></span>
@@ -48,8 +51,8 @@
 			<span id="obc-average_speed-mph-container"></span>
 			<span id="obc-consumption-c1-mpg-container"></span>
 			<span id="obc-consumption-c2-mpg-container"></span>
-			<span id="obc-range-mi-container"></span>
 			<span id="fuel-level-container"></span>
+			<span id="obc-range-mi-container"></span>
 			<hr>
 
 			<i class="material-icons position-absolute">toll</i>
