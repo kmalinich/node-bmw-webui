@@ -170,7 +170,7 @@ function on_status_tx(data) {
 		case 'engine' : {
 			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
 			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
-			// gauges['engine-speed'].redraw(v_full.speed);
+			gauges['engine-speed'].redraw(v_full.speed);
 			gauges['engine-throttle-pedal'].redraw(v_full.throttle.pedal);
 			gauges['engine-torque-output'].redraw(v_full.torque.output);
 			break;
@@ -216,6 +216,8 @@ function on_status_tx(data) {
 		case 'vehicle' : {
 			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
 			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
+
+			gauges['vehicle-ignition_level'].redraw(v_full.ignition_level);
 
 			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
 			gauges['vehicle-steering-velocity'].redraw(v_full.steering.velocity);
