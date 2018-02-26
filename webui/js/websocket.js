@@ -115,6 +115,9 @@ function init_dash() {
 	gauge_create('engine-torque-before_interventions', 'Torq B %');
 	gauge_create('engine-torque-after_interventions',  'Torq A %');
 
+	gauge_create('vehicle-dsc-torque_reduction_1', 'Torq R1 %');
+	gauge_create('vehicle-dsc-torque_reduction_2', 'Torq R2 %');
+
 	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
 	gauge_create_temp('temperature-exterior-c', 'Atm °C');
@@ -137,9 +140,6 @@ function init_dash() {
 	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
 	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
 	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
-
-	gauge_create('vehicle-dsc-torque_reduction_1', 'TQ RD1 %');
-	gauge_create('vehicle-dsc-torque_reduction_2', 'TQ RD2 %');
 
 	gauge_create('vehicle-steering-angle',    'STR °', -675, 675, 5);
 	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);

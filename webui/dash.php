@@ -16,6 +16,9 @@
 			<span id="engine-torque-loss-container"></span>
 			<span id="engine-torque-before_interventions-container"></span>
 			<span id="engine-torque-after_interventions-container"></span>
+			<!-- DSC data -->
+			<span id="vehicle-dsc-torque_reduction_1-container"></span>
+			<span id="vehicle-dsc-torque_reduction_2-container"></span>
 			<hr>
 
 			<!-- Temperatures -->
@@ -50,9 +53,6 @@
 			<hr>
 
 			<i class="material-icons position-absolute">toll</i>
-			<!-- DSC data -->
-			<span id="vehicle-dsc-torque_reduction_1-container"></span>
-			<span id="vehicle-dsc-torque_reduction_2-container"></span>
 			<!-- Wheel speeds -->
 			<span id="vehicle-wheel_speed-front-left-container"></span>
 			<span id="vehicle-wheel_speed-front-right-container"></span>
