@@ -11,8 +11,11 @@
 			<!-- Engine data -->
 			<i class="material-icons position-absolute">track_changes</i>
 			<span id="engine-speed-container"></span>
-			<span id="engine-torque-output-container"></span>
 			<span id="engine-throttle-pedal-container"></span>
+			<span id="engine-torque-output-container"></span>
+			<span id="engine-torque-loss-container"></span>
+			<span id="engine-torque-before_interventions-container"></span>
+			<span id="engine-torque-after_interventions-container"></span>
 			<hr>
 
 			<!-- Temperatures -->
@@ -35,19 +38,15 @@
 
 			<!-- OBC data -->
 			<i class="material-icons position-absolute">computer</i>
+			<span id="system-cpu-load_pct-container"></span>
+			<!--
+			<span id="system-cpu-speed-container"></span>
+			-->
 			<span id="obc-average_speed-mph-container"></span>
 			<span id="obc-consumption-c1-mpg-container"></span>
 			<span id="obc-consumption-c2-mpg-container"></span>
 			<span id="obc-range-mi-container"></span>
 			<span id="fuel-level-container"></span>
-			<hr>
-
-			<!-- RPi system stats -->
-			<i class="material-icons position-absolute">hot_tub</i>
-			<!--
-			<span id="system-cpu-speed-container"></span>
-			-->
-			<span id="system-cpu-load_pct-container"></span>
 			<hr>
 
 			<i class="material-icons position-absolute">toll</i>
