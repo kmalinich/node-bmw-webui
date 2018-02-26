@@ -107,8 +107,8 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('engine-speed',          'RPM',     0, 7000, 5, 350);
-	gauge_create('engine-throttle-pedal', 'Thrtl %', 0, 100,  5, 350);
+	gauge_create('engine-speed',          'RPM',     0, 7000, 5, 360);
+	gauge_create('engine-throttle-pedal', 'Thrtl %', 0, 100,  5, 360);
 
 	gauge_create('engine-torque-output',               'Out %');
 	gauge_create('engine-torque-loss',                 'Loss %');
