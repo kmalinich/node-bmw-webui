@@ -4,13 +4,13 @@
 		"url": "https://github.com/kmalinich/node-bmw-webui/issues"
 	},
 	"dependencies": {
-		"bootstrap-material-design": "^4.0.0-beta.4",
-		"d3": "^4.12.2",
+		"bootstrap-material-design": "^4.1.1",
+		"d3": "^4.13.0",
 		"datatables": "^1.10.13",
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
-		"moment": "^2.20.1",
-		"nouislider": "^10.1.0",
+		"moment": "^2.21.0",
+		"nouislider": "^11.0.3",
 		"popper.js": "^1.12.9",
 		"socket.io-client": "^2.0.4"
 	},
