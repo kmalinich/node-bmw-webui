@@ -14,7 +14,7 @@ function debug_toggle() {
 }
 
 // For gauges where a high value is bad
-function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
+function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 238) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -42,7 +42,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 200) {
 }
 
 // For temperature gauges
-function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = 200) {
+function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = 238) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -76,7 +76,7 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size =
 
 
 // For gauges where a low value is bad
-function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 200) {
+function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 238) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -107,43 +107,44 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	// gauge_create('engine-speed',                    'RPM', 0, 7000, 5);
-	//
-	gauge_create('engine-throttle-pedal', 'THRTL %');
-	gauge_create('engine-aux_fan_speed',  'AUXFAN');
+	gauge_create('engine-speed',          'RPM',     0, 7000, 5, 361);
+	gauge_create('engine-throttle-pedal', 'Thrtl %', 0, 100,  5, 361);
 
-	gauge_create_temp('system-temperature',     'CPU °');
-	gauge_create_temp('temperature-coolant-c',  'CLNT °C');
-	gauge_create_temp('temperature-exterior-c', 'EXT °C');
-	gauge_create_temp('temperature-oil-c',      'OIL °C');
+	gauge_create('engine-torque-output',               'Out %');
+	gauge_create('engine-torque-loss',                 'Loss %');
+	gauge_create('engine-torque-before_interventions', 'Before %');
+	gauge_create('engine-torque-after_interventions',  'After %');
+	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %');
+	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %');
 
-	gauge_create('engine-atmospheric_pressure-psi', 'ATM PSI',   8,  16);
-	gauge_create('lcm-voltage-terminal_30',         'BATT V',    8,  16);
+	gauge_create_temp('system-temperature',     'CPU °C');
+	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
+	gauge_create_temp('temperature-exterior-c', 'Atm °C');
+	gauge_create_temp('temperature-oil-c',      'Oil °C');
 
-	gauge_create('engine-torque-output', 'TQOUT %');
-
-
-	gauge_create('gpio-relay_0', 'AMP', 0, 1);
-	gauge_create('gpio-relay_1', 'FAN', 0, 1);
+	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  5,  20);
+	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5);
+	gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
+	gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
+	gauge_create('lcm-voltage-terminal_30',         'Batt V',   8,  16, 5);
+	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240);
 
-	gauge_create_reverse('obc-average_speed-mph',  'AVG MPH',  0, 85);
-	gauge_create_reverse('obc-consumption-c1-mpg', 'CON1 MPG', 0, 35);
-	gauge_create_reverse('obc-range-mi',           'RNG MI',   0, 500);
-	gauge_create_reverse('fuel-level',             'FUEL %',   0, 100, 2);
-
-	gauge_create('vehicle-dsc-torque_reduction_1', 'TQ RD1 %');
-	gauge_create('vehicle-dsc-torque_reduction_2', 'TQ RD2 %');
+	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
+	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
+	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
+	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
+	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
 
 	gauge_create('vehicle-steering-angle',    'STR °', -675, 675, 5);
 	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
-	gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
+	// gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
 }
 
 function log(msg) {
@@ -171,8 +172,11 @@ function on_status_tx(data) {
 		case 'engine' : {
 			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
 			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
-			// gauges['engine-speed'].redraw(v_full.speed);
+			gauges['engine-speed'].redraw(v_full.speed);
 			gauges['engine-throttle-pedal'].redraw(v_full.throttle.pedal);
+			gauges['engine-torque-after_interventions'].redraw(v_full.torque.after_interventions);
+			gauges['engine-torque-before_interventions'].redraw(v_full.torque.before_interventions);
+			gauges['engine-torque-loss'].redraw(v_full.torque.loss);
 			gauges['engine-torque-output'].redraw(v_full.torque.output);
 			break;
 		}
@@ -196,13 +200,14 @@ function on_status_tx(data) {
 		case 'obc' : {
 			gauges['obc-average_speed-mph'].redraw(v_full.average_speed.mph);
 			gauges['obc-consumption-c1-mpg'].redraw(v_full.consumption.c1.mpg);
+			gauges['obc-consumption-c2-mpg'].redraw(v_full.consumption.c2.mpg);
 			gauges['obc-range-mi'].redraw(v_full.range.mi);
 			break;
 		}
 
 		case 'system' : {
 			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
-			gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
+			// gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
 			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
@@ -210,13 +215,15 @@ function on_status_tx(data) {
 		case 'temperature' : {
 			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
-			gauges['temperature-oil-c'].redraw(v_full.oil.c);
+			gauges['temperature-oil-c'].redraw(Math.round(v_full.oil.c));
 			break;
 		}
 
 		case 'vehicle' : {
 			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
 			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
+
+			gauges['vehicle-ignition_level'].redraw(v_full.ignition_level);
 
 			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
 			gauges['vehicle-steering-velocity'].redraw(v_full.steering.velocity);
