@@ -187,8 +187,8 @@ function on_status_tx(data) {
 		}
 
 		case 'gpio' : {
-			gauges['gpio-relay_0'].redraw(parseInt((v_full.relay_0 === true && 1 || 0)));
-			gauges['gpio-relay_1'].redraw(parseInt((v_full.relay_1 === true && 1 || 0)));
+			gauges['gpio-relay_0'].redraw(v_full.relay_0);
+			gauges['gpio-relay_1'].redraw(v_full.relay_1);
 			break;
 		}
 
