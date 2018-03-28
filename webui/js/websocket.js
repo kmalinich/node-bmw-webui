@@ -13,8 +13,14 @@ function debug_toggle() {
 	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
 }
 
+let gauge_sizes = {
+	small : 256,
+	large : 387,
+};
+
+
 // For gauges where a high value is bad
-function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 238) {
+function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -42,7 +48,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = 238) {
 }
 
 // For temperature gauges
-function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = 238) {
+function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = gauge_sizes.small) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -76,7 +82,7 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size =
 
 
 // For gauges where a low value is bad
-function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = 238) {
+function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
 	let config = {
 		size       : size,
 		label      : label,
@@ -107,8 +113,8 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('engine-speed',          'RPM',     0, 7000, 5, 361);
-	gauge_create('engine-throttle-pedal', 'Thrtl %', 0, 100,  5, 361);
+	gauge_create('engine-speed',          'RPM',     0, 7000, 5, gauge_sizes.large);
+	gauge_create('engine-throttle-pedal', 'Thrtl %', 0, 100,  5, gauge_sizes.large);
 
 	gauge_create('engine-torque-output',               'Out %');
 	gauge_create('engine-torque-loss',                 'Loss %');
