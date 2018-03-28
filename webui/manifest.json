@@ -1,0 +1,31 @@
+{
+	"background_color": "#000",
+	"display": "fullscreen",
+	"icons": [
+		{
+			"sizes": "128x128",
+			"src": "images/bmw-128px.png",
+			"type": "image/png"
+		},
+		{
+			"sizes": "192x192",
+			"src": "images/bmw-192px.png",
+			"type": "image/png"
+		},
+		{
+			"sizes": "256x256",
+			"src": "images/bmw-256px.png",
+			"type": "image/png"
+		},
+		{
+			"sizes": "512x512",
+			"src": "images/bmw-512px.png",
+			"type": "image/png"
+		}
+	],
+	"name": "bmwd webUI",
+	"short_name": "bmwd",
+	"start_url": "/?homescreen=1",
+	"scope": "/",
+	"theme_color": "#000"
+}

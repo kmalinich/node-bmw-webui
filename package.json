@@ -5,13 +5,13 @@
 	},
 	"dependencies": {
 		"bootstrap-material-design": "^4.1.1",
-		"d3": "^4.13.0",
+		"d3": "^5.0.0",
 		"datatables": "^1.10.13",
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
 		"moment": "^2.21.0",
 		"nouislider": "^11.0.3",
-		"popper.js": "^1.12.9",
+		"popper.js": "^1.14.1",
 		"socket.io-client": "^2.0.4"
 	},
 	"description": "node-bmw webUI code",

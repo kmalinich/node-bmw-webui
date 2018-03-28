@@ -2,7 +2,6 @@
 <html lang="en">
 	<head>
 		<?php include './include/head.php'; ?>
-		<?php include './include/css.php'; ?>
 	</head>
 	<body onload="javascript:status();">
 		<?php include './include/navbar.php'; ?>

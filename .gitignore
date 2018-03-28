@@ -4,6 +4,6 @@
 *.swp
 .DS_Store
 ._*
+/*.sh
 node_modules/
 package-lock.json
-webui/*.html
