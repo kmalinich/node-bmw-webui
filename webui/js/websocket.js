@@ -126,6 +126,7 @@ function init_dash() {
 	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
 	gauge_create_temp('temperature-exterior-c', 'Atm °C');
+	gauge_create_temp('temperature-intake-c',   'Itk °C');
 	gauge_create_temp('temperature-oil-c',      'Oil °C');
 
 	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  5,  20);
@@ -221,6 +222,7 @@ function on_status_tx(data) {
 		case 'temperature' : {
 			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
+			gauges['temperature-intake-c'].redraw(v_full.intake.c);
 			gauges['temperature-oil-c'].redraw(Math.round(v_full.oil.c));
 			break;
 		}

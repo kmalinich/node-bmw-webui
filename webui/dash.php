@@ -27,8 +27,9 @@
 			<!-- Temperatures -->
 			<i class="material-icons position-absolute">hot_tub</i>
 			<span id="temperature-coolant-c-container"></span>
-			<span id="temperature-oil-c-container"></span>
 			<span id="temperature-exterior-c-container"></span>
+			<span id="temperature-intake-c-container"></span>
+			<span id="temperature-oil-c-container"></span>
 			<span id="engine-atmospheric_pressure-psi-container"></span>
 			<span id="system-temperature-container"></span>
 			<hr>
