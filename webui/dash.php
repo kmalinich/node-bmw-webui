@@ -27,6 +27,7 @@
 			<!-- Temperatures -->
 			<i class="material-icons position-absolute">hot_tub</i>
 			<span id="temperature-coolant-c-container"></span>
+			<span id="temperature-exhaust-c-container"></span>
 			<span id="temperature-exterior-c-container"></span>
 			<span id="temperature-intake-c-container"></span>
 			<span id="temperature-oil-c-container"></span>
@@ -36,6 +37,7 @@
 
 			<!-- Ignition/power/voltage/etc -->
 			<i class="material-icons position-absolute">power_settings_new</i>
+			<span id="dme1-voltage-container"></span>
 			<span id="lcm-voltage-terminal_30-container"></span>
 			<span id="vehicle-ignition_level-container"></span>
 			<span id="gpio-relay_0-container"></span>

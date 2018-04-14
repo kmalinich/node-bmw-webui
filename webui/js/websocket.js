@@ -125,15 +125,17 @@ function init_dash() {
 
 	gauge_create_temp('system-temperature',     'CPU °C');
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
+	gauge_create_temp('temperature-exhaust-c',  'EGT °C');
 	gauge_create_temp('temperature-exterior-c', 'Atm °C');
-	gauge_create_temp('temperature-intake-c',   'Itk °C');
+	gauge_create_temp('temperature-intake-c',   'IAT °C');
 	gauge_create_temp('temperature-oil-c',      'Oil °C');
 
 	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  5,  20);
 	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5);
 	gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
 	gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
-	gauge_create('lcm-voltage-terminal_30',         'Batt V',   8,  16, 5);
+	gauge_create('dme1-voltage',                    'DME V',    8,  16, 5);
+	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
 	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240);
