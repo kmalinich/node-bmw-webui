@@ -178,6 +178,11 @@ function on_status_tx(data) {
 
 	// Initial page load data
 	switch (data.key.full) {
+		case 'dme1' : {
+			gauges['dme1-voltage'].redraw(v_full.voltage);
+			break;
+		}
+
 		case 'engine' : {
 			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
 			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
