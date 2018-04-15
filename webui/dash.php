@@ -55,6 +55,7 @@
 			<span id="obc-consumption-c1-mpg-container"></span>
 			<span id="obc-consumption-c2-mpg-container"></span>
 			<span id="fuel-level-container"></span>
+			<span id="fuel-pump-duty-percent-container"></span>
 			<span id="obc-range-mi-container"></span>
 			<hr>
 
