@@ -1,3 +1,5 @@
+/* eslint no-unused-vars : 0 */
+
 function Gauge(placeholderName, configuration) {
 	this.placeholderName = placeholderName;
 
@@ -40,14 +42,14 @@ function Gauge(placeholderName, configuration) {
 			.attr('cy', this.config.cy)
 			.attr('r', 0.95 * this.config.radius)
 			.style('fill', '#646464')
-			.style('stroke', '#000')
+			.style('stroke', '#000000d6')
 			.style('stroke-width', '0.5px');
 
 		this.body.append('svg:circle')
 			.attr('cx', this.config.cx)
 			.attr('cy', this.config.cy)
 			.attr('r', 0.9 * this.config.radius)
-			.style('fill', '#000000')
+			.style('fill', '#000000d6')
 			.style('stroke', '#111')
 			.style('stroke-width', '0.5px');
 
@@ -78,7 +80,7 @@ function Gauge(placeholderName, configuration) {
 		var point2;
 
 		if (undefined != this.config.label) {
-			fontSize = Math.round(this.config.size / 9);
+			fontSize = Math.round(this.config.size / 8.8);
 
 			this.body.append('svg:text')
 				.attr('x', this.config.cx)
@@ -87,7 +89,7 @@ function Gauge(placeholderName, configuration) {
 				.attr('text-anchor', 'middle')
 				.text(this.config.label)
 				.style('font-size', fontSize + 'px')
-				.style('fill', '#FF762E')
+				.style('fill', '#fafafa')
 				.style('stroke-width', '0px');
 		}
 
@@ -106,7 +108,7 @@ function Gauge(placeholderName, configuration) {
 					.attr('y1', point1.y)
 					.attr('x2', point2.x)
 					.attr('y2', point2.y)
-					.style('stroke', '#FF762E')
+					.style('stroke', '#fafafa')
 					.style('stroke-width', '1px');
 			}
 
@@ -118,7 +120,7 @@ function Gauge(placeholderName, configuration) {
 				.attr('y1', point1.y)
 				.attr('x2', point2.x)
 				.attr('y2', point2.y)
-				.style('stroke', '#FF762E')
+				.style('stroke', '#fafafa')
 				.style('stroke-width', '2px');
 
 			if (major == this.config.min || major == this.config.max) {
@@ -131,7 +133,7 @@ function Gauge(placeholderName, configuration) {
 					.attr('text-anchor', major == this.config.min ? 'start' : 'end')
 					.text(major)
 					.style('font-size', fontSize + 'px')
-					.style('fill', '#FF762E')
+					.style('fill', '#fafafa')
 					.style('stroke-width', '0px');
 			}
 		}
@@ -152,8 +154,8 @@ function Gauge(placeholderName, configuration) {
 			.enter()
 			.append('svg:path')
 			.attr('d', pointerLine)
-			.style('fill', '#DC3912')
-			.style('stroke', '#C63310')
+			.style('fill', '#ff57244d')
+			.style('stroke', '#ff572280')
 			.style('fill-opacity', 0.9);
 
 		// pointerContainer.append('svg:circle')
@@ -174,7 +176,7 @@ function Gauge(placeholderName, configuration) {
 			.attr('dy', fontSize / 2)
 			.attr('text-anchor', 'middle')
 			.style('font-size', fontSize + 'px')
-			.style('fill', '#FF762E')
+			.style('fill', '#fafafa')
 			.style('stroke-width', '0px');
 
 		this.redraw(this.config.min, 0);
@@ -225,7 +227,7 @@ function Gauge(placeholderName, configuration) {
 		var pointer = pointerContainer.selectAll('path');
 		pointer.transition()
 			.duration(undefined != transitionDuration ? transitionDuration : this.config.transitionDuration)
-			// .delay(0)
+			.delay(10)
 			// .ease('linear')
 			// .attr('transform', function(d)
 			.attrTween('transform', () => {

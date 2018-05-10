@@ -23,3 +23,14 @@ padding-bottom : 3px;
 .container-fluid {
 	padding-top: 15px;
 }
+
+
+/* Dash page */
+svg.gauge {
+	height: 209px;
+	margin: -6px -8px;
+}
+
+.container-dash {
+	background-color: #000;
+}
