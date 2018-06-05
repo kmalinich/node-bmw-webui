@@ -9,7 +9,7 @@
 		"datatables": "^1.10.13",
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
-		"moment": "^2.22.1",
+		"moment": "^2.22.2",
 		"nouislider": "^11.1.0",
 		"popper.js": "^1.14.3",
 		"socket.io-client": "^2.1.1"
