@@ -10,7 +10,7 @@
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
 		"moment": "^2.22.2",
-		"nouislider": "^11.1.0",
+		"nouislider": "^12.0.0",
 		"popper.js": "^1.14.4",
 		"socket.io-client": "^2.1.1"
 	},
