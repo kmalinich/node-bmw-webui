@@ -6,13 +6,13 @@
 	<body onload="javascript:status();">
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
-				<div class="panel-group">
-					<div class="panel panel-default" id="panel-status-vehicle">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-status-vehicle">Vehicle</a></h4>
+				<div class="card-group">
+					<div class="card card-default" id="card-status-vehicle">
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-status-vehicle">Vehicle</a></h4>
 						</div>
-						<div id="collapse-status-vehicle" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-status-vehicle" class="card-collapse collapse">
+							<div class="card-body">
 							<h4 id="vehicle-ignition" ></h4>
 							<h4 id="engine-running"></h5>
 							<h4 id="vehicle-handbrake"></h4>

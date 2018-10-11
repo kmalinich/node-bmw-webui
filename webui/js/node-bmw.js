@@ -1,16 +1,39 @@
 /* eslint no-console     : 0 */
 /* eslint no-unused-vars : 0 */
 
+
 // Convert integer to hex string
 function i2s(data, prefix = true) {
 	var hexstr;
 	var string;
 
 	hexstr = data.toString(16).toUpperCase();
-	hexstr = hexstr.length === 1 && '0' + hexstr || hexstr;
-	string = prefix === true && '0x' + hexstr || hexstr;
+
+	hexstr = hexstr.length === 1    && '0'  + hexstr || hexstr;
+	string = prefix        === true && '0x' + hexstr || hexstr;
+
 	return string;
 }
+
+const form2json = elements => [].reduce.call(elements, (data, element) => {
+	switch (element.type) {
+		case 'reset'  :
+		case 'submit' : {
+			break;
+		}
+
+		case 'checkbox' : {
+			data[element.name] = element.checked;
+			break;
+		}
+
+		default : {
+			data[element.name] = element.value;
+		}
+	}
+
+	return data;
+}, {});
 
 // Clean all the text strings
 function clean_class_all() {
@@ -146,13 +169,17 @@ function ike_text() {
 
 function form_lcm() {
 	$.ajax({
-		url      : '/api/client/lcm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : $('#form-lcm').serialize(),
-		success  : (return_data) => {
+		contentType : 'application/json',
+		dataType    : 'json',
+
+		data : JSON.stringify(form2json(document.getElementsByName('form-lcm')[0])),
+
+		success : (return_data) => {
 			console.log(return_data);
 		},
+
+		type : 'POST',
+		url  : '/api/client/lcm/io-encode',
 	});
 }
 
