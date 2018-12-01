@@ -39,7 +39,7 @@
 
 			<!-- Ignition/power/voltage/etc -->
 			<i class="material-icons position-absolute">power_settings_new</i>
-			<span class="d3-gauge" id="dme1-voltage-container"></span>
+			<span class="d3-gauge" id="dme-voltage-container"></span>
 			<span class="d3-gauge" id="lcm-voltage-terminal_30-container"></span>
 			<span class="d3-gauge" id="vehicle-ignition_level-container"></span>
 			<span class="d3-gauge" id="gpio-relay_0-container"></span>

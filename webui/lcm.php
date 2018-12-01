@@ -6,21 +6,22 @@
 	<body onload="javascript:prepare_lcm();">
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
-			<form class="form-horizontal" id="form-lcm" action="javascript:form_lcm();">
+			<form class="form-horizontal" name="form-lcm" id="form-lcm" action="javascript:form_lcm();">
 
 				<h4>Dimmer wheel</h4>
-				<div id="slider-lcm-dimmer"></div>
+				<div id="slider-lcm-dimmer" name="dimmer_value_2"></div>
+				<hr>
 
-				<div class="panel-group">
+				<div class="card-group">
 
-					<div class="panel panel-default" id="panel-lcm-front">
+					<div class="card" id="card-lcm-front">
 
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-front">Front</a></h4>
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-front">Front</a></h4>
 						</div>
 
-						<div id="collapse-lcm-front" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-lcm-front" class="card-collapse collapse">
+							<div class="card-body">
 
 								<div class="togglebutton">
 									<label>
@@ -95,14 +96,14 @@
 						</div>
 					</div>
 
-					<div class="panel panel-default" id="panel-lcm-rear">
+					<div class="card" id="card-lcm-rear">
 
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-rear">Rear</a></h4>
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-rear">Rear</a></h4>
 						</div>
 
-						<div id="collapse-lcm-rear" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-lcm-rear" class="card-collapse collapse">
+							<div class="card-body">
 
 								<div class="togglebutton">
 									<label>
@@ -198,13 +199,13 @@
 						</div>
 					</div>
 
-					<div class="panel panel-default" id="panel-lcm-led">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-led">LEDs</a></h4>
+					<div class="card" id="card-lcm-led">
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-led">LEDs</a></h4>
 						</div>
 
-						<div id="collapse-lcm-led" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-lcm-led" class="card-collapse collapse">
+							<div class="card-body">
 
 								<div class="togglebutton">
 									<label>
@@ -223,13 +224,19 @@
 							</div>
 						</div>
 					</div>
+				</div>
 
-					<div class="panel panel-default" id="panel-lcm-clamps">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-clamps">Clamps</a></h4>
+				<hr>
+
+				<div class="card-group">
+
+					<div class="card" id="card-lcm-clamps">
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-clamps">Clamps</a></h4>
 						</div>
-						<div id="collapse-lcm-clamps" class="panel-collapse collapse">
-							<div class="panel-body">
+
+						<div id="collapse-lcm-clamps" class="card-collapse collapse">
+							<div class="card-body">
 								<div class="togglebutton">
 									<label>
 										<input type="checkbox" id="clamp_15" name="clamp_15"/>
@@ -258,12 +265,12 @@
 						</div>
 					</div>
 
-					<div class="panel panel-default" id="panel-lcm-modes">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-modes">Modes</a></h4>
+					<div class="card" id="card-lcm-modes">
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-modes">Modes</a></h4>
 						</div>
-						<div id="collapse-lcm-modes" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-lcm-modes" class="card-collapse collapse">
+							<div class="card-body">
 								<div class="togglebutton">
 									<label>
 										<input type="checkbox" id="mode_failsafe" name="mode_failsafe"/>
@@ -280,12 +287,12 @@
 						</div>
 					</div>
 
-					<div class="panel panel-default" id="panel-lcm-inputs">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-inputs">Inputs</a></h4>
+					<div class="card" id="card-lcm-inputs">
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-inputs">Inputs</a></h4>
 						</div>
-						<div id="collapse-lcm-inputs" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-lcm-inputs" class="card-collapse collapse">
+							<div class="card-body">
 								<div class="togglebutton">
 									<label>
 										<input type="checkbox" id="input_air_suspension" name="input_air_suspension"/>
@@ -374,12 +381,12 @@
 						</div>
 					</div>
 
-					<div class="panel panel-default" id="panel-lcm-switches">
-						<div class="panel-heading">
-							<h4 class="panel-title text-center"><a data-toggle="collapse" href="#collapse-lcm-switches">Switches</a></h4>
+					<div class="card" id="card-lcm-switches">
+						<div class="card-heading">
+							<h4 class="card-title text-center"><a data-toggle="collapse" href="#collapse-lcm-switches">Switches</a></h4>
 						</div>
-						<div id="collapse-lcm-switches" class="panel-collapse collapse">
-							<div class="panel-body">
+						<div id="collapse-lcm-switches" class="card-collapse collapse">
+							<div class="card-body">
 								<div class="togglebutton">
 									<label>
 										<input type="checkbox" id="switch_brake" name="switch_brake"/>
@@ -450,6 +457,8 @@
 						</div>
 					</div>
 				</div>
+
+				<hr>
 
 				<button class="btn btn-raised btn-lg btn-primary btn-block" id="form-lcm-submit" type="submit">Send</button>
 				<button class="btn btn-raised btn-lg btn-danger btn-block" id="form-lcm-reset" type="reset">Reset</button>

@@ -135,7 +135,7 @@ function init_dash() {
 	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5);
 	gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
 	gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
-	gauge_create('dme1-voltage',                    'DME V',    8,  16, 5);
+	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
 	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
 	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
 
@@ -180,8 +180,8 @@ function on_status_tx(data) {
 
 	// Initial page load data
 	switch (data.key.full) {
-		case 'dme1' : {
-			gauges['dme1-voltage'].redraw(v_full.voltage);
+		case 'dme' : {
+			gauges['dme-voltage'].redraw(v_full.voltage);
 			break;
 		}
 
