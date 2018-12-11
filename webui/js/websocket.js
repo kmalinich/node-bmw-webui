@@ -14,9 +14,9 @@ function debug_toggle() {
 }
 
 let gauge_sizes = {
-	small  : 274,
-	medium : 279,
-	large  : 387,
+	small  : 258,
+	medium : 263,
+	large  : 372,
 };
 
 
