@@ -73,7 +73,6 @@
 			<!-- Steering -->
 			<i class="material-icons position-absolute">donut_small</i>
 			<span class="d3-gauge" id="vehicle-steering-angle-container"></span>
-			<span class="d3-gauge" id="vehicle-steering-velocity-container"></span>
 			<hr>
 
 		</div>

@@ -151,11 +151,9 @@ function init_dash() {
 	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
 	gauge_create_reverse('fuel-pump-duty-percent', 'EKP %',  0, 100);
 
-	gauge_create('vehicle-steering-angle',    'STR °', -675, 675, 5);
-	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);
+	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
-	// gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
 }
 
 function log(msg) {
@@ -224,7 +222,6 @@ function on_status_tx(data) {
 
 		case 'system' : {
 			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
-			// gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
 			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
@@ -234,7 +231,7 @@ function on_status_tx(data) {
 			gauges['temperature-exhaust-c'].redraw(v_full.exhaust.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
 			gauges['temperature-intake-c'].redraw(v_full.intake.c);
-			gauges['temperature-oil-c'].redraw(Math.round(v_full.oil.c));
+			gauges['temperature-oil-c'].redraw(v_full.oil.c);
 			break;
 		}
 
@@ -245,7 +242,6 @@ function on_status_tx(data) {
 			gauges['vehicle-ignition_level'].redraw(v_full.ignition_level);
 
 			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
-			gauges['vehicle-steering-velocity'].redraw(v_full.steering.velocity);
 
 			gauges['vehicle-wheel_speed-front-left'].redraw(v_full.wheel_speed.front.left);
 			gauges['vehicle-wheel_speed-front-right'].redraw(v_full.wheel_speed.front.right);
