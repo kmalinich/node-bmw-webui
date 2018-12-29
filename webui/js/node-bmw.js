@@ -119,12 +119,14 @@ function form_gm() {
 }
 
 function form_ike_get() {
+	var input_data = $('#form-ike-get').serializeArray().map((v) => {
+		return v.value;
+	});
+
 	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : $('#form-ike-get').serialize(),
-		success  : (return_data) => {
+		url     : '/api/client/obc/get/' + input_data[0],
+		type    : 'GET',
+		success : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -135,18 +137,10 @@ function form_ike_reset() {
 		return v.value;
 	});
 
-	var post_data = {
-		command : 'obc-reset',
-		value   : input_data[0],
-	};
-
-	console.log(post_data);
 	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : post_data,
-		success  : (return_data) => {
+		url     : '/api/client/obc/reset/' + input_data[0],
+		type    : 'GET',
+		success : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -154,13 +148,7 @@ function form_ike_reset() {
 
 function ike_text() {
 	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			command : 'ike-text',
-			value   : $('#ike-text').val(),
-		},
+		url     : '/api/client/ike/text/normal/' + $('#ike-text').val(),
 		success : (return_data) => {
 			console.log(return_data);
 		},
