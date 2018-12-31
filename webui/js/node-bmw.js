@@ -155,9 +155,8 @@ function ike_backlight(value) {
 
 function ike_set_clock() {
 	$.ajax({
-		url      : '/api/client/obc/set/clock',
-		dataType : 'json',
-		success  : (return_data) => {
+		url     : '/api/client/obc/set/clock',
+		success : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -172,14 +171,9 @@ function ike_text() {
 	});
 }
 
-
 function obc_get() {
-	var obc_key = $('#select-obc-value').val();
-
-	console.log('obc_get() :: obc_key = \'%s\'', obc_key);
-
 	$.ajax({
-		url     : '/api/client/obc/get/' + obc_key,
+		url     : '/api/client/obc/get/' + $('#select-obc-value').val(),
 		success : (return_data) => {
 			console.log(return_data);
 		},
@@ -187,12 +181,8 @@ function obc_get() {
 }
 
 function obc_reset() {
-	var obc_key = $('#select-obc-value').val();
-
-	console.log('obc_reset() :: obc_key = \'%s\'', obc_key);
-
 	$.ajax({
-		url     : '/api/client/obc/reset/' + obc_key,
+		url     : '/api/client/obc/reset/' + $('#select-obc-value').val(),
 		success : (return_data) => {
 			console.log(return_data);
 		},

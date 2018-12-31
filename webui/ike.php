@@ -4,7 +4,7 @@
 		<?php include './include/head.php'; ?>
 	</head>
 
-	<body onload="javascript:prepare_ike();">
+	<body>
 		<?php include './include/navbar.php'; ?>
 
 		<div class="container-fluid">
