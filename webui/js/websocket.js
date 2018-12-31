@@ -274,7 +274,7 @@ function send(event, data = null) {
 
 
 // Dashboard WebSocket
-function ws_init() {
+function init_websocket() {
 	log('init_websocket()');
 
 	ws_set_status('connecting');
