@@ -43,8 +43,8 @@
 			<span class="d3-gauge" id="dme-voltage-container"></span>
 			<span class="d3-gauge" id="lcm-voltage-terminal_30-container"></span>
 			<span class="d3-gauge" id="vehicle-ignition_level-container"></span>
-			<span class="d3-gauge" id="gpio-relay_0-container"></span>
-			<span class="d3-gauge" id="gpio-relay_1-container"></span>
+			<!-- <span class="d3-gauge" id="gpio-relay_0-container"></span> -->
+			<!-- <span class="d3-gauge" id="gpio-relay_1-container"></span> -->
 			<span class="d3-gauge" id="engine-aux_fan_speed-container"></span>
 			<hr>
 
