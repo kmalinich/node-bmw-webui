@@ -8,9 +8,12 @@ function Gauge(placeholderName, configuration) {
 	this.configure = function (configuration) {
 		this.config = configuration;
 
-		this.config.size = this.config.size * 0.9;
+		this.config.height = this.config.size * 0.79;
+		this.config.width  = this.config.size * 0.93;
 
-		this.config.radius = this.config.size * 0.97 / 2;
+		this.config.size = this.config.size * 0.95;
+
+		this.config.radius = this.config.size / 2;
 		this.config.cx     = this.config.size / 2;
 		this.config.cy     = this.config.size / 2;
 
@@ -27,15 +30,15 @@ function Gauge(placeholderName, configuration) {
 		this.config.orangeColor = configuration.orangeColor || '#e67e22';
 		this.config.redColor    = configuration.redColor    || '#e74c3c';
 
-		this.config.transitionDuration = configuration.transitionDuration || 500;
+		this.config.transitionDuration = configuration.transitionDuration || 200;
 	};
 
 	this.render = function () {
 		this.body = d3.select('#' + this.placeholderName)
 			.append('svg:svg')
 			.attr('class', 'gauge')
-			.attr('width', this.config.size)
-			.attr('height', this.config.size);
+			.attr('width', this.config.width)
+			.attr('height', this.config.height);
 
 		this.body.append('svg:circle')
 			.attr('cx', this.config.cx)

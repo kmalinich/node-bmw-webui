@@ -26,8 +26,8 @@ padding-bottom : 3px;
 
 /* Dash page */
 svg.gauge {
-	height: 209px;
-	margin: -6px -8px;
+	/* height: 209px; */
+	margin: -5px -7px;
 }
 
 .container-dash {
