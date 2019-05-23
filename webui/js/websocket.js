@@ -14,9 +14,9 @@ function debug_toggle() {
 }
 
 let gauge_sizes = {
-	small  : 274,
-	medium : 279,
-	large  : 387,
+	small  : 258,
+	medium : 258,
+	large  : 372,
 };
 
 
@@ -124,17 +124,17 @@ function init_dash() {
 	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %');
 	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %');
 
-	gauge_create_temp('system-temperature',     'CPU °C');
+	gauge_create_temp('system-temperature',     'CPU °C', 5, 80);
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
-	gauge_create_temp('temperature-exhaust-c',  'EGT °C', 0, 900);
-	gauge_create_temp('temperature-exterior-c', 'Atm °C');
-	gauge_create_temp('temperature-intake-c',   'IAT °C');
+	gauge_create_temp('temperature-exhaust-c',  'EGT °C', 300, 900);
+	gauge_create_temp('temperature-exterior-c', 'Atm °C', -20, 40);
+	gauge_create_temp('temperature-intake-c',   'IAT °C', -20, 40);
 	gauge_create_temp('temperature-oil-c',      'Oil °C');
 
 	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  13, 15);
 	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5);
-	gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
-	gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
+	// gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
+	// gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
 	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
 	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
 	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
@@ -151,11 +151,9 @@ function init_dash() {
 	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
 	gauge_create_reverse('fuel-pump-duty-percent', 'EKP %',  0, 100);
 
-	gauge_create('vehicle-steering-angle',    'STR °', -675, 675, 5);
-	gauge_create('vehicle-steering-velocity', 'STR V', -675, 675, 5);
+	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
 
 	gauge_create('system-cpu-load_pct', 'CPU %');
-	// gauge_create('system-cpu-speed',    'CPU MHz', 0, 2200);
 }
 
 function log(msg) {
@@ -203,11 +201,11 @@ function on_status_tx(data) {
 			break;
 		}
 
-		case 'gpio' : {
-			gauges['gpio-relay_0'].redraw(v_full.relay_0);
-			gauges['gpio-relay_1'].redraw(v_full.relay_1);
-			break;
-		}
+		// case 'gpio' : {
+		// 	gauges['gpio-relay_0'].redraw(v_full.relay_0);
+		// 	gauges['gpio-relay_1'].redraw(v_full.relay_1);
+		// 	break;
+		// }
 
 		case 'lcm' : {
 			gauges['lcm-voltage-terminal_30'].redraw(v_full.voltage.terminal_30);
@@ -224,7 +222,6 @@ function on_status_tx(data) {
 
 		case 'system' : {
 			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
-			// gauges['system-cpu-speed'].redraw(v_full.cpu.speed);
 			gauges['system-temperature'].redraw(v_full.temperature);
 			break;
 		}
@@ -234,7 +231,7 @@ function on_status_tx(data) {
 			gauges['temperature-exhaust-c'].redraw(v_full.exhaust.c);
 			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
 			gauges['temperature-intake-c'].redraw(v_full.intake.c);
-			gauges['temperature-oil-c'].redraw(Math.round(v_full.oil.c));
+			gauges['temperature-oil-c'].redraw(v_full.oil.c);
 			break;
 		}
 
@@ -245,7 +242,6 @@ function on_status_tx(data) {
 			gauges['vehicle-ignition_level'].redraw(v_full.ignition_level);
 
 			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
-			gauges['vehicle-steering-velocity'].redraw(v_full.steering.velocity);
 
 			gauges['vehicle-wheel_speed-front-left'].redraw(v_full.wheel_speed.front.left);
 			gauges['vehicle-wheel_speed-front-right'].redraw(v_full.wheel_speed.front.right);
@@ -278,7 +274,7 @@ function send(event, data = null) {
 
 
 // Dashboard WebSocket
-function ws_init() {
+function init_websocket() {
 	log('init_websocket()');
 
 	ws_set_status('connecting');

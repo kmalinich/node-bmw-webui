@@ -18,10 +18,11 @@
 
 			<!-- DSC/Torque output data -->
 			<i class="material-icons position-absolute">track_changes</i>
-			<span class="d3-gauge" id="engine-torque-loss-container"></span>
 			<span class="d3-gauge" id="engine-torque-before_interventions-container"></span>
 			<span class="d3-gauge" id="vehicle-dsc-torque_reduction_1-container"></span>
+			<span class="d3-gauge" id="engine-torque-loss-container"></span>
 			<span class="d3-gauge" id="engine-torque-output-container"></span>
+
 			<span class="d3-gauge" id="engine-torque-after_interventions-container"></span>
 			<span class="d3-gauge" id="vehicle-dsc-torque_reduction_2-container"></span>
 			<hr>
@@ -42,8 +43,8 @@
 			<span class="d3-gauge" id="dme-voltage-container"></span>
 			<span class="d3-gauge" id="lcm-voltage-terminal_30-container"></span>
 			<span class="d3-gauge" id="vehicle-ignition_level-container"></span>
-			<span class="d3-gauge" id="gpio-relay_0-container"></span>
-			<span class="d3-gauge" id="gpio-relay_1-container"></span>
+			<!-- <span class="d3-gauge" id="gpio-relay_0-container"></span> -->
+			<!-- <span class="d3-gauge" id="gpio-relay_1-container"></span> -->
 			<span class="d3-gauge" id="engine-aux_fan_speed-container"></span>
 			<hr>
 
@@ -72,7 +73,6 @@
 			<!-- Steering -->
 			<i class="material-icons position-absolute">donut_small</i>
 			<span class="d3-gauge" id="vehicle-steering-angle-container"></span>
-			<span class="d3-gauge" id="vehicle-steering-velocity-container"></span>
 			<hr>
 
 		</div>

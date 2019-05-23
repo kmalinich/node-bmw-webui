@@ -35,6 +35,7 @@ const form2json = elements => [].reduce.call(elements, (data, element) => {
 	return data;
 }, {});
 
+
 // Clean all the text strings
 function clean_class_all() {
 	// This is really dumb and there is a better way
@@ -91,6 +92,7 @@ function clean_class(id) {
 	$(id).removeClass('text-danger').removeClass('text-success').removeClass('text-warning').removeClass('text-primary').removeClass('text-info').text('');
 }
 
+
 function hdmi_command(command) {
 	$.ajax({
 		url      : '/api/client/hdmi',
@@ -118,35 +120,43 @@ function form_gm() {
 	});
 }
 
-function form_ike_get() {
+
+// Prepare IKE page
+function prepare_ike() {
+	prepare_ike_backlight();
+}
+
+// Initialize IKE backlight slider
+function prepare_ike_backlight() {
+	$('#slider-ike-backlight').on('slideStart', (data) => {
+		console.log('ike_backlight_slideStart: %s', data.value);
+		ike_backlight(data.value);
+	});
+
+	$('#slider-ike-backlight').on('slideStop', (data) => {
+		console.log('ike_backlight_slidestop: %s', data.value);
+		ike_backlight(data.value);
+	});
+}
+
+function ike_backlight(value) {
+	console.log('ike_backlight(%s);', value);
+
 	$.ajax({
 		url      : '/api/client/ike',
 		type     : 'POST',
 		dataType : 'json',
-		data     : $('#form-ike-get').serialize(),
+		data     : 'ike-backlight=' + value,
 		success  : (return_data) => {
 			console.log(return_data);
 		},
 	});
 }
 
-function form_ike_reset() {
-	var input_data = $('#form-ike-reset').serializeArray().map((v) => {
-		return v.value;
-	});
-
-	var post_data = {
-		command : 'obc-reset',
-		value   : input_data[0],
-	};
-
-	console.log(post_data);
+function ike_set_clock() {
 	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : post_data,
-		success  : (return_data) => {
+		url     : '/api/client/obc/set/clock',
+		success : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -154,18 +164,31 @@ function form_ike_reset() {
 
 function ike_text() {
 	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			command : 'ike-text',
-			value   : $('#ike-text').val(),
-		},
+		url     : '/api/client/ike/text/normal/' + $('#ike-text').val(),
 		success : (return_data) => {
 			console.log(return_data);
 		},
 	});
 }
+
+function obc_get() {
+	$.ajax({
+		url     : '/api/client/obc/get/' + $('#select-obc-value').val(),
+		success : (return_data) => {
+			console.log(return_data);
+		},
+	});
+}
+
+function obc_reset() {
+	$.ajax({
+		url     : '/api/client/obc/reset/' + $('#select-obc-value').val(),
+		success : (return_data) => {
+			console.log(return_data);
+		},
+	});
+}
+
 
 function form_lcm() {
 	$.ajax({
@@ -227,32 +250,6 @@ function gm_windows(window, action) {
 			'window-action' : action,
 		},
 		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
-}
-
-// AJAX for IKE backlight
-function ike_backlight(value) {
-	console.log('ike_backlight(%s);', value);
-
-	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'ike-backlight=' + value,
-		success  : (return_data) => {
-			console.log(return_data);
-		},
-	});
-}
-
-function ike_set_clock() {
-	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		success  : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -339,24 +336,6 @@ function prepare_gm_interior_light() {
 	slider.noUiSlider.on('update', (data) => {
 		var value = parseInt(data[0]);
 		gm_interior_light(value);
-	});
-}
-
-// Prepare IKE page
-function prepare_ike() {
-	prepare_ike_backlight();
-}
-
-// Initialize IKE backlight slider
-function prepare_ike_backlight() {
-	$('#slider-ike-backlight').on('slideStart', (data) => {
-		console.log('ike_backlight_slideStart: %s', data.value);
-		ike_backlight(data.value);
-	});
-
-	$('#slider-ike-backlight').on('slideStop', (data) => {
-		console.log('ike_backlight_slidestop: %s', data.value);
-		ike_backlight(data.value);
 	});
 }
 
@@ -667,7 +646,28 @@ function ws_ibus() {
 	});
 }
 
+
+function init_listeners() {
+	let buttons = {
+		obc : {
+			get   : document.getElementById('btn-obc-value-get'),
+			reset : document.getElementById('btn-obc-value-reset'),
+		},
+	};
+
+	if (buttons.obc.get !== null) {
+		buttons.obc.get.addEventListener('pointerup', () => { obc_get(); });
+	}
+
+	if (buttons.obc.reset !== null) {
+		buttons.obc.reset.addEventListener('pointerup', () => { obc_reset(); });
+	}
+}
+
+
 $(() => {
 	$('body').bootstrapMaterialDesign();
-	ws_init();
+
+	init_listeners();
+	init_websocket();
 });
