@@ -11,10 +11,9 @@
 	<div class="collapse navbar-collapse" id="navbar-menu">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item active">
-				<a class="nav-link" href="/">Home</a>
+				<a class="nav-link" href="/">Dash</a>
 			</li>
 
-			<li class="nav-item"><a class="nav-link" href="dash">Dash</a></li>
 			<li class="nav-item"><a class="nav-link" href="status">Status</a></li>
 
 			<!--

@@ -23,8 +23,8 @@
 			"type": "image/png"
 		}
 	],
-	"name": "bmwd webUI",
-	"short_name": "bmwd",
+	"name": "bmwcd webUI",
+	"short_name": "bmwcd",
 	"start_url": "/?homescreen=1",
 	"scope": "/",
 	"theme_color": "#000"

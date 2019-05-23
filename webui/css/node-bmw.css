@@ -113,3 +113,19 @@ svg.gauge {
 	margin-bottom: 0.3125rem;
 	margin-top: 0.3125rem;
 }
+
+
+body {
+	color: #fff;
+}
+
+hr {
+	border-top: 1px solid #ffffff3a;
+	margin-bottom: 0.8rem;
+	margin-top: 0.2rem;
+}
+
+
+h3 {
+	margin-top: 1.5rem;
+}
