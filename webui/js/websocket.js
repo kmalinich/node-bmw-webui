@@ -126,15 +126,15 @@ function init_dash() {
 	gauge_create('engine-torque-before_interventions', 'Before %');
 	gauge_create('engine-torque-after_interventions',  'After %');
 
-	// gauge_create('engine-torque-value-loss',                 'Loss %');
-	// gauge_create('engine-torque-value-output',               'Out %');
-	// gauge_create('engine-torque-value-before_interventions', 'Before %');
-	gauge_create('engine-torque-value-after_interventions', 'lb-ft', 0, 400, 10, gauge_sizes.xl);
+	// gauge_create('engine-torque_value-loss',                 'Loss %');
+	// gauge_create('engine-torque_value-output',               'Out %');
+	// gauge_create('engine-torque_value-before_interventions', 'Before %');
+	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.xl);
 
 	// gauge_create('engine-horsepower-loss',                 'Loss %');
 	// gauge_create('engine-horsepower-output',               'Out %');
 	// gauge_create('engine-horsepower-before_interventions', 'Before %');
-	gauge_create('engine-horsepower-after_interventions', '#BuffHorses', 0, 500, 10, gauge_sizes.xl);
+	gauge_create('engine-horsepower-after_interventions', '#BuffHorses', 0, 400, 5, gauge_sizes.xl);
 
 	gauge_create_temp('system-temperature',     'CPU °C', 5, 80);
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
@@ -207,15 +207,15 @@ function on_status_tx(data) {
 			gauges['engine-torque-loss'].redraw(v_full.torque.loss);
 			gauges['engine-torque-output'].redraw(v_full.torque.output);
 
-			gauges['engine-torque-value-after_interventions'].redraw(v_full.torque_value.after_interventions);
-			gauges['engine-torque-value-before_interventions'].redraw(v_full.torque_value.before_interventions);
-			gauges['engine-torque-value-loss'].redraw(v_full.torque_value.loss);
-			gauges['engine-torque-value-output'].redraw(v_full.torque_value.output);
+			gauges['engine-torque_value-after_interventions'].redraw(v_full.torque_value.after_interventions);
+			// gauges['engine-torque_value-before_interventions'].redraw(v_full.torque_value.before_interventions);
+			// gauges['engine-torque_value-loss'].redraw(v_full.torque_value.loss);
+			// gauges['engine-torque_value-output'].redraw(v_full.torque_value.output);
 
 			gauges['engine-horsepower-after_interventions'].redraw(v_full.horsepower.after_interventions);
-			gauges['engine-horsepower-before_interventions'].redraw(v_full.horsepower.before_interventions);
-			gauges['engine-horsepower-loss'].redraw(v_full.horsepower.loss);
-			gauges['engine-horsepower-output'].redraw(v_full.horsepower.output);
+			// gauges['engine-horsepower-before_interventions'].redraw(v_full.horsepower.before_interventions);
+			// gauges['engine-horsepower-loss'].redraw(v_full.horsepower.loss);
+			// gauges['engine-horsepower-output'].redraw(v_full.horsepower.output);
 			break;
 		}
 
