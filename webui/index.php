@@ -34,7 +34,7 @@
 			<h3>Horsepower/lb-ft</h3>
 			<hr>
 			<i class="material-icons position-absolute">track_changes</i>
-			<span class="d3-gauge" id="engine-torque-value-after_interventions-container"></span>
+			<span class="d3-gauge" id="engine-torque_value-after_interventions-container"></span>
 			<span class="d3-gauge" id="engine-horsepower-after_interventions-container"></span>
 
 			<!-- Temperatures -->
