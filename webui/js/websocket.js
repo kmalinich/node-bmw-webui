@@ -156,6 +156,8 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 5, gauge_sizes.medium);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
 
+	gauge_create('fuel-consumption', 'Fuel cons', 0, 100, 2);
+
 	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
 	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
 	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
@@ -218,6 +220,7 @@ function on_status_tx(data) {
 		}
 
 		case 'fuel' : {
+			gauges['fuel-consumption'].redraw(v_full.consumption);
 			gauges['fuel-level'].redraw(v_full.level);
 			gauges['fuel-pump-duty-percent'].redraw(v_full.pump.percent);
 			break;

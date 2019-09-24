@@ -5,15 +5,15 @@
 	},
 	"dependencies": {
 		"bootstrap-material-design": "^4.1.2",
-		"d3": "^5.9.2",
+		"d3": "^5.12.0",
 		"datatables": "^1.10.18",
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
 		"moment": "^2.24.0",
-		"nouislider": "^13.1.5",
-		"npm-check-updates": "^3.1.9",
+		"nouislider": "^14.0.2",
+		"npm-check-updates": "^3.1.23",
 		"popper.js": "^1.15.0",
-		"socket.io-client": "^2.2.0"
+		"socket.io-client": "^2.3.0"
 	},
 	"description": "node-bmw webUI code",
 	"devDependencies": {},
