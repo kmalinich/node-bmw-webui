@@ -156,7 +156,7 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 5, gauge_sizes.medium);
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
 
-	gauge_create('fuel-consumption', 'Fuel cons', 0, 100, 2);
+	gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
 
 	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
 	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
