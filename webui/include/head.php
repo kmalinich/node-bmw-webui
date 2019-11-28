@@ -24,12 +24,16 @@
 
 <title>bmwd webUI</title>
 
+<!--
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+-->
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<!--
 <link rel="stylesheet" type="text/css" href="css/font-awesome.css">
+-->
 
 <link rel="stylesheet" type="text/css" href="css/material.css">
-<link rel="stylesheet" type="text/css" href="css/nouislider.css"/>
+<!-- <link rel="stylesheet" type="text/css" href="css/nouislider.css"/> -->
 <link rel="stylesheet" type="text/css" href="css/node-bmw.css">
 
 <link rel="manifest" href="manifest.json">

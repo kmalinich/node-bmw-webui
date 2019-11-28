@@ -7,25 +7,23 @@
 		"worker": true
 	},
 	"extends": [
-		"eslint:recommended"
+		"eslint:recommended",
+		"esnext"
 	],
 	"globals": {
-		"Gauge": false,
 		"d3": false,
+		"Gauge": false,
 		"gauges": true,
+		"init_websocket": true,
 		"io": false,
 		"moment": false,
-		"noUiSlider": false,
-		"ws_init": true
+		"noUiSlider": false
 	},
 	"parserOptions": {
 		"ecmaVersion": 6,
-		"sourceType": "module"
+		"sourceType": "script"
 	},
 	"plugins": [
-		"import",
-		"node",
-		"promise",
 		"standard"
 	],
 	"rules": {
@@ -52,7 +50,7 @@
 				"allowSingleLine": true
 			}
 		],
-		"camelcase": 0,
+		"camelcase": "off",
 		"comma-dangle": [
 			"error",
 			{
@@ -84,7 +82,7 @@
 			"property"
 		],
 		"eol-last": "error",
-		"eqeqeq": 0,
+		"eqeqeq": "warn",
 		"func-call-spacing": [
 			"error",
 			"never"
@@ -100,10 +98,6 @@
 			"error",
 			"^(err|error)$"
 		],
-		"import/export": "error",
-		"import/first": "error",
-		"import/no-duplicates": "error",
-		"import/no-webpack-loader-syntax": "error",
 		"indent": [
 			"error",
 			"tab",
@@ -136,9 +130,9 @@
 			"error",
 			"unix"
 		],
-		"new-cap": 0,
+		"new-cap": "off",
 		"new-parens": "error",
-		"newline-per-chained-call": 0,
+		"newline-per-chained-call": "warn",
 		"no-array-constructor": "error",
 		"no-caller": "error",
 		"no-class-assign": "error",
@@ -214,7 +208,7 @@
 			}
 		],
 		"no-mixed-spaces-and-tabs": "error",
-		"no-multi-spaces": 0,
+		"no-multi-spaces": "off",
 		"no-multi-str": "error",
 		"no-multiple-empty-lines": [
 			"error",
@@ -248,7 +242,7 @@
 		"no-sequences": "error",
 		"no-shadow-restricted-names": "error",
 		"no-sparse-arrays": "error",
-		"no-tabs": 0,
+		"no-tabs": "off",
 		"no-template-curly-in-string": "error",
 		"no-this-before-super": "error",
 		"no-throw-literal": "error",
@@ -293,8 +287,6 @@
 		"no-useless-return": "error",
 		"no-whitespace-before-property": "error",
 		"no-with": "error",
-		"node/no-deprecated-api": "error",
-		"node/process-exit-as-throw": "error",
 		"object-curly-spacing": [
 			"error",
 			"always"
@@ -330,7 +322,6 @@
 			}
 		],
 		"prefer-promise-reject-errors": "error",
-		"promise/param-names": "error",
 		"quotes": [
 			"error",
 			"single",

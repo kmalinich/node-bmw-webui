@@ -4,13 +4,12 @@
 
 // Convert integer to hex string
 function i2s(data, prefix = true) {
-	var hexstr;
-	var string;
+	let hexstr;
 
 	hexstr = data.toString(16).toUpperCase();
 
 	hexstr = hexstr.length === 1    && '0'  + hexstr || hexstr;
-	string = prefix        === true && '0x' + hexstr || hexstr;
+	const string = prefix        === true && '0x' + hexstr || hexstr;
 
 	return string;
 }
@@ -89,7 +88,12 @@ function clean_class_all() {
 
 // Remove all color-coded CSS classes from a text id
 function clean_class(id) {
-	$(id).removeClass('text-danger').removeClass('text-success').removeClass('text-warning').removeClass('text-primary').removeClass('text-info').text('');
+	$(id).removeClass('text-danger')
+		.removeClass('text-success')
+		.removeClass('text-warning')
+		.removeClass('text-primary')
+		.removeClass('text-info')
+		.text('');
 }
 
 
@@ -99,7 +103,7 @@ function hdmi_command(command) {
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
-			command : command,
+			command,
 		},
 		success : (return_data) => {
 			console.log(return_data);
@@ -246,7 +250,7 @@ function gm_windows(window, action) {
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
-			'window'        : window,
+			window,
 			'window-action' : action,
 		},
 		success : (return_data) => {
@@ -321,7 +325,7 @@ function prepare_gm() {
 
 // Initialize GM interior_light slider
 function prepare_gm_interior_light() {
-	var slider = $('#slider-gm-interior-light')[0];
+	const slider = $('#slider-gm-interior-light')[0];
 
 	noUiSlider.create(slider, {
 		start   : 0,
@@ -334,7 +338,7 @@ function prepare_gm_interior_light() {
 	});
 
 	slider.noUiSlider.on('update', (data) => {
-		var value = parseInt(data[0]);
+		const value = parseInt(data[0]);
 		gm_interior_light(value);
 	});
 }
@@ -346,7 +350,7 @@ function prepare_lcm() {
 
 // Initialize LCM dimmer slider
 function prepare_lcm_dimmer() {
-	var slider = $('#slider-lcm-dimmer')[0];
+	const slider = $('#slider-lcm-dimmer')[0];
 
 	noUiSlider.create(slider, {
 		start   : 0,
@@ -359,7 +363,7 @@ function prepare_lcm_dimmer() {
 	});
 
 	slider.noUiSlider.on('change', (data) => {
-		var value = parseInt(data[0]);
+		const value = parseInt(data[0]);
 		console.log('LCM dimmer slider: %s', value);
 	});
 }
@@ -376,10 +380,12 @@ function status_apply(return_data) {
 	// Engine status
 	$('#engine-speed').text(return_data.engine.speed);
 	if (return_data.engine.running) {
-		$('#engine-running').text('Engine running').addClass('text-success');
+		$('#engine-running').text('Engine running')
+			.addClass('text-success');
 	}
 	else {
-		$('#engine-running').text('Engine off').addClass('text-danger');
+		$('#engine-running').text('Engine off')
+			.addClass('text-danger');
 	}
 
 	/*
@@ -394,11 +400,11 @@ function status_apply(return_data) {
 	$('#temperature-coolant-unit').text(return_data.coding.unit.temp.toUpperCase());
 	$('#obc-temp-exterior-unit').text(return_data.coding.unit.temp.toUpperCase());
 
-	if (return_data.coding.unit.temp == 'c') {
+	if (return_data.coding.unit.temp === 'c') {
 		$('#temperature-coolant').text(return_data.temperature.coolant.c);
 		$('#obc-temp-exterior').text(return_data.temperature.exterior.obc.c);
 	}
-	else if (return_data.coding.unit.temp == 'f') {
+	else if (return_data.coding.unit.temp === 'f') {
 		$('#temperature-coolant').text(return_data.temperature.coolant.f);
 		$('#obc-temp-exterior').text(return_data.temperature.exterior.obc.f);
 	}
@@ -412,33 +418,41 @@ function status_apply(return_data) {
 
 	// Handbrake
 	if (return_data.vehicle.handbrake) {
-		$('#vehicle-handbrake').text('Handbrake on').addClass('text-danger');
+		$('#vehicle-handbrake').text('Handbrake on')
+			.addClass('text-danger');
 	}
 	else {
-		$('#vehicle-handbrake').text('Handbrake off').addClass('text-success');
+		$('#vehicle-handbrake').text('Handbrake off')
+			.addClass('text-success');
 	}
 
 	// Reverse
 	if (return_data.vehicle.reverse) {
-		$('#vehicle-reverse').text('In reverse').addClass('text-danger');
+		$('#vehicle-reverse').text('In reverse')
+			.addClass('text-danger');
 	}
 	else {
-		$('#vehicle-reverse').text('Not in reverse').addClass('text-success');
+		$('#vehicle-reverse').text('Not in reverse')
+			.addClass('text-success');
 	}
 
 	// Ignition
 	switch (return_data.vehicle.ignition) {
 		case 'run':
-			$('#vehicle-ignition').text('Ignition run').addClass('text-success');
+			$('#vehicle-ignition').text('Ignition run')
+				.addClass('text-success');
 			break;
 		case 'accessory':
-			$('#vehicle-ignition').text('Ignition accessory').addClass('text-info');
+			$('#vehicle-ignition').text('Ignition accessory')
+				.addClass('text-info');
 			break;
 		case 'start':
-			$('#vehicle-ignition').text('Ignition start').addClass('text-warning');
+			$('#vehicle-ignition').text('Ignition start')
+				.addClass('text-warning');
 			break;
 		default:
-			$('#vehicle-ignition').text('Ignition off').addClass('text-danger');
+			$('#vehicle-ignition').text('Ignition off')
+				.addClass('text-danger');
 			break;
 	}
 
@@ -484,11 +498,11 @@ function status_apply(return_data) {
 	$('#obc-speedlimit-unit').text(return_data.coding.unit.speed.toUpperCase());
 	$('#obc-speedlimit').text(return_data.obc.speedlimit);
 
-	if (return_data.coding.unit.speed == 'kmh') {
+	if (return_data.coding.unit.speed === 'kmh') {
 		$('#vehicle-speed').text(return_data.vehicle.speed.kmh);
 		$('#obc-speedavg').text(return_data.obc.speedavg.kmh);
 	}
-	else if (return_data.coding.unit.speed == 'mph') {
+	else if (return_data.coding.unit.speed === 'mph') {
 		$('#vehicle-speed').text(return_data.vehicle.speed.mph);
 		$('#obc-speedavg').text(return_data.obc.average_speed.mph);
 	}
@@ -498,11 +512,11 @@ function status_apply(return_data) {
 	$('#obc-range-unit').text(return_data.coding.unit.distance);
 	$('#obc-distance').text(return_data.obc.distance);
 
-	if (return_data.coding.unit.distance == 'mi') {
+	if (return_data.coding.unit.distance === 'mi') {
 		$('#obc-range').text(return_data.obc.range.mi);
 	}
 
-	else if (return_data.coding.unit.distance == 'km') {
+	else if (return_data.coding.unit.distance === 'km') {
 		$('#obc-range').text(return_data.obc.range.km);
 	}
 
@@ -510,12 +524,12 @@ function status_apply(return_data) {
 	$('#obc-consumption-1-unit').text(return_data.coding.unit.cons);
 	$('#obc-consumption-2-unit').text(return_data.coding.unit.cons);
 
-	if (return_data.coding.unit.cons == 'mpg') {
+	if (return_data.coding.unit.cons === 'mpg') {
 		$('#obc-consumption-1').text(return_data.obc.consumption.c1.mpg);
 		$('#obc-consumption-2').text(return_data.obc.consumption.c2.mpg);
 	}
 
-	else if (return_data.coding.unit.cons == 'l100') {
+	else if (return_data.coding.unit.cons === 'l100') {
 		$('#obc-consumption-1').text(return_data.obc.consumption.c1.l100);
 		$('#obc-consumption-2').text(return_data.obc.consumption.c2.l100);
 	}
@@ -575,8 +589,8 @@ function lcm_pulse() {
 
 // Convert a string to hex
 function str2hex(str) {
-	var hex = '';
-	for (var i = 0; i < str.length; i++) {
+	let hex = '';
+	for (let i = 0; i < str.length; i++) {
 		hex += '' + str.charCodeAt(i).toString(16);
 	}
 	return hex;
@@ -585,24 +599,36 @@ function str2hex(str) {
 // Live IBUS data websocket
 function ws_ibus() {
 	// Open WebSocket
-	var socket = io();
+	const socket = io();
 
 	socket.on('connect', () => {
-		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').removeClass('text-danger').addClass('text-success').text('Socket connected');
+		$('#ws-bus-header').removeClass('text-warning')
+			.removeClass('text-success')
+			.removeClass('text-danger')
+			.addClass('text-success')
+			.text('Socket connected');
 	});
 
 	socket.on('error', (error) => {
 		console.error(error);
-		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').addClass('text-danger').removeClass('text-success').text('Socket error');
+		$('#ws-bus-header').removeClass('text-warning')
+			.removeClass('text-success')
+			.addClass('text-danger')
+			.removeClass('text-success')
+			.text('Socket error');
 	});
 
 	socket.on('disconnect', () => {
-		$('#ws-bus-header').removeClass('text-warning').removeClass('text-danger').addClass('text-warning').removeClass('text-success').text('Socket disconnected');
+		$('#ws-bus-header').removeClass('text-warning')
+			.removeClass('text-danger')
+			.addClass('text-warning')
+			.removeClass('text-success')
+			.text('Socket disconnected');
 	});
 
 	socket.on('data-receive', (data) => {
-		var msg_fmt   = '';
-		var timestamp = moment().format('h:mm:ss a');
+		let msg_fmt   = '';
+		const timestamp = moment().format('h:mm:ss a');
 
 		// Format the message
 		data.msg.forEach((bit) => {
@@ -611,7 +637,7 @@ function ws_ibus() {
 		});
 
 		// Add a new row to the table
-		var tr = '';
+		let tr = '';
 		tr += '<tr>';
 		tr += '<td>' + timestamp + '</td>';
 		tr += '<td>' + data.bus + '</td>';
@@ -625,18 +651,21 @@ function ws_ibus() {
 
 	// Assemble and send data from form below table
 	$('#ws-bus-send').click(() => {
-		var data_send = {};
+		const data_send = {};
 
 		// Parse incoming data
 		data_send.src = $('#ws-bus-src').val();
 		data_send.dst = $('#ws-bus-dst').val();
 
 		// Create the message array by removing whitespaces and splitting by comma
-		data_send.msg = $('#ws-bus-msg').val().replace(' ', '').replace('0x', '').split(',');
+		data_send.msg = $('#ws-bus-msg').val()
+			.replace(' ', '')
+			.replace('0x', '')
+			.split(',');
 
 		// Format the message
-		var msg_array = [];
-		for (var i = 0; i < data_send.msg.length; i++) {
+		const msg_array = [];
+		for (let i = 0; i < data_send.msg.length; i++) {
 			// Convert it to hexadecimal
 			msg_array.push(parseInt(data_send.msg[i], 16));
 		}
@@ -648,7 +677,7 @@ function ws_ibus() {
 
 
 function init_listeners() {
-	let buttons = {
+	const buttons = {
 		obc : {
 			get   : document.getElementById('btn-obc-value-get'),
 			reset : document.getElementById('btn-obc-value-reset'),

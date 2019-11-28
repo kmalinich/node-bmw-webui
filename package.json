@@ -15,7 +15,14 @@
 		"socket.io-client": "^2.3.0"
 	},
 	"description": "node-bmw webUI code",
-	"devDependencies": {},
+	"devDependencies": {
+		"eslint": "^6.7.1",
+		"eslint-config-esnext": "^4.0.0",
+		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-node": "^10.0.0",
+		"eslint-plugin-promise": "^4.2.1",
+		"eslint-plugin-standard": "^4.0.1"
+	},
 	"homepage": "https://github.com/kmalinich/node-bmw-webui#readme",
 	"keywords": [
 		"bmw",

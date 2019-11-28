@@ -8,13 +8,12 @@
 		<?php include './include/navbar.php'; ?>
 
 		<div class="container-fluid">
-			<!-- Misc -->
-			<!--
+			<!-- Engine -->
+			<h4>Engine</h4>
+			<hr>
 			<i class="material-icons position-absolute">toll</i>
 			<span class="d3-gauge" id="engine-speed-container"></span>
 			<span class="d3-gauge" id="engine-throttle-pedal-container"></span>
-			<hr>
-			-->
 
 			<h3>Torque reduction, percentage</h3>
 			<hr>

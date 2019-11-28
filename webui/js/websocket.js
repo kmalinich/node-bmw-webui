@@ -5,7 +5,7 @@
 window.socket_debug = false;
 
 let socket;
-let gauges = [];
+const gauges = [];
 
 // Toggle debug console output on and off
 function debug_toggle() {
@@ -13,7 +13,7 @@ function debug_toggle() {
 	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
 }
 
-let gauge_sizes = {
+const gauge_sizes = {
 	small  : 258,
 	medium : 258,
 	large  : 372,
@@ -23,15 +23,15 @@ let gauge_sizes = {
 
 // For gauges where a high value is bad
 function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
-	let config = {
-		size       : size,
-		label      : label,
-		min        : min,
-		max        : max,
+	const config = {
+		size,
+		label,
+		min,
+		max,
 		minorTicks : ticks,
 	};
 
-	let range = config.max - config.min;
+	const range = config.max - config.min;
 
 	config.yellowZones = [ {
 		from : config.min + range * 0.8,
@@ -51,15 +51,15 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_
 
 // For temperature gauges
 function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = gauge_sizes.small) {
-	let config = {
-		size       : size,
-		label      : label,
-		min        : min,
-		max        : max,
+	const config = {
+		size,
+		label,
+		min,
+		max,
 		minorTicks : ticks,
 	};
 
-	let range = config.max - config.min;
+	const range = config.max - config.min;
 
 	config.blueZones = [ {
 		from : config.min,
@@ -85,15 +85,15 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size =
 
 // For gauges where a low value is bad
 function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
-	let config = {
-		size       : size,
-		label      : label,
-		min        : min,
-		max        : max,
+	const config = {
+		size,
+		label,
+		min,
+		max,
 		minorTicks : ticks,
 	};
 
-	let range = config.max - config.min;
+	const range = config.max - config.min;
 
 	config.yellowZones = [ {
 		from : config.min + range * 0.1,
@@ -115,11 +115,11 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	// gauge_create('engine-speed',          'RPM',     0, 7000, 5, gauge_sizes.large);
-	// gauge_create('engine-throttle-pedal', 'Thrtl %', 0, 100,  5, gauge_sizes.large);
+	gauge_create('engine-speed',          'RPM',  0, 7000, 5, gauge_sizes.large);
+	gauge_create('engine-throttle-pedal', 'DK %', 0, 100,  5, gauge_sizes.large);
 
-	gauge_create('vehicle-dsc-torque_reduction_1', 'Reduce1 %', 0, 100, 10, gauge_sizes.xl);
-	gauge_create('vehicle-dsc-torque_reduction_2', 'Reduce2 %', 0, 100, 10, gauge_sizes.xl);
+	gauge_create('vehicle-dsc-torque_reduction_1', 'Reduce1 %', 0, 100, 10, gauge_sizes.large);
+	gauge_create('vehicle-dsc-torque_reduction_2', 'Reduce2 %', 0, 100, 10, gauge_sizes.large);
 
 	gauge_create('engine-torque-loss',                 'Loss %');
 	gauge_create('engine-torque-output',               'Out %');
@@ -129,12 +129,12 @@ function init_dash() {
 	// gauge_create('engine-torque_value-loss',                 'Loss %');
 	// gauge_create('engine-torque_value-output',               'Out %');
 	// gauge_create('engine-torque_value-before_interventions', 'Before %');
-	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.xl);
+	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.large);
 
 	// gauge_create('engine-horsepower-loss',                 'Loss %');
 	// gauge_create('engine-horsepower-output',               'Out %');
 	// gauge_create('engine-horsepower-before_interventions', 'Before %');
-	gauge_create('engine-horsepower-after_interventions', '#BuffHorses', 0, 400, 5, gauge_sizes.xl);
+	gauge_create('engine-horsepower-after_interventions', '#BuffHorses', 0, 400, 5, gauge_sizes.large);
 
 	gauge_create_temp('system-temperature',     'CPU °C', 5, 80);
 	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
@@ -188,7 +188,7 @@ function on_log_tx(data) {
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 
-	let v_full = data.value.full;
+	const v_full = data.value.full;
 
 	// Initial page load data
 	switch (data.key.full) {
@@ -276,7 +276,7 @@ function on_status_tx(data) {
 		}
 
 		default : { // Delta updates
-			let path_hyphen = data.key.full.replace(/\./g, '-');
+			const path_hyphen = data.key.full.replace(/\./g, '-');
 
 			if (typeof gauges[path_hyphen] !== 'undefined') {
 				if (window.socket_debug === true) console.log('Updating gauge \'%s\'', path_hyphen);
@@ -289,9 +289,9 @@ function on_status_tx(data) {
 
 // Send data over WebSocket
 function send(event, data = null) {
-	let message = {
-		event : event,
-		data  : data,
+	const message = {
+		event,
+		data,
 	};
 
 	socket.emit('client-tx', message);
@@ -333,10 +333,18 @@ function init_websocket() {
 
 function ws_set_status(status) {
 	switch (status) {
-		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
-		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		default           : $('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
+		case 'connect'    : $('#status-ws').removeClass('btn-danger')
+			.addClass('btn-success')
+			.removeClass('btn-warning'); break;
+		case 'error'      : $('#status-ws').addClass('btn-danger')
+			.removeClass('btn-success')
+			.removeClass('btn-warning'); break;
+		case 'disconnect' : $('#status-ws').addClass('btn-danger')
+			.removeClass('btn-success')
+			.removeClass('btn-warning'); break;
+		default           : $('#status-ws').removeClass('btn-danger')
+			.removeClass('btn-success')
+			.addClass('btn-warning');
 	}
 
 	switch (status) {

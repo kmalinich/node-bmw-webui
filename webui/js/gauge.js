@@ -3,7 +3,7 @@
 function Gauge(placeholderName, configuration) {
 	this.placeholderName = placeholderName;
 
-	var self = this; // For internal d3 functions
+	const self = this; // For internal d3 functions
 
 	this.configure = function (configuration) {
 		this.config = configuration;
@@ -11,14 +11,14 @@ function Gauge(placeholderName, configuration) {
 		this.config.height = this.config.size * 0.81;
 		this.config.width  = this.config.size * 0.93;
 
-		this.config.size = this.config.size * 0.95;
+		this.config.size *= 0.95;
 
 		this.config.radius = this.config.size / 2;
 		this.config.cx     = this.config.size / 2;
 		this.config.cy     = this.config.size / 2;
 
-		this.config.min   = undefined != configuration.min ? configuration.min : 0;
-		this.config.max   = undefined != configuration.max ? configuration.max : 100;
+		this.config.min   = configuration.min !== undefined ? configuration.min : 0;
+		this.config.max   = configuration.max !== undefined ? configuration.max : 100;
 		this.config.range = this.config.max - this.config.min;
 
 		this.config.majorTicks = configuration.majorTicks || 5;
@@ -56,33 +56,32 @@ function Gauge(placeholderName, configuration) {
 			.style('stroke', '#111')
 			.style('stroke-width', '0.5px');
 
-		for (var index_blue in this.config.blueZones) {
+		for (const index_blue in this.config.blueZones) {
 			this.drawBand(this.config.blueZones[index_blue].from, this.config.blueZones[index_blue].to, self.config.blueColor);
 		}
 
-		for (var index_green in this.config.greenZones) {
+		for (const index_green in this.config.greenZones) {
 			this.drawBand(this.config.greenZones[index_green].from, this.config.greenZones[index_green].to, self.config.greenColor);
 		}
 
-		for (var index_yellow in this.config.yellowZones) {
+		for (const index_yellow in this.config.yellowZones) {
 			this.drawBand(this.config.yellowZones[index_yellow].from, this.config.yellowZones[index_yellow].to, self.config.yellowColor);
 		}
 
-		for (var index_orange in this.config.orangeZones) {
+		for (const index_orange in this.config.orangeZones) {
 			this.drawBand(this.config.orangeZones[index_orange].from, this.config.orangeZones[index_orange].to, self.config.orangeColor);
 		}
 
-		for (var index_red in this.config.redZones) {
+		for (const index_red in this.config.redZones) {
 			this.drawBand(this.config.redZones[index_red].from, this.config.redZones[index_red].to, self.config.redColor);
 		}
 
-		var fontSize;
-		var majorDelta;
-		var minorDelta;
-		var point1;
-		var point2;
+		let fontSize;
+		let minorDelta;
+		let point1;
+		let point2;
 
-		if (undefined != this.config.label) {
+		if (this.config.label !== undefined) {
 			fontSize = Math.round(this.config.size / 8.8);
 
 			this.body.append('svg:text')
@@ -97,12 +96,12 @@ function Gauge(placeholderName, configuration) {
 		}
 
 		fontSize = Math.round(this.config.size / 16);
-		majorDelta = this.config.range / (this.config.majorTicks - 1);
+		const majorDelta = this.config.range / (this.config.majorTicks - 1);
 
-		for (var major = this.config.min; major <= this.config.max; major += majorDelta) {
+		for (let major = this.config.min; major <= this.config.max; major += majorDelta) {
 			minorDelta = majorDelta / this.config.minorTicks;
 
-			for (var minor = major + minorDelta; minor < Math.min(major + majorDelta, this.config.max); minor += minorDelta) {
+			for (let minor = major + minorDelta; minor < Math.min(major + majorDelta, this.config.max); minor += minorDelta) {
 				point1 = this.valueToPoint(minor, 0.75);
 				point2 = this.valueToPoint(minor, 0.85);
 
@@ -126,14 +125,14 @@ function Gauge(placeholderName, configuration) {
 				.style('stroke', '#fafafa')
 				.style('stroke-width', '2px');
 
-			if (major == this.config.min || major == this.config.max) {
-				var point = this.valueToPoint(major, 0.63);
+			if (major === this.config.min || major === this.config.max) {
+				const point = this.valueToPoint(major, 0.63);
 
 				this.body.append('svg:text')
 					.attr('x', point.x)
 					.attr('y', point.y)
 					.attr('dy', fontSize / 3)
-					.attr('text-anchor', major == this.config.min ? 'start' : 'end')
+					.attr('text-anchor', major === this.config.min ? 'start' : 'end')
 					.text(major)
 					.style('font-size', fontSize + 'px')
 					.style('fill', '#fafafa')
@@ -141,15 +140,15 @@ function Gauge(placeholderName, configuration) {
 			}
 		}
 
-		var pointerContainer = this.body.append('svg:g').attr('class', 'pointerContainer');
+		const pointerContainer = this.body.append('svg:g').attr('class', 'pointerContainer');
 
-		var midValue = (this.config.min + this.config.max) / 2;
+		const midValue = (this.config.min + this.config.max) / 2;
 
-		var pointerPath = this.buildPointerPath(midValue);
+		const pointerPath = this.buildPointerPath(midValue);
 
-		var pointerLine = d3.svg.line()
-			.x((d) => { return d.x; })
-			.y((d) => { return d.y; })
+		const pointerLine = d3.svg.line()
+			.x((d) => d.x)
+			.y((d) => d.y)
 			.interpolate('basis');
 
 		pointerContainer.selectAll('path')
@@ -186,21 +185,21 @@ function Gauge(placeholderName, configuration) {
 	};
 
 	this.buildPointerPath = function (value) {
-		var delta = this.config.range / 13;
+		const delta = this.config.range / 13;
 
-		var head  = valueToPoint(value, 0.85);
-		var head1 = valueToPoint(value - delta, 0.12);
-		var head2 = valueToPoint(value + delta, 0.12);
+		const head  = valueToPoint(value, 0.85);
+		const head1 = valueToPoint(value - delta, 0.12);
+		const head2 = valueToPoint(value + delta, 0.12);
 
-		var tailValue = value - (this.config.range * (1 / (270 / 360)) / 2);
-		var tail  = valueToPoint(tailValue, 0.28);
-		var tail1 = valueToPoint(tailValue - delta, 0.12);
-		var tail2 = valueToPoint(tailValue + delta, 0.12);
+		const tailValue = value - (this.config.range * (1 / (270 / 360)) / 2);
+		const tail  = valueToPoint(tailValue, 0.28);
+		const tail1 = valueToPoint(tailValue - delta, 0.12);
+		const tail2 = valueToPoint(tailValue + delta, 0.12);
 
 		return [ head, head1, tail2, tail, tail1, head2, head ];
 
 		function valueToPoint(value, factor) {
-			var point = self.valueToPoint(value, factor);
+			const point = self.valueToPoint(value, factor);
 			point.x -= self.config.cx;
 			point.y -= self.config.cy;
 			return point;
@@ -217,35 +216,33 @@ function Gauge(placeholderName, configuration) {
 				.endAngle(this.valueToRadians(end))
 				.innerRadius(0.79 * this.config.radius)
 				.outerRadius(0.86 * this.config.radius))
-			.attr('transform', () => {
-				return 'translate(' + self.config.cx + ', ' + self.config.cy + ') rotate(270)';
-			});
+			.attr('transform', () => 'translate(' + self.config.cx + ', ' + self.config.cy + ') rotate(270)');
 	};
 
 	this.redraw = function (value, transitionDuration) {
-		var pointerContainer = this.body.select('.pointerContainer');
+		const pointerContainer = this.body.select('.pointerContainer');
 
 		pointerContainer.selectAll('text').text(value);
 
-		var pointer = pointerContainer.selectAll('path');
+		const pointer = pointerContainer.selectAll('path');
 		pointer.transition()
-			.duration(undefined != transitionDuration ? transitionDuration : this.config.transitionDuration)
-			.delay(10)
+			.duration(transitionDuration !== undefined ? transitionDuration : this.config.transitionDuration)
+			// .delay(10)
 			// .ease('linear')
 			// .attr('transform', function(d)
 			.attrTween('transform', () => {
-				var pointerValue = value;
+				let pointerValue = value;
 
 				if      (value > self.config.max) pointerValue = self.config.max + 0.02 * self.config.range;
 				else if (value < self.config.min) pointerValue = self.config.min - 0.02 * self.config.range;
 
-				var targetRotation  = (self.valueToDegrees(pointerValue) - 90);
-				var currentRotation = self._currentRotation || targetRotation;
+				const targetRotation  = (self.valueToDegrees(pointerValue) - 90);
+				const currentRotation = self._currentRotation || targetRotation;
 
 				self._currentRotation = targetRotation;
 
 				return function (step) {
-					var rotation = currentRotation + (targetRotation - currentRotation) * step;
+					const rotation = currentRotation + (targetRotation - currentRotation) * step;
 					return 'translate(' + self.config.cx + ', ' + self.config.cy + ') rotate(' + rotation + ')';
 				};
 			});
