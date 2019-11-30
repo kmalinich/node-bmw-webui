@@ -14,10 +14,13 @@ function debug_toggle() {
 }
 
 const gauge_sizes = {
-	small  : 258,
-	medium : 258,
+	small  : 254,
+	medium : 254,
 	large  : 372,
 	xl     : 385,
+
+	landscape2 : 490,
+	landscape4 : 254,
 };
 
 
@@ -115,36 +118,27 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('engine-speed',          'RPM',  0, 7000, 5, gauge_sizes.large);
-	gauge_create('engine-throttle-pedal', 'DK %', 0, 100,  5, gauge_sizes.large);
+	gauge_create('engine-throttle-pedal',                   'DK %', 0, 100,  5, gauge_sizes.landscape4);
+	gauge_create('engine-speed',                            'RPM',  0, 7000, 5, gauge_sizes.landscape4);
+	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
+	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
 
-	gauge_create('vehicle-dsc-torque_reduction_1', 'Reduce1 %', 0, 100, 10, gauge_sizes.large);
-	gauge_create('vehicle-dsc-torque_reduction_2', 'Reduce2 %', 0, 100, 10, gauge_sizes.large);
+	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-output',               'Out %',     0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
 
-	gauge_create('engine-torque-loss',                 'Loss %');
-	gauge_create('engine-torque-output',               'Out %');
-	gauge_create('engine-torque-before_interventions', 'Before %');
-	gauge_create('engine-torque-after_interventions',  'After %');
+	gauge_create_temp('temperature-coolant-c',  'Clnt °C',   0, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-oil-c',      'Oil °C',    0, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-intake-c',   'IAT °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-exterior-c', 'Atm °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('system-temperature',     'CPU °C',    5,  80, 5, gauge_sizes.landscape4);
 
-	// gauge_create('engine-torque_value-loss',                 'Loss %');
-	// gauge_create('engine-torque_value-output',               'Out %');
-	// gauge_create('engine-torque_value-before_interventions', 'Before %');
-	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.large);
-
-	// gauge_create('engine-horsepower-loss',                 'Loss %');
-	// gauge_create('engine-horsepower-output',               'Out %');
-	// gauge_create('engine-horsepower-before_interventions', 'Before %');
-	gauge_create('engine-horsepower-after_interventions', '#BuffHorses', 0, 400, 5, gauge_sizes.large);
-
-	gauge_create_temp('system-temperature',     'CPU °C', 5, 80);
-	gauge_create_temp('temperature-coolant-c',  'Clnt °C');
-	gauge_create_temp('temperature-exhaust-c',  'EGT °C', 300, 900);
-	gauge_create_temp('temperature-exterior-c', 'Atm °C', -20, 40);
-	gauge_create_temp('temperature-intake-c',   'IAT °C', -20, 40);
-	gauge_create_temp('temperature-oil-c',      'Oil °C');
-
-	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi',  13, 15);
-	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5);
+	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi', 13,  15, 5, gauge_sizes.landscape4);
+	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
 	// gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
 	// gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
 	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);

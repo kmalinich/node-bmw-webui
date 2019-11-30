@@ -15,7 +15,7 @@ if ! hash tidy > /dev/null 2>&1; then
 	USE_TIDY="0"
 fi
 
-if ! hash brotli > /dev/null 2>&1; then
+if ! hash brotli1 > /dev/null 2>&1; then
 	echo "Warning : brotli binary not found, will not be used"
 	USE_BROTLI="0"
 fi
