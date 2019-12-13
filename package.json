@@ -10,15 +10,15 @@
 		"font-awesome": "^4.7.0",
 		"glyphicons": "^0.2.0",
 		"moment": "^2.24.0",
-		"nouislider": "^14.0.3",
+		"nouislider": "^14.1.0",
 		"popper.js": "^1.16.0",
 		"socket.io-client": "^2.3.0"
 	},
 	"description": "node-bmw webUI code",
 	"devDependencies": {
-		"eslint": "^6.7.1",
+		"eslint": "^6.7.2",
 		"eslint-config-esnext": "^4.0.0",
-		"eslint-plugin-import": "^2.18.2",
+		"eslint-plugin-import": "^2.19.1",
 		"eslint-plugin-node": "^10.0.0",
 		"eslint-plugin-promise": "^4.2.1",
 		"eslint-plugin-standard": "^4.0.1"

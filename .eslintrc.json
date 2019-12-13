@@ -11,8 +11,8 @@
 		"esnext"
 	],
 	"globals": {
-		"d3": false,
 		"Gauge": false,
+		"d3": false,
 		"gauges": true,
 		"init_websocket": true,
 		"io": false,

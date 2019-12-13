@@ -6,17 +6,17 @@ USE_TIDY="1"
 
 
 if ! hash php > /dev/null 2>&1; then
-	echo "Error : php binary required, cannot continue"
+	echo "ERR : php binary required, cannot continue"
 	exit 1
 fi
 
 if ! hash tidy > /dev/null 2>&1; then
-	echo "Warning : tidy binary not found, will not be used"
+	echo "WRN : tidy binary not found, will not be used"
 	USE_TIDY="0"
 fi
 
 if ! hash brotli > /dev/null 2>&1; then
-	echo "Warning : brotli binary not found, will not be used"
+	echo "INF : brotli binary not found, will not be used"
 	USE_BROTLI="0"
 fi
 
@@ -24,15 +24,17 @@ fi
 # if not, don't compress brotli files
 if hash nginx > /dev/null 2>&1; then
 	if ! nginx -V 2>&1 | grep -Eq brotli; then
-		echo "Nginx install is missing brotli support, not brotli-compressing files"
+		echo "INF : nginx install is missing brotli support, not brotli-compressing files"
 		USE_BROTLI="0"
 	fi
 fi
 
 if ! hash gzip > /dev/null 2>&1; then
-	echo "Warning : gzip binary not found, will not be used"
+	echo "WRN : gzip binary not found, will not be used"
 	USE_GZIP="0"
 fi
+
+[[ "$((USE_GZIP+USE_BROTLI+USE_TIDY))" != "3" ]] && echo
 
 
 # Clean up
@@ -43,7 +45,7 @@ rm -f "${ARRAY_OLD_FILES[@]}"
 for FILE_PHP in ./*.php; do
 	[[ "${FILE_PHP}" == *"*"* ]] && continue
 
-	echo "Rendering '${FILE_PHP}'"
+	echo "INF : Rendering '${FILE_PHP}'"
 
 	FILE_HTML="${FILE_PHP/\.php/}.html"
 
@@ -61,7 +63,7 @@ for FILE_COMPRESS in ./*.html ./css/*.css /css/*.css.map ./images/*.svg ./js/*.j
 	[[      "${FILE_COMPRESS}" == *"*"* ]] && continue
 	[[ ! -s "${FILE_COMPRESS}"          ]] && continue
 
-	echo "Compressing '${FILE_COMPRESS}'"
+	echo "INF : Compressing '${FILE_COMPRESS}'"
 
 	FILE_BR="${FILE_COMPRESS}.br"
 	FILE_GZ="${FILE_COMPRESS}.gz"
@@ -80,4 +82,7 @@ for FILE_COMPRESS in ./*.html ./css/*.css /css/*.css.map ./images/*.svg ./js/*.j
 done
 echo
 
-echo "Complete"
+echo "INF : Fixing ownership"
+chown -R www-data:www-data .
+
+echo "INF : Complete"
