@@ -1,3 +1,5 @@
 /*.html
 *.br
 *.gz
+
+/audio/
