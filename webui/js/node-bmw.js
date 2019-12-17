@@ -1,6 +1,28 @@
 /* eslint no-console     : 0 */
 /* eslint no-unused-vars : 0 */
 
+window.socket_debug = false;
+
+let socket;
+const gauges = [];
+
+
+// Toggle debug console output on and off
+function debug_toggle() {
+	window.socket_debug = !window.socket_debug;
+	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
+}
+
+const gauge_sizes = {
+	small  : 254,
+	medium : 254,
+	large  : 372,
+	xl     : 385,
+
+	landscape2 : 490,
+	landscape4 : 254,
+};
+
 
 // Convert integer to hex string
 function i2s(data, prefix = true) {
@@ -8,11 +30,13 @@ function i2s(data, prefix = true) {
 
 	hexstr = data.toString(16).toUpperCase();
 
-	hexstr = hexstr.length === 1    && '0'  + hexstr || hexstr;
-	const string = prefix        === true && '0x' + hexstr || hexstr;
+	hexstr = hexstr.length === 1 && '0' + hexstr || hexstr;
+
+	const string = prefix === true && '0x' + hexstr || hexstr;
 
 	return string;
 }
+
 
 const form2json = elements => [].reduce.call(elements, (data, element) => {
 	switch (element.type) {
@@ -88,12 +112,7 @@ function clean_class_all() {
 
 // Remove all color-coded CSS classes from a text id
 function clean_class(id) {
-	$(id).removeClass('text-danger')
-		.removeClass('text-success')
-		.removeClass('text-warning')
-		.removeClass('text-primary')
-		.removeClass('text-info')
-		.text('');
+	$(id).removeClass('text-danger').removeClass('text-success').removeClass('text-warning').removeClass('text-primary').removeClass('text-info').text('');
 }
 
 
@@ -373,20 +392,22 @@ function status_apply(return_data) {
 	// Clean up page
 	clean_class_all();
 
+
 	// Time and date
 	$('#obc-time').text(return_data.obc.time);
 	$('#obc-date').text(return_data.obc.date);
 
+
 	// Engine status
 	$('#engine-speed').text(return_data.engine.speed);
+
 	if (return_data.engine.running) {
-		$('#engine-running').text('Engine running')
-			.addClass('text-success');
+		$('#engine-running').text('Engine running').addClass('text-success');
 	}
 	else {
-		$('#engine-running').text('Engine off')
-			.addClass('text-danger');
+		$('#engine-running').text('Engine off').addClass('text-danger');
 	}
+
 
 	/*
 	 * Temperatures
@@ -412,81 +433,102 @@ function status_apply(return_data) {
 	$('#vehicle-odometer-mi').text(return_data.vehicle.odometer.mi);
 	$('#vehicle-vin').text(return_data.vehicle.vin);
 
+
 	/*
 	 * Vehicle sensors
 	 */
 
+
 	// Handbrake
 	if (return_data.vehicle.handbrake) {
-		$('#vehicle-handbrake').text('Handbrake on')
-			.addClass('text-danger');
+		$('#vehicle-handbrake').text('Handbrake on').addClass('text-danger');
 	}
 	else {
-		$('#vehicle-handbrake').text('Handbrake off')
-			.addClass('text-success');
+		$('#vehicle-handbrake').text('Handbrake off').addClass('text-success');
 	}
+
 
 	// Reverse
 	if (return_data.vehicle.reverse) {
-		$('#vehicle-reverse').text('In reverse')
-			.addClass('text-danger');
+		$('#vehicle-reverse').text('In reverse').addClass('text-danger');
 	}
 	else {
-		$('#vehicle-reverse').text('Not in reverse')
-			.addClass('text-success');
+		$('#vehicle-reverse').text('Not in reverse').addClass('text-success');
 	}
+
 
 	// Ignition
+	let ignition_class = 'danger';
+
 	switch (return_data.vehicle.ignition) {
-		case 'run':
-			$('#vehicle-ignition').text('Ignition run')
-				.addClass('text-success');
-			break;
-		case 'accessory':
-			$('#vehicle-ignition').text('Ignition accessory')
-				.addClass('text-info');
-			break;
-		case 'start':
-			$('#vehicle-ignition').text('Ignition start')
-				.addClass('text-warning');
-			break;
-		default:
-			$('#vehicle-ignition').text('Ignition off')
-				.addClass('text-danger');
-			break;
+		case 'run'       : ignition_class = 'success'; break;
+		case 'accessory' : ignition_class = 'info';    break;
+		case 'start'     : ignition_class = 'warning';
 	}
 
-	// Doors (doors) and window status
-	if (return_data.doors.front_left)    { $('#doors-front-left').text('Door open');      }
-	else { $('#doors-front-left').text('Door closed');      }
-	if (return_data.doors.front_right)   { $('#doors-front-right').text('Door open');     }
-	else { $('#doors-front-right').text('Door closed');     }
-	if (return_data.doors.hood)          { $('#doors-hood').text('Hood open');            }
-	else { $('#doors-hood').text('Hood closed');            }
-	if (return_data.doors.rear_left)     { $('#doors-rear-left').text('Door open');       }
-	else { $('#doors-rear-left').text('Door closed');       }
-	if (return_data.doors.rear_right)    { $('#doors-rear-right').text('Door open');      }
-	else { $('#doors-rear-right').text('Door closed');      }
-	if (return_data.doors.trunk)         { $('#doors-trunk').text('Trunk open');          }
-	else { $('#doors-trunk').text('Trunk closed');          }
-	if (return_data.windows.front_left)  { $('#windows-front-left').text('Window open');  }
-	else { $('#windows-front-left').text('Window closed');  }
-	if (return_data.windows.front_right) { $('#windows-front-right').text('Window open'); }
-	else { $('#windows-front-right').text('Window closed'); }
-	if (return_data.windows.rear_left)   { $('#windows-rear-left').text('Window open');   }
-	else { $('#windows-rear-left').text('Window closed');   }
-	if (return_data.windows.rear_right)  { $('#windows-rear-right').text('Window open');  }
-	else { $('#windows-rear-right').text('Window closed');  }
-	if (return_data.windows.roof)        { $('#windows-roof').text('Moonroof open');      }
-	else { $('#windows-roof').text('Moonroof closed');      }
+	$('#vehicle-ignition').text('Ignition ' + return_data.vehicle.ignition).addClass('text-' + ignition_class);
 
-	// Lighting status
-	if (return_data.lights.interior) { $('#lights-interior').text('interior lights on'); }
-	else { $('#lights-interior').text('interior lights off'); }
 
-	// Central locking status
+	// Door status
+	const doors = {
+		hood  : 'closed',
+		trunk : 'closed',
+
+		front : { left : 'closed', right : 'closed' },
+		rear  : { left : 'closed', right : 'closed' },
+	};
+
+	if (return_data.doors.hood)  doors.hood  = 'open';
+	if (return_data.doors.trunk) doors.trunk = 'open';
+
+	if (return_data.doors.front_left)  doors.front.left  = 'open';
+	if (return_data.doors.front_right) doors.front.right = 'open';
+	if (return_data.doors.rear_left)   doors.rear.left   = 'open';
+	if (return_data.doors.rear_right)  doors.rear.right  = 'open';
+
+	$('#doors-hood').text('Hood ' + doors.hood);
+	$('#doors-trunk').text('Trunk ' + doors.trunk);
+
+	$('#doors-front-left').text('Door ' + doors.front.left);
+	$('#doors-front-right').text('Door ' + doors.front.right);
+	$('#doors-rear-left').text('Door ' + doors.rear.left);
+	$('#doors-rear-right').text('Door ' + doors.rear.right);
+
+
+	// Window status
+	const windows = {
+		roof : 'closed',
+
+		front : { left : 'closed', right : 'closed' },
+		rear  : { left : 'closed', right : 'closed' },
+	};
+
+	if (return_data.doors.roof) doors.roof = 'open';
+
+	if (return_data.windows.front_left)  windows.front.left  = 'open';
+	if (return_data.windows.front_right) windows.front.right = 'open';
+	if (return_data.windows.rear_left)   windows.rear.left   = 'open';
+	if (return_data.windows.rear_right)  windows.rear.right  = 'open';
+
+	$('#doors-roof').text('Roof ' + doors.roof);
+	$('#doors-trunk').text('Trunk ' + doors.trunk);
+
+	$('#windows-front-left').text('Window ' + windows.front.left);
+	$('#windows-front-right').text('Window ' + windows.front.right);
+	$('#windows-rear-left').text('Window ' + windows.rear.left);
+	$('#windows-rear-right').text('Window ' + windows.rear.right);
+
+
+	// Interior lighting
+	let interior_lights = 'off';
+	if (return_data.lights.interior) interior_lights = 'on';
+	$('#lights-interior').text('Interior lights ' + interior_lights);
+
+
+	// Central locking
 	if (return_data.vehicle.locked) { $('#vehicle-locked').text('Locked'); }
 	else { $('#vehicle-locked').text('Unlocked'); }
+
 
 	// Current, average, and limit speed
 	if (return_data.coding.unit.speed === null) {
@@ -507,6 +549,7 @@ function status_apply(return_data) {
 		$('#obc-speedavg').text(return_data.obc.average_speed.mph);
 	}
 
+
 	// Distance to arrival and range to empty
 	$('#obc-distance-unit').text(return_data.coding.unit.distance);
 	$('#obc-range-unit').text(return_data.coding.unit.distance);
@@ -519,6 +562,7 @@ function status_apply(return_data) {
 	else if (return_data.coding.unit.distance === 'km') {
 		$('#obc-range').text(return_data.obc.range.km);
 	}
+
 
 	// Fuel consumption
 	$('#obc-consumption-1-unit').text(return_data.coding.unit.cons);
@@ -534,11 +578,13 @@ function status_apply(return_data) {
 		$('#obc-consumption-2').text(return_data.obc.consumption.c2.l100);
 	}
 
+
 	// Stopwatch, timer, aux heat timers
 	$('#obc-aux-heat-timer-1').text(return_data.obc.aux_heat_timer.t1);
 	$('#obc-aux-heat-timer-2').text(return_data.obc.aux_heat_timer.t2);
 	$('#obc-stopwatch').text(return_data.obc.stopwatch);
 	$('#obc-timer').text(return_data.obc.timer);
+
 
 	// Coding data
 	$('#obc-coding-unit-cons').text(return_data.coding.unit.cons);
@@ -602,32 +648,20 @@ function ws_ibus() {
 	const socket = io();
 
 	socket.on('connect', () => {
-		$('#ws-bus-header').removeClass('text-warning')
-			.removeClass('text-success')
-			.removeClass('text-danger')
-			.addClass('text-success')
-			.text('Socket connected');
+		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').removeClass('text-danger').addClass('text-success').text('Socket connected');
 	});
 
 	socket.on('error', (error) => {
 		console.error(error);
-		$('#ws-bus-header').removeClass('text-warning')
-			.removeClass('text-success')
-			.addClass('text-danger')
-			.removeClass('text-success')
-			.text('Socket error');
+		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').addClass('text-danger').removeClass('text-success').text('Socket error');
 	});
 
 	socket.on('disconnect', () => {
-		$('#ws-bus-header').removeClass('text-warning')
-			.removeClass('text-danger')
-			.addClass('text-warning')
-			.removeClass('text-success')
-			.text('Socket disconnected');
+		$('#ws-bus-header').removeClass('text-warning').removeClass('text-danger').addClass('text-warning').removeClass('text-success').text('Socket disconnected');
 	});
 
 	socket.on('data-receive', (data) => {
-		let msg_fmt   = '';
+		let msg_fmt     = '';
 		const timestamp = moment().format('h:mm:ss a');
 
 		// Format the message
@@ -658,10 +692,7 @@ function ws_ibus() {
 		data_send.dst = $('#ws-bus-dst').val();
 
 		// Create the message array by removing whitespaces and splitting by comma
-		data_send.msg = $('#ws-bus-msg').val()
-			.replace(' ', '')
-			.replace('0x', '')
-			.split(',');
+		data_send.msg = $('#ws-bus-msg').val().replace(' ', '').replace('0x', '').split(',');
 
 		// Format the message
 		const msg_array = [];
@@ -690,6 +721,327 @@ function init_listeners() {
 
 	if (buttons.obc.reset !== null) {
 		buttons.obc.reset.addEventListener('pointerup', () => { obc_reset(); });
+	}
+}
+
+
+// For gauges where a high value is bad
+function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
+	const config = {
+		size,
+		label,
+		min,
+		max,
+		minorTicks : ticks,
+	};
+
+	const range = config.max - config.min;
+
+	config.yellowZones = [ {
+		from : config.min + range * 0.8,
+		to   : config.min + range * 0.9,
+	} ];
+
+	config.redZones = [ {
+		from : config.min + range * 0.9,
+		to   : config.max,
+	} ];
+
+	log('[gauge_create] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
+
+// For temperature gauges
+function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = gauge_sizes.small) {
+	const config = {
+		size,
+		label,
+		min,
+		max,
+		minorTicks : ticks,
+	};
+
+	const range = config.max - config.min;
+
+	config.blueZones = [ {
+		from : config.min,
+		to   : config.min + range * 0.2,
+	} ];
+
+	config.yellowZones = [ {
+		from : config.min + range * 0.9,
+		to   : config.min + range * 0.95,
+	} ];
+
+	config.redZones = [ {
+		from : config.min + range * 0.95,
+		to   : config.max,
+	} ];
+
+	log('[gauge_create] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
+
+
+// For gauges where a low value is bad
+function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
+	const config = {
+		size,
+		label,
+		min,
+		max,
+		minorTicks : ticks,
+	};
+
+	const range = config.max - config.min;
+
+	config.yellowZones = [ {
+		from : config.min + range * 0.1,
+		to   : config.min + range * 0.2,
+	} ];
+
+	config.redZones = [ {
+		from : config.min,
+		to   : config.min + range * 0.1,
+	} ];
+
+	log('[gauge_create_reverse] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
+
+
+function init_dash() {
+	log('init_dash()');
+
+	gauge_create('engine-throttle-pedal',                   'DK %', 0, 100,  5, gauge_sizes.landscape4);
+	// gauge_create('engine-rpm',                              'RPM',  0, 7000, 5, gauge_sizes.landscape4);
+	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
+	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
+
+	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-output',               'Out %',     0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
+
+	gauge_create_temp('temperature-coolant-c',  'Clnt °C',   0, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-oil-c',      'Oil °C',    0, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-intake-c',   'IAT °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-exterior-c', 'Atm °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('system-temperature',     'CPU °C',    5,  80, 5, gauge_sizes.landscape4);
+
+	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi', 13,  15, 5, gauge_sizes.landscape4);
+	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
+	// gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
+	// gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
+	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
+	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
+	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
+
+	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
+
+	// gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
+
+
+	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
+	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
+	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
+	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
+	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
+	gauge_create_reverse('fuel-pump-duty-percent', 'EKP %',  0, 100);
+
+	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
+
+	gauge_create('system-cpu-load_pct', 'CPU %');
+}
+
+function log(msg) {
+	console.log('[websocket] %s', msg);
+}
+
+
+function on_config_tx(data) {
+	if (window.socket_debug === true) console.log(data);
+}
+
+function on_log_tx(data) {
+	if (window.socket_debug === true) {
+		console.log(JSON.stringify(data, null, 2));
+	}
+}
+
+function on_status_tx(data) {
+	if (window.socket_debug === true) console.dir([ 'on_status_tx()', data ]);
+
+	const v_full = data.value.full;
+
+	// Initial page load data
+	switch (data.key.full) {
+		case 'dme' : {
+			gauges['dme-voltage'].redraw(v_full.voltage);
+			break;
+		}
+
+		case 'engine' : {
+			gauges['engine-throttle-pedal'].redraw(v_full.throttle.pedal);
+			// gauges['engine-rpm'].redraw(v_full.rpm);
+
+			gauges['engine-torque_value-after_interventions'].redraw(v_full.torque_value.after_interventions);
+			// gauges['engine-torque_value-before_interventions'].redraw(v_full.torque_value.before_interventions);
+			// gauges['engine-torque_value-loss'].redraw(v_full.torque_value.loss);
+			// gauges['engine-torque_value-output'].redraw(v_full.torque_value.output);
+
+			gauges['engine-horsepower-after_interventions'].redraw(v_full.horsepower.after_interventions);
+			// gauges['engine-horsepower-before_interventions'].redraw(v_full.horsepower.before_interventions);
+			// gauges['engine-horsepower-loss'].redraw(v_full.horsepower.loss);
+			// gauges['engine-horsepower-output'].redraw(v_full.horsepower.output);
+
+			gauges['engine-torque-after_interventions'].redraw(v_full.torque.after_interventions);
+			gauges['engine-torque-before_interventions'].redraw(v_full.torque.before_interventions);
+			gauges['engine-torque-loss'].redraw(v_full.torque.loss);
+			gauges['engine-torque-output'].redraw(v_full.torque.output);
+
+			gauges['engine-atmospheric_pressure-psi'].redraw(v_full.atmospheric_pressure.psi);
+			gauges['engine-aux_fan_speed'].redraw(v_full.aux_fan_speed);
+			break;
+		}
+
+		case 'fuel' : {
+			// gauges['fuel-consumption'].redraw(v_full.consumption);
+			gauges['fuel-level'].redraw(v_full.level);
+			gauges['fuel-pump-duty-percent'].redraw(v_full.pump.percent);
+			break;
+		}
+
+		// case 'gpio' : {
+		// 	gauges['gpio-relay_0'].redraw(v_full.relay_0);
+		// 	gauges['gpio-relay_1'].redraw(v_full.relay_1);
+		// 	break;
+		// }
+
+		case 'lcm' : {
+			gauges['lcm-voltage-terminal_30'].redraw(v_full.voltage.terminal_30);
+			break;
+		}
+
+		case 'obc' : {
+			gauges['obc-average_speed-mph'].redraw(v_full.average_speed.mph);
+			gauges['obc-consumption-c1-mpg'].redraw(v_full.consumption.c1.mpg);
+			gauges['obc-consumption-c2-mpg'].redraw(v_full.consumption.c2.mpg);
+			gauges['obc-range-mi'].redraw(v_full.range.mi);
+			break;
+		}
+
+		case 'system' : {
+			gauges['system-cpu-load_pct'].redraw(v_full.cpu.load_pct);
+			gauges['system-temperature'].redraw(v_full.temperature);
+			break;
+		}
+
+		case 'temperature' : {
+			gauges['temperature-coolant-c'].redraw(v_full.coolant.c);
+			gauges['temperature-exhaust-c'].redraw(v_full.exhaust.c);
+			gauges['temperature-exterior-c'].redraw(v_full.exterior.c);
+			gauges['temperature-intake-c'].redraw(v_full.intake.c);
+			gauges['temperature-oil-c'].redraw(v_full.oil.c);
+			break;
+		}
+
+		case 'vehicle' : {
+			gauges['vehicle-dsc-torque_reduction_1'].redraw(v_full.dsc.torque_reduction_1);
+			gauges['vehicle-dsc-torque_reduction_2'].redraw(v_full.dsc.torque_reduction_2);
+
+			gauges['vehicle-ignition_level'].redraw(v_full.ignition_level);
+
+			gauges['vehicle-steering-angle'].redraw(v_full.steering.angle);
+
+			gauges['vehicle-wheel_speed-front-left'].redraw(v_full.wheel_speed.front.left);
+			gauges['vehicle-wheel_speed-front-right'].redraw(v_full.wheel_speed.front.right);
+			gauges['vehicle-wheel_speed-rear-left'].redraw(v_full.wheel_speed.rear.left);
+			gauges['vehicle-wheel_speed-rear-right'].redraw(v_full.wheel_speed.rear.right);
+			break;
+		}
+
+		default : { // Delta updates
+			const path_hyphen = data.key.full.replace(/\./g, '-');
+
+			if (typeof gauges[path_hyphen] !== 'undefined') {
+				if (window.socket_debug === true) console.log('Updating gauge \'%s\'', path_hyphen);
+				gauges[path_hyphen].redraw(data.value.stub);
+			}
+		}
+	}
+}
+
+
+// Send data over WebSocket
+function send(event, data = null) {
+	const message = {
+		event,
+		data,
+	};
+
+	socket.emit('client-tx', message);
+}
+
+
+// Dashboard WebSocket
+function init_websocket() {
+	log('init_websocket()');
+
+	ws_set_status('connecting');
+
+	// Open WebSocket
+	socket = io();
+
+	socket.on('connect', () => {
+		ws_set_status('connect');
+		log('connected');
+		send('status-request', 'all');
+	});
+
+	socket.on('error', (error) => {
+		ws_set_status('error');
+		log('error');
+		console.error(error);
+	});
+
+	socket.on('disconnect', () => {
+		log('disconnected');
+		ws_set_status('disconnect');
+	});
+
+	socket.on('config-tx', on_config_tx);
+	socket.on('log-tx',    on_log_tx);
+	socket.on('status-tx', on_status_tx);
+
+	init_dash();
+}
+
+function ws_set_status(status) {
+	switch (status) {
+		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
+		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
+		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
+		default           : $('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
+	}
+
+	switch (status) {
+		case 'connect'    : $('#status-ws').text('Connected');    break;
+		case 'error'      : $('#status-ws').text('Error');        break;
+		case 'disconnect' : $('#status-ws').text('Disconnected'); break;
+		default           :	$('#status-ws').text('Connecting');
 	}
 }
 

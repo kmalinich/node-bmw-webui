@@ -63,17 +63,19 @@ for FILE_COMPRESS in ./*.html ./css/*.css /css/*.css.map ./images/*.svg ./js/*.j
 	[[      "${FILE_COMPRESS}" == *"*"* ]] && continue
 	[[ ! -s "${FILE_COMPRESS}"          ]] && continue
 
-	echo "INF : Compressing '${FILE_COMPRESS}'"
-
 	FILE_BR="${FILE_COMPRESS}.br"
 	FILE_GZ="${FILE_COMPRESS}.gz"
 
 	if [[ "${USE_BROTLI}" == "1" ]]; then
+		echo "INF : Compressing '${FILE_COMPRESS}' (brotli)"
+
 		[[ -s "${FILE_BR}" ]] && rm -f "${FILE_BR}"
 		brotli --keep --lgwin=0 --quality=11 "${FILE_COMPRESS}"
 	fi
 
 	if [[ "${USE_GZIP}" == "1" ]]; then
+		echo "INF : Compressing '${FILE_COMPRESS}' (gzip)"
+
 		[[ -s "${FILE_GZ}" ]] && rm -f "${FILE_GZ}"
 		gzip --best --force --keep "${FILE_COMPRESS}"
 	fi
@@ -82,7 +84,9 @@ for FILE_COMPRESS in ./*.html ./css/*.css /css/*.css.map ./images/*.svg ./js/*.j
 done
 echo
 
-echo "INF : Fixing ownership"
-chown -R www-data:www-data .
+if id www-data > /dev/null 2>&1; then
+	echo "INF : Setting ownership to www-data"
+	chown -R www-data:www-data .
+fi
 
 echo "INF : Complete"

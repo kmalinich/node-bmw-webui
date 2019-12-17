@@ -3,6 +3,7 @@
 	<head>
 		<?php include './include/head.php'; ?>
 	</head>
+
 	<body>
 		<?php include './include/navbar.php'; ?>
 		<div class="container-fluid">
@@ -24,11 +25,13 @@
 
 			<h4 class="pull-right">Reverb</h4>
 			<input type="text" id="slider-dsp-reverb" name="dsp-reverb" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="always" data-slider-tooltip-position="top" />
+
 			<h4 class="pull-right">Room size</h4>
 			<input type="text" id="slider-dsp-room-size" name="dsp-room-size" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="always" data-slider-tooltip-position="top" />
 			<hr/>
+
 			<h4 class="pull-right">EQ</h4>
-<!--
+			<!--
 			<h5 class="">200Hz</h5>
 			<h5 class="">500Hz</h5>
 			<h5 class="">1KHz</h5>
@@ -36,15 +39,15 @@
 			<h5 class="">5KHz</h5>
 			<h5 class="">12KHz</h5>
 			<h5 class="">80Hz</h5>
--->
+			-->
 
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
-			<input type="text" id="slider-dsp-" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-" data-provide="slider" data-slider-min="0" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-80hz"  data-slider-orientation="vertical" data-slider-selection="after" name="dsp-80hz"  data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-200hz" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-200hz" data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-500hz" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-500hz" data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-1khz"  data-slider-orientation="vertical" data-slider-selection="after" name="dsp-1khz"  data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-2khz"  data-slider-orientation="vertical" data-slider-selection="after" name="dsp-2khz"  data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-5khz"  data-slider-orientation="vertical" data-slider-selection="after" name="dsp-5khz"  data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
+			<input type="text" id="slider-dsp-12khz" data-slider-orientation="vertical" data-slider-selection="after" name="dsp-12khz" data-provide="slider" data-slider-min="-10" data-slider-max="10" data-slider-value="0" data-slider-tooltip="hide" data-slider-reversed="true"/>
 			<hr/>
 
 			<div class="row">
@@ -55,5 +58,6 @@
 
 		</div>
 	</body>
+
 	<?php include './include/js.php'; ?>
 </html>
