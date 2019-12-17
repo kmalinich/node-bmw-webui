@@ -7,7 +7,7 @@ let socket;
 const gauges = [];
 
 function log(msg) {
-	console.log('[websocket] %s', msg);
+	console.log('[node-bmw] %o', msg);
 }
 
 // Toggle debug console output on and off
@@ -407,7 +407,7 @@ function status() {
 
 // Take status object, parse, and display
 function status_apply(return_data) {
-	console.dir([ 'status_apply()', return_data ]);
+	if (window.socket_debug === true) console.log('status_apply()', return_data);
 
 	// Clean up page
 	clean_class_all();
@@ -860,7 +860,7 @@ function on_log_tx(data) {
 
 
 function on_status_tx(data) {
-	if (window.socket_debug === true) console.dir([ 'on_status_tx()', data ]);
+	if (window.socket_debug === true) console.log('on_status_tx()', data);
 
 	const v_full = data.value.full;
 
