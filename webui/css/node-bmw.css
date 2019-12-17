@@ -30,8 +30,9 @@ svg.gauge {
 	margin: -5px -9px;
 }
 
-.container-dash {
+body {
 	background-color: #000;
+	color: #fff;
 }
 
 .col,
@@ -114,10 +115,6 @@ svg.gauge {
 	margin-top: 0.3125rem;
 }
 
-
-body {
-	color: #fff;
-}
 
 hr {
 	border-top: 1px solid #ffffff3a;

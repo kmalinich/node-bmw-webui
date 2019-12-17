@@ -1025,8 +1025,6 @@ function init_websocket() {
 	socket.on('config-tx', on_config_tx);
 	socket.on('log-tx',    on_log_tx);
 	socket.on('status-tx', on_status_tx);
-
-	init_dash();
 }
 
 function ws_set_status(status) {

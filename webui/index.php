@@ -4,7 +4,7 @@
 		<?php include './include/head.php'; ?>
 	</head>
 
-	<body class="container-dash">
+	<body>
 		<?php include './include/navbar.php'; ?>
 
 		<div class="container-fluid">
@@ -83,4 +83,6 @@
 	</body>
 
 	<?php include './include/js.php'; ?>
+
+	<script type="text/javascript">init_dash();</script>
 </html>

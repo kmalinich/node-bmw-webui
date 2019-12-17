@@ -8,7 +8,7 @@
 
 <script src="js/popper.js"     type="text/javascript"></script>
 <script src="js/material.js"   type="text/javascript"></script>
-<!-- <script src="js/nouislider.js" type="text/javascript"></script> -->
+<script src="js/nouislider.js" type="text/javascript"></script>
 
 <script src="js/d3.js" type="text/javascript"></script>
 
