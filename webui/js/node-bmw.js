@@ -7,15 +7,26 @@ let socket;
 const gauges = [];
 
 
-function log(msg) {
-	console.log('[node-bmw] %o', msg);
-}
-
 // Toggle debug console output on and off
 function debug_toggle() {
 	window.socket_debug = !window.socket_debug;
 	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
 }
+
+function log(msg) {
+	console.log('[node-bmw] %o', msg);
+}
+
+function get_type(object) {
+	let type = typeof object;
+
+	if (type === 'object') {
+		if (object.isArray() === true) type = 'array';
+	}
+
+	return type;
+}
+
 
 // Convert a string to hex
 function str2hex(str) {
@@ -864,26 +875,34 @@ function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('on_status_tx()', data);
 
 	Object.entries(data.value.full).forEach(([ key_00, value_00 ]) => {
-		if (typeof value_00 !== 'object') {
-			console.log('[00] status.' + data.key.stub + '.' + key_00 + ' (%s)', typeof value_00, value_00);
+		const type_value_00 = get_type(value_00);
+
+		if (type_value_00 !== 'object') {
+			console.log('[00] status.' + data.key.stub + '.' + key_00 + ' (%s)', type_value_00, value_00);
 			return;
 		}
 
 		Object.entries(value_00).forEach(([ key_01, value_01 ]) => {
-			if (typeof value_01 !== 'object') {
-				console.log('[01] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + ' (%s)', typeof value_01, value_01);
+			const type_value_01 = get_type(value_01);
+
+			if (type_value_01 !== 'object') {
+				console.log('[01] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + ' (%s)', type_value_01, value_01);
 				return;
 			}
 
 			Object.entries(value_01).forEach(([ key_02, value_02 ]) => {
-				if (typeof value_02 !== 'object') {
-					console.log('[02] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + '.' + key_02 + ' (%s)', typeof value_02, value_02);
+				const type_value_02 = get_type(value_02);
+
+				if (type_value_02 !== 'object') {
+					console.log('[02] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + '.' + key_02 + ' (%s)', type_value_02, value_02);
 					return;
 				}
 
 				Object.entries(value_02).forEach(([ key_03, value_03 ]) => {
-					if (typeof value_03 !== 'object') {
-						console.log('[03] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + '.' + key_02 + '.' + key_03 + ' (%s)', typeof value_03, value_03);
+					const type_value_03 = get_type(value_03);
+
+					if (type_value_03 !== 'object') {
+						console.log('[03] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + '.' + key_02 + '.' + key_03 + ' (%s)', type_value_03, value_03);
 					}
 				});
 			});
