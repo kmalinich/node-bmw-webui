@@ -35,6 +35,3 @@
 		</ul>
 	</div>
 </nav>
-
-
-<!-- vim: set syntax=html filetype=html ts=2 sw=2 tw=0 noet :-->
