@@ -91,8 +91,8 @@ function clean_class_all() {
 	clean_class('#obc-distance-unit');
 	clean_class('#obc-range');
 	clean_class('#obc-range-unit');
-	clean_class('#obc-speedavg');
-	clean_class('#obc-speedavg-unit');
+	clean_class('#obc-average-speed');
+	clean_class('#obc-average-speed-unit');
 	clean_class('#obc-speedlimit');
 	clean_class('#obc-speedlimit-unit');
 	clean_class('#obc-stopwatch');
@@ -558,12 +558,12 @@ function status_apply(return_data) {
 	if (typeof return_data.coding.unit.speed !== 'string' && return_data.coding.unit.speed === null) return_data.coding.unit.speed = 'mph';
 
 	$('#vehicle-speed-unit').text(return_data.coding.unit.speed.toUpperCase());
-	$('#obc-speedavg-unit').text(return_data.coding.unit.speed.toUpperCase());
+	$('#obc-average-speed-unit').text(return_data.coding.unit.speed.toUpperCase());
 	$('#obc-speedlimit-unit').text(return_data.coding.unit.speed.toUpperCase());
 	$('#obc-speedlimit').text(return_data.obc.speedlimit);
 
 	$('#vehicle-speed').text(return_data.vehicle.speed[return_data.coding.unit.speed]);
-	$('#obc-speedavg').text(return_data.obc.speedavg[return_data.coding.unit.speed]);
+	$('#obc-average-speed').text(return_data.obc.average_speed[return_data.coding.unit.speed]);
 
 
 	// Distance to arrival and range to empty

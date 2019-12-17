@@ -87,7 +87,7 @@
 					<div class="row text-center">
 						<div class="col-sm">
 							<h5>Speed average</h5>
-							<h6><span id="obc-speedavg"></span> <span id="obc-speedavg-unit"></span></h6>
+							<h6><span id="obc-average-speed"></span> <span id="obc-average-speed-unit"></span></h6>
 						</div>
 
 						<div class="col-sm">
