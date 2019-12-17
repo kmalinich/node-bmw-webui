@@ -864,11 +864,11 @@ function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('on_status_tx()', data);
 
 	Object.entries(data.value.full).forEach(([ key_00, value_00 ]) => {
-		console.log('[00] status.' + data.key.stub + '.' + key_00 + ' = typeof value_00 : \'%s\', value_00 : %o', key_00, typeof value_00, value_00);
+		console.log('[00] status.' + data.key.stub + '.' + key_00 + ' = (%s), value_00 : %o', typeof value_00, value_00);
 
 		if (typeof value_00 === 'object') {
 			Object.entries(value_00).forEach(([ key_01, value_01 ]) => {
-				console.log('[01] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + ' = typeof value_01 : \'%s\', value_01 : %o', key_01, typeof value_01, value_01);
+				console.log('[01] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + ' = (%s), value_01 : %o', typeof value_01, value_01);
 			});
 		}
 	});
