@@ -1,3 +1,25 @@
+body {
+	background-color: #000;
+	color: #fff;
+}
+
+hr {
+	border-top: 1px solid #ffffff3a;
+	margin-bottom: 0.8rem;
+	margin-top: 0.2rem;
+}
+
+h3 {
+	margin-top: 1.5rem;
+}
+
+/* Dash page */
+svg.gauge {
+	/* height: 209px; */
+	margin: -5px -9px;
+}
+
+
 /* Live WebSocket data table */
 .table-live {
 	height: 300px !important;
@@ -22,17 +44,6 @@ padding-bottom : 3px;
 
 .container-fluid {
 	padding-top: 15px;
-}
-
-/* Dash page */
-svg.gauge {
-	/* height: 209px; */
-	margin: -5px -9px;
-}
-
-body {
-	background-color: #000;
-	color: #fff;
 }
 
 .col,
@@ -113,16 +124,4 @@ body {
 .custom-file-control::before {
 	margin-bottom: 0.3125rem;
 	margin-top: 0.3125rem;
-}
-
-
-hr {
-	border-top: 1px solid #ffffff3a;
-	margin-bottom: 0.8rem;
-	margin-top: 0.2rem;
-}
-
-
-h3 {
-	margin-top: 1.5rem;
 }

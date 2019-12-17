@@ -6,6 +6,9 @@ window.socket_debug = false;
 let socket;
 const gauges = [];
 
+function log(msg) {
+	console.log('[websocket] %s', msg);
+}
 
 // Toggle debug console output on and off
 function debug_toggle() {
@@ -13,16 +16,14 @@ function debug_toggle() {
 	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
 }
 
-const gauge_sizes = {
-	small  : 254,
-	medium : 254,
-	large  : 372,
-	xl     : 385,
-
-	landscape2 : 490,
-	landscape4 : 254,
-};
-
+// Convert a string to hex
+function str2hex(str) {
+	let hex = '';
+	for (let i = 0; i < str.length; i++) {
+		hex += '' + str.charCodeAt(i).toString(16);
+	}
+	return hex;
+}
 
 // Convert integer to hex string
 function i2s(data, prefix = true) {
@@ -40,23 +41,27 @@ function i2s(data, prefix = true) {
 
 const form2json = elements => [].reduce.call(elements, (data, element) => {
 	switch (element.type) {
+		case 'checkbox' : data[element.name] = element.checked; break;
+
 		case 'reset'  :
-		case 'submit' : {
-			break;
-		}
+		case 'submit' : break;
 
-		case 'checkbox' : {
-			data[element.name] = element.checked;
-			break;
-		}
-
-		default : {
-			data[element.name] = element.value;
-		}
+		default : data[element.name] = element.value;
 	}
 
 	return data;
 }, {});
+
+
+const gauge_sizes = {
+	small  : 254,
+	medium : 254,
+	large  : 372,
+	xl     : 385,
+
+	landscape2 : 490,
+	landscape4 : 254,
+};
 
 
 // Clean all the text strings
@@ -337,6 +342,7 @@ function lcm_get() {
 	});
 }
 
+
 // Prepare GM page
 function prepare_gm() {
 	prepare_gm_interior_light();
@@ -361,6 +367,7 @@ function prepare_gm_interior_light() {
 		gm_interior_light(value);
 	});
 }
+
 
 // Prepare LCM page
 function prepare_lcm() {
@@ -387,11 +394,21 @@ function prepare_lcm_dimmer() {
 	});
 }
 
+
+// Get status object
+function status() {
+	$.ajax({
+		url      : '/api/client/status',
+		type     : 'GET',
+		dataType : 'json',
+		success  : status_apply,
+	});
+}
+
 // Take status object, parse, and display
 function status_apply(return_data) {
 	// Clean up page
 	clean_class_all();
-
 
 	// Time and date
 	$('#obc-time').text(return_data.obc.time);
@@ -401,12 +418,15 @@ function status_apply(return_data) {
 	// Engine status
 	$('#engine-speed').text(return_data.engine.speed);
 
+	let engine_class = 'danger';
+	let engine_text  = 'off';
+
 	if (return_data.engine.running) {
-		$('#engine-running').text('Engine running').addClass('text-success');
+		engine_class = 'success';
+		engine_text  = 'running';
 	}
-	else {
-		$('#engine-running').text('Engine off').addClass('text-danger');
-	}
+
+	$('#engine-running').text('Engine ' + engine_text).addClass('text-' + engine_class);
 
 
 	/*
@@ -434,27 +454,28 @@ function status_apply(return_data) {
 	$('#vehicle-vin').text(return_data.vehicle.vin);
 
 
-	/*
-	 * Vehicle sensors
-	 */
-
-
 	// Handbrake
+	let handbrake_class = 'success';
+	let handbrake_text  = 'off';
+
 	if (return_data.vehicle.handbrake) {
-		$('#vehicle-handbrake').text('Handbrake on').addClass('text-danger');
+		handbrake_class = 'danger';
+		handbrake_text  = 'on';
 	}
-	else {
-		$('#vehicle-handbrake').text('Handbrake off').addClass('text-success');
-	}
+
+	$('#vehicle-handbrake').text('Handbrake ' + handbrake_text).addClass('text-' + handbrake_class);
 
 
 	// Reverse
+	let reverse_class = 'success';
+	let reverse_text  = 'disengaged';
+
 	if (return_data.vehicle.reverse) {
-		$('#vehicle-reverse').text('In reverse').addClass('text-danger');
+		reverse_class = 'danger';
+		reverse_text  = 'engaged';
 	}
-	else {
-		$('#vehicle-reverse').text('Not in reverse').addClass('text-success');
-	}
+
+	$('#vehicle-reverse').text('Reverse gear ' + reverse_text).addClass('text-' + reverse_class);
 
 
 	// Ignition
@@ -540,14 +561,8 @@ function status_apply(return_data) {
 	$('#obc-speedlimit-unit').text(return_data.coding.unit.speed.toUpperCase());
 	$('#obc-speedlimit').text(return_data.obc.speedlimit);
 
-	if (return_data.coding.unit.speed === 'kmh') {
-		$('#vehicle-speed').text(return_data.vehicle.speed.kmh);
-		$('#obc-speedavg').text(return_data.obc.speedavg.kmh);
-	}
-	else if (return_data.coding.unit.speed === 'mph') {
-		$('#vehicle-speed').text(return_data.vehicle.speed.mph);
-		$('#obc-speedavg').text(return_data.obc.average_speed.mph);
-	}
+	$('#vehicle-speed').text(return_data.vehicle.speed[return_data.coding.unit.speed]);
+	$('#obc-speedavg').text(return_data.obc.speedavg[return_data.coding.unit.speed]);
 
 
 	// Distance to arrival and range to empty
@@ -555,28 +570,15 @@ function status_apply(return_data) {
 	$('#obc-range-unit').text(return_data.coding.unit.distance);
 	$('#obc-distance').text(return_data.obc.distance);
 
-	if (return_data.coding.unit.distance === 'mi') {
-		$('#obc-range').text(return_data.obc.range.mi);
-	}
-
-	else if (return_data.coding.unit.distance === 'km') {
-		$('#obc-range').text(return_data.obc.range.km);
-	}
+	$('#obc-range').text(return_data.obc.range[return_data.coding.unit.distance]);
 
 
 	// Fuel consumption
 	$('#obc-consumption-1-unit').text(return_data.coding.unit.cons);
 	$('#obc-consumption-2-unit').text(return_data.coding.unit.cons);
 
-	if (return_data.coding.unit.cons === 'mpg') {
-		$('#obc-consumption-1').text(return_data.obc.consumption.c1.mpg);
-		$('#obc-consumption-2').text(return_data.obc.consumption.c2.mpg);
-	}
-
-	else if (return_data.coding.unit.cons === 'l100') {
-		$('#obc-consumption-1').text(return_data.obc.consumption.c1.l100);
-		$('#obc-consumption-2').text(return_data.obc.consumption.c2.l100);
-	}
+	$('#obc-consumption-1').text(return_data.obc.consumption.c1[return_data.coding.unit.cons]);
+	$('#obc-consumption-2').text(return_data.obc.consumption.c2[return_data.coding.unit.cons]);
 
 
 	// Stopwatch, timer, aux heat timers
@@ -594,16 +596,6 @@ function status_apply(return_data) {
 	$('#obc-coding-unit-time').text(return_data.coding.unit.time);
 }
 
-// Get status object
-function status() {
-	$.ajax({
-		url      : '/api/client/status',
-		type     : 'GET',
-		dataType : 'json',
-		success  : status_apply,
-	});
-}
-
 function obc_refresh(callback) {
 	// Data refresh from OBC/IKE
 	$.ajax({
@@ -613,9 +605,7 @@ function obc_refresh(callback) {
 		data     : 'obc-get=all',
 		success  : (return_data) => {
 			console.log(return_data);
-			if (typeof callback === 'function') {
-				callback();
-			}
+			if (typeof callback === 'function') callback();
 		},
 	});
 }
@@ -633,14 +623,6 @@ function lcm_pulse() {
 	});
 }
 
-// Convert a string to hex
-function str2hex(str) {
-	let hex = '';
-	for (let i = 0; i < str.length; i++) {
-		hex += '' + str.charCodeAt(i).toString(16);
-	}
-	return hex;
-}
 
 // Live IBUS data websocket
 function ws_ibus() {
@@ -866,20 +848,15 @@ function init_dash() {
 	gauge_create('system-cpu-load_pct', 'CPU %');
 }
 
-function log(msg) {
-	console.log('[websocket] %s', msg);
-}
-
 
 function on_config_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 }
 
 function on_log_tx(data) {
-	if (window.socket_debug === true) {
-		console.log(JSON.stringify(data, null, 2));
-	}
+	if (window.socket_debug === true) console.log(JSON.stringify(data, null, 2));
 }
+
 
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.dir([ 'on_status_tx()', data ]);
