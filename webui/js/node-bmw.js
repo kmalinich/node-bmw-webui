@@ -1,10 +1,11 @@
 /* eslint no-console     : 0 */
 /* eslint no-unused-vars : 0 */
 
-window.socket_debug = false;
+window.socket_debug = true;
 
 let socket;
 const gauges = [];
+
 
 function log(msg) {
 	console.log('[node-bmw] %o', msg);
@@ -864,6 +865,12 @@ function on_status_tx(data) {
 
 	const v_full = data.value.full;
 
+	Object.keys(data.key.full).forEach((key) => {
+		console.log('key_00 : \'%s\'', key);
+	});
+
+	if (window.page_view !== 'dash') return;
+
 	// Initial page load data
 	switch (data.key.full) {
 		case 'dme' : {
@@ -965,12 +972,7 @@ function on_status_tx(data) {
 
 // Send data over WebSocket
 function send(event, data = null) {
-	const message = {
-		event,
-		data,
-	};
-
-	socket.emit('client-tx', message);
+	socket.emit('client-tx', { event, data });
 }
 
 

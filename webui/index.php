@@ -82,7 +82,13 @@
 		</div>
 	</body>
 
+	<script type="text/javascript">
+		window.page_view = 'dash';
+	</script>
+
 	<?php include './include/js.php'; ?>
 
-	<script type="text/javascript">init_dash();</script>
+	<script type="text/javascript">
+		init_dash();
+	</script>
 </html>
