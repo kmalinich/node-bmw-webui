@@ -21,7 +21,7 @@ function get_type(object) {
 	let type = typeof object;
 
 	if (type === 'object') {
-		if (object.isArray() === true) type = 'array';
+		if (Array.isArray(object) === true) type = 'array';
 	}
 
 	return type;
