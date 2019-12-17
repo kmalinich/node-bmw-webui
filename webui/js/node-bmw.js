@@ -863,13 +863,13 @@ function on_log_tx(data) {
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('on_status_tx()', data);
 
-	const v_full = data.value.full;
-
-	Object.entries(data.key.full).forEach(([ key, value ]) => {
-		console.log('key_00 : \'%s\', value : %o', key, value);
+	Object.entries(data.value.full).forEach(([ key, value ]) => {
+		console.log('status.' + data.key.stub + ' = key_00 : \'%s\', value : %o', key, value);
 	});
 
 	if (window.page_view !== 'dash') return;
+
+	const v_full = data.value.full;
 
 	// Initial page load data
 	switch (data.key.full) {
