@@ -407,6 +407,8 @@ function status() {
 
 // Take status object, parse, and display
 function status_apply(return_data) {
+	console.dir([ 'status_apply()', return_data ]);
+
 	// Clean up page
 	clean_class_all();
 
@@ -541,20 +543,19 @@ function status_apply(return_data) {
 
 
 	// Interior lighting
-	let interior_lights = 'off';
-	if (return_data.lights.interior) interior_lights = 'on';
-	$('#lights-interior').text('Interior lights ' + interior_lights);
+	let interior_lights_text = 'off';
+	if (return_data.lights.interior) interior_lights_text = 'on';
+	$('#lights-interior').text('Interior lights ' + interior_lights_text);
 
 
 	// Central locking
-	if (return_data.vehicle.locked) { $('#vehicle-locked').text('Locked'); }
-	else { $('#vehicle-locked').text('Unlocked'); }
+	let locked_text = 'Unlocked';
+	if (return_data.vehicle.locked) locked_text = 'Locked';
+	$('#vehicle-locked').text(locked_text);
 
 
 	// Current, average, and limit speed
-	if (return_data.coding.unit.speed === null) {
-		return_data.coding.unit.speed = 'mph';
-	}
+	if (typeof return_data.coding.unit.speed !== 'string' && return_data.coding.unit.speed === null) return_data.coding.unit.speed = 'mph';
 
 	$('#vehicle-speed-unit').text(return_data.coding.unit.speed.toUpperCase());
 	$('#obc-speedavg-unit').text(return_data.coding.unit.speed.toUpperCase());
