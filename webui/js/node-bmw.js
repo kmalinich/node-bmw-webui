@@ -18,10 +18,12 @@ function log(msg) {
 }
 
 function get_type(object) {
-	let type = typeof object;
+	const type = typeof object;
 
 	if (type === 'object') {
-		if (Array.isArray(object) === true) type = 'array';
+		if (object === null) return 'null';
+
+		if (Array.isArray(object) === true) return 'array';
 	}
 
 	return type;
