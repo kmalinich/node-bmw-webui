@@ -865,8 +865,8 @@ function on_status_tx(data) {
 
 	const v_full = data.value.full;
 
-	Object.keys(data.key.full).forEach((key) => {
-		console.log('key_00 : \'%s\'', key);
+	Object.entries(data.key.full).forEach(([ key, value ]) => {
+		console.log('key_00 : \'%s\', value : %o', key, value);
 	});
 
 	if (window.page_view !== 'dash') return;
