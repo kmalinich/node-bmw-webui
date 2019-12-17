@@ -863,8 +863,8 @@ function on_log_tx(data) {
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('on_status_tx()', data);
 
-	Object.entries(data.value.full).forEach(([ key, value ]) => {
-		console.log('status.' + data.key.stub + ' = key_00 : \'%s\', value : %o', key, value);
+	Object.entries(data.value.full).forEach(([ key_00, value_00 ]) => {
+		console.log('status.' + data.key.stub + ' = key_00 : \'%s\', typeof value_00 : \'%s\', value_00 : %o', key_00, typeof value_00, value_00);
 	});
 
 	if (window.page_view !== 'dash') return;
