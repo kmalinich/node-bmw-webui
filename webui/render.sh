@@ -2,7 +2,7 @@
 
 USE_BROTLI="1"
 USE_GZIP="1"
-USE_TIDY="1"
+USE_TIDY="0"
 
 
 if ! hash php > /dev/null 2>&1; then
