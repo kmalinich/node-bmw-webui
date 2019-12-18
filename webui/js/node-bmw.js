@@ -1,7 +1,7 @@
 /* eslint no-console     : 0 */
 /* eslint no-unused-vars : 0 */
 
-window.socket_debug = true;
+window.socket_debug = false;
 
 let socket;
 const gauges = [];
@@ -882,7 +882,7 @@ function on_status_tx(data) {
 		const prefix_00     = prefix + '.' + key_00;
 		const type_value_00 = get_type(value_00);
 
-		if (type_value_00 !== 'object') {
+		if (type_value_00 !== 'array' && type_value_00 !== 'object') {
 			console.log('[00] %s (%s) =', prefix_00, type_value_00, value_00);
 			return;
 		}
@@ -891,7 +891,7 @@ function on_status_tx(data) {
 			const prefix_01     = prefix_00 + '.' + key_01;
 			const type_value_01 = get_type(value_01);
 
-			if (type_value_01 !== 'object') {
+			if (type_value_01 !== 'array' && type_value_01 !== 'object') {
 				console.log('[01] %s (%s) =', prefix_01, type_value_01, value_01);
 				return;
 			}
@@ -900,7 +900,7 @@ function on_status_tx(data) {
 				const prefix_02     = prefix_01 + '.' + key_02;
 				const type_value_02 = get_type(value_02);
 
-				if (type_value_02 !== 'object') {
+				if (type_value_02 !== 'array' && type_value_02 !== 'object') {
 					console.log('[02] %s (%s) =', prefix_02, type_value_02, value_02);
 					return;
 				}
@@ -909,7 +909,7 @@ function on_status_tx(data) {
 					const prefix_03     = prefix_02 + '.' + key_02;
 					const type_value_03 = get_type(value_03);
 
-					if (type_value_03 !== 'object') {
+					if (type_value_03 !== 'array' && type_value_03 !== 'object') {
 						console.log('[03] %s (%s) =', prefix_03, type_value_03, value_03);
 					}
 				});
