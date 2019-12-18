@@ -130,6 +130,11 @@ body {
 .custom-file-control,
 .form-control,
 body {
+	color: #ddd;
+}
+
+.custom-file-control:focus,
+.form-control:focus {
 	color: #fff;
 }
 
