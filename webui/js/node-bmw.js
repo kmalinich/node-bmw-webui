@@ -876,39 +876,40 @@ function on_log_tx(data) {
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('on_status_tx()', data);
 
+	let prefix = 'status.' + data.key.stub;
 	Object.entries(data.value.full).forEach(([ key_00, value_00 ]) => {
+		prefix += '.' + key_00;
 		const type_value_00 = get_type(value_00);
-		console.dir({ key_00, value_00, type_value_00 });
 
 		if (type_value_00 !== 'object') {
-			console.log('[00] status.' + data.key.stub + '.' + key_00 + ' (%s)', type_value_00, value_00);
+			console.log('[00] %s (%s) =', prefix, type_value_00, value_00);
 			return;
 		}
 
 		Object.entries(value_00).forEach(([ key_01, value_01 ]) => {
+			prefix += '.' + key_01;
 			const type_value_01 = get_type(value_01);
-			console.dir({ key_01, value_01, type_value_01 });
 
 			if (type_value_01 !== 'object') {
-				console.log('[01] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + ' (%s)', type_value_01, value_01);
+				console.log('[01] %s (%s) =', prefix, type_value_01, value_01);
 				return;
 			}
 
 			Object.entries(value_01).forEach(([ key_02, value_02 ]) => {
+				prefix += '.' + key_02;
 				const type_value_02 = get_type(value_02);
-				console.dir({ key_02, value_02, type_value_02 });
 
 				if (type_value_02 !== 'object') {
-					console.log('[02] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + '.' + key_02 + ' (%s)', type_value_02, value_02);
+					console.log('[02] %s (%s) =', type_value_02, value_02);
 					return;
 				}
 
 				Object.entries(value_02).forEach(([ key_03, value_03 ]) => {
+					prefix += '.' + key_03;
 					const type_value_03 = get_type(value_03);
-					console.dir({ key_03, value_03, type_value_03 });
 
 					if (type_value_03 !== 'object') {
-						console.log('[03] status.' + data.key.stub + '.' + key_00 + '.' + key_01 + '.' + key_02 + '.' + key_03 + ' (%s)', type_value_03, value_03);
+						console.log('[03] %s (%s) =', type_value_03, value_03);
 					}
 				});
 			});
