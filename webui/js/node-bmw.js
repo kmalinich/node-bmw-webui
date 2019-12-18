@@ -703,22 +703,16 @@ function ws_ibus() {
 	});
 }
 
+function gauge_redraw(gauge_id_dot, value) {
+	const gauge_id_dash = gauge_id_dot.replace(/status\./g, '').replace(/\./g, '-');
 
-function init_listeners() {
-	const buttons = {
-		obc : {
-			get   : document.getElementById('btn-obc-value-get'),
-			reset : document.getElementById('btn-obc-value-reset'),
-		},
-	};
+	if (typeof gauges[gauge_id_dash] === 'undefined') return false;
 
-	if (buttons.obc.get !== null) {
-		buttons.obc.get.addEventListener('pointerup', () => { obc_get(); });
-	}
+	if (typeof gauges[gauge_id_dash].redraw !== 'function') return false;
 
-	if (buttons.obc.reset !== null) {
-		buttons.obc.reset.addEventListener('pointerup', () => { obc_reset(); });
-	}
+	gauges[gauge_id_dash].redraw(value);
+
+	return true;
 }
 
 
@@ -813,57 +807,6 @@ function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size 
 }
 
 
-function init_dash() {
-	log('init_dash()');
-
-	gauge_create('engine-throttle-pedal',                   'DK %', 0, 100,  5, gauge_sizes.landscape4);
-	// gauge_create('engine-rpm',                              'RPM',  0, 7000, 5, gauge_sizes.landscape4);
-	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
-	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
-
-	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-output',               'Out %',     0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
-
-	gauge_create_temp('temperature-coolant-c',  'Clnt °C',   0, 100, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-oil-c',      'Oil °C',    0, 100, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-intake-c',   'IAT °C',  -20,  40, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-exterior-c', 'Atm °C',  -20,  40, 5, gauge_sizes.landscape4);
-	gauge_create_temp('system-temperature',     'CPU °C',    5,  80, 5, gauge_sizes.landscape4);
-
-	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi', 13,  15, 5, gauge_sizes.landscape4);
-	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
-	// gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
-	// gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
-	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
-	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
-	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
-
-	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
-
-	// gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
-
-
-	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
-	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
-	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
-	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
-	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
-	gauge_create_reverse('fuel-pump-duty-percent', 'EKP %',  0, 100);
-
-	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
-
-	gauge_create('system-cpu-load_pct', 'CPU %');
-}
-
-
 function on_config_tx(data) {
 	if (window.socket_debug === true) console.log(data);
 }
@@ -872,9 +815,10 @@ function on_log_tx(data) {
 	if (window.socket_debug === true) console.log(JSON.stringify(data, null, 2));
 }
 
-
 function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('on_status_tx()', data);
+
+	if (window.page_view !== 'dash') return;
 
 	const prefix = 'status.' + data.key.stub;
 
@@ -883,7 +827,9 @@ function on_status_tx(data) {
 		const type_value_00 = get_type(value_00);
 
 		if (type_value_00 !== 'array' && type_value_00 !== 'object') {
-			console.log('[00] %s (%s) =', prefix_00, type_value_00, value_00);
+			let redraw = null;
+			if (type_value_00 === 'number') redraw = gauge_redraw(prefix_00, value_00);
+			console.log('[00] %s (%s) =', prefix_00, type_value_00, value_00, redraw);
 			return;
 		}
 
@@ -892,7 +838,9 @@ function on_status_tx(data) {
 			const type_value_01 = get_type(value_01);
 
 			if (type_value_01 !== 'array' && type_value_01 !== 'object') {
-				console.log('[01] %s (%s) =', prefix_01, type_value_01, value_01);
+				let redraw = null;
+				if (type_value_01 === 'number') redraw = gauge_redraw(prefix_01, value_01);
+				console.log('[01] %s (%s) =', prefix_01, type_value_01, value_01, redraw);
 				return;
 			}
 
@@ -901,7 +849,9 @@ function on_status_tx(data) {
 				const type_value_02 = get_type(value_02);
 
 				if (type_value_02 !== 'array' && type_value_02 !== 'object') {
-					console.log('[02] %s (%s) =', prefix_02, type_value_02, value_02);
+					let redraw = null;
+					if (type_value_02 === 'number') redraw = gauge_redraw(prefix_02, value_02);
+					console.log('[02] %s (%s) =', prefix_02, type_value_02, value_02, redraw);
 					return;
 				}
 
@@ -910,14 +860,18 @@ function on_status_tx(data) {
 					const type_value_03 = get_type(value_03);
 
 					if (type_value_03 !== 'array' && type_value_03 !== 'object') {
-						console.log('[03] %s (%s) =', prefix_03, type_value_03, value_03);
+						let redraw = null;
+						if (type_value_03 === 'number') redraw = gauge_redraw(prefix_03, value_03);
+						console.log('[03] %s (%s) =', prefix_03, type_value_03, value_03, redraw);
 					}
 				});
 			});
 		});
 	});
 
-	if (window.page_view !== 'dash') return;
+	/* eslint no-unreachable : 0 */
+
+	return;
 
 	const v_full = data.value.full;
 
@@ -1026,7 +980,74 @@ function send(event, data = null) {
 }
 
 
-// Dashboard WebSocket
+function init_dash() {
+	log('init_dash()');
+
+	gauge_create('engine-throttle-pedal',                   'DK %', 0, 100,  5, gauge_sizes.landscape4);
+	// gauge_create('engine-rpm',                              'RPM',  0, 7000, 5, gauge_sizes.landscape4);
+	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
+	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
+
+	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-output',               'Out %',     0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
+
+	gauge_create_temp('temperature-coolant-c',  'Clnt °C',   0, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-oil-c',      'Oil °C',    0, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-intake-c',   'IAT °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-exterior-c', 'Atm °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('system-temperature',     'CPU °C',    5,  80, 5, gauge_sizes.landscape4);
+
+	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi', 13,  15, 5, gauge_sizes.landscape4);
+	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
+	// gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
+	// gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
+	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
+	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
+	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
+
+	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
+
+	// gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
+
+
+	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
+	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
+	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
+	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
+	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
+	gauge_create_reverse('fuel-pump-duty-percent', 'EKP %',  0, 100);
+
+	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
+
+	gauge_create('system-cpu-load_pct', 'CPU %');
+}
+
+function init_listeners() {
+	const buttons = {
+		obc : {
+			get   : document.getElementById('btn-obc-value-get'),
+			reset : document.getElementById('btn-obc-value-reset'),
+		},
+	};
+
+	if (buttons.obc.get !== null) {
+		buttons.obc.get.addEventListener('pointerup', () => { obc_get(); });
+	}
+
+	if (buttons.obc.reset !== null) {
+		buttons.obc.reset.addEventListener('pointerup', () => { obc_reset(); });
+	}
+}
+
+// Dashboard websocket
 function init_websocket() {
 	log('init_websocket()');
 
