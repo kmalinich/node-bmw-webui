@@ -14,7 +14,7 @@ function debug_toggle() {
 }
 
 function log(msg) {
-	console.log('[node-bmw] %o', msg);
+	console.log('[node-bmw] %s', msg);
 }
 
 function get_type(object) {
@@ -822,6 +822,7 @@ function on_status_tx(data) {
 
 	const prefix = 'status.' + data.key.stub;
 
+	// YEAH BABY I THOUGHT SO
 	Object.entries(data.value.full).forEach(([ key_00, value_00 ]) => {
 		const prefix_00     = prefix + '.' + key_00;
 		const type_value_00 = get_type(value_00);
