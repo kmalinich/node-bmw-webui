@@ -135,7 +135,10 @@ body {
 
 .custom-file-control:focus,
 .form-control:focus {
+	background-color: transparent;
+	border-color: #17ffe9;
 	color: #fff;
+	outline: 0;
 }
 
 [class*=" bmd-label"],
