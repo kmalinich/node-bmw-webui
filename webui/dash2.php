@@ -113,6 +113,7 @@
 	<script src="js/socket.io.js" type="text/javascript"></script>
 	<script src="js/jquery.js"    type="text/javascript"></script>
 
+	<script src="js/popper.js"   type="text/javascript"></script>
 	<script src="js/material.js"   type="text/javascript"></script>
 
 	<script src="js/gauge-chart-js/dist/index.js" type="text/javascript"></script>
