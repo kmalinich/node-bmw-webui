@@ -2,6 +2,7 @@
 <html lang="en">
 	<head>
 		<?php include './include/head.php'; ?>
+		<link rel="stylesheet" type="text/css" href="css/dash2.css">
 	</head>
 
 	<body>
@@ -12,7 +13,7 @@
 			<h3>Engine</h3>
 			<hr>
 			<div class="conical-gauge-wrapper">
-				<div class="conical-gauge"></div>
+				<div id="engine-throttle-pedal-container" class="conical-gauge"></div>
 				<span class="label"></span>
 				<div class="controls">
 					<button class="control decrease">Decrease</button>
@@ -109,9 +110,13 @@
 		window.page_view = 'dash2';
 	</script>
 
-	<?php include './include/js.php'; ?>
+	<script src="js/socket.io.js" type="text/javascript"></script>
+	<script src="js/jquery.js"    type="text/javascript"></script>
 
-	<script type="text/javascript">
-		init_dash2();
-	</script>
+	<script src="js/material.js"   type="text/javascript"></script>
+
+	<script src="js/gauge-chart-js/dist/index.js" type="text/javascript"></script>
+	<script type="module" src="js/dash2.mjs" type="text/javascript"></script>
+
+	<script src="js/node-bmw.js" type="text/javascript"></script>
 </html>
