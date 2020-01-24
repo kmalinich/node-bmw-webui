@@ -41,6 +41,10 @@ padding-bottom : 3px;
 	padding-top: 15px;
 }
 
+.mb-0 {
+	margin-bottom: 0;
+}
+
 .col,
 .col-1,
 .col-2,

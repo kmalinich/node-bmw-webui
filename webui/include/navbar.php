@@ -2,7 +2,7 @@
 	<!--
 	<a class="navbar-brand" href="/">node-bmw</a>
 	-->
-	<div id="status-ws" class="mr-2 btn btn-raised btn-warning" style="margin-bottom: 0;" onclick="javascript:debug_toggle()">Connecting</div>
+	<div id="status-ws" class="mr-2 btn btn-raised btn-warning mb-0" onclick="javascript:debug_toggle()">Connecting</div>
 
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
 		<span class="navbar-toggler-icon"></span>
@@ -10,10 +10,8 @@
 
 	<div class="collapse navbar-collapse" id="navbar-menu">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active">
-				<a class="nav-link" href="/">Dash</a>
-			</li>
-
+			<li class="nav-item"><a class="nav-link" href="/">Dash</a></li>
+			<li class="nav-item"><a class="nav-link" href="/dash2">Dash2</a></li>
 			<li class="nav-item"><a class="nav-link" href="status">Status</a></li>
 
 			<!--
