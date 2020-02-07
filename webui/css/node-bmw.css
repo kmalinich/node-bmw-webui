@@ -145,3 +145,7 @@ body {
 [class^=bmd-label] {
 	color: #ffffffa8;
 }
+
+::-webkit-scrollbar {
+	display: none;
+}

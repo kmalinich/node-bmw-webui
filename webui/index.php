@@ -62,7 +62,7 @@
 			<span class="d3-gauge" id="obc-consumption-c2-mpg-container"></span>
 			<!-- <span class="d3-gauge" id="fuel-consumption-container"></span> -->
 			<span class="d3-gauge" id="fuel-level-container"></span>
-			<span class="d3-gauge" id="fuel-pump-duty-percent-container"></span>
+			<span class="d3-gauge" id="fuel-pump-percent-container"></span>
 			<span class="d3-gauge" id="obc-range-mi-container"></span>
 
 			<h3>Wheel speeds</h3>

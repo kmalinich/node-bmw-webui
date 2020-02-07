@@ -921,7 +921,7 @@ function init_dash() {
 	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
 	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
 	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
-	gauge_create_reverse('fuel-pump-duty-percent', 'EKP %',  0, 100);
+	gauge_create_reverse('fuel-pump-percent',      'EKP %',  0, 100);
 
 	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
 
