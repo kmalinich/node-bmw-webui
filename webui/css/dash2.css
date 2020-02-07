@@ -1,0 +1,74 @@
+.conical-gauge-wrapper {
+	background-color: #fff;
+	font-family: 'Open Sans', sans-serif;
+	height: 500px;
+	position: relative;
+	width: 500px;
+}
+
+.conical-gauge-wrapper .conical-gauge {
+	height: 400px;
+	left: 50px;
+	position: relative;
+	top: 50px;
+	width: 400px;
+}
+
+.conical-gauge-wrapper .label {
+	color: #0f3e48;
+	font-size: 66px;
+	left: 50%;
+	letter-spacing: -1.5px;
+	position: absolute;
+	top: 50%;
+	transform: translate(-50%, -60%);
+}
+
+.conical-gauge-wrapper .controls {
+	bottom: 65px;
+	display: flex;
+	left: 50%;
+	position: absolute;
+	transform: translateX(-50%);
+}
+
+.conical-gauge-wrapper .controls .control {
+	background-color: #fff;
+	border: 1px solid #7199e3;
+	color: #7199e3;
+	cursor: pointer;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 16px;
+	padding: 3px 20px;
+	text-align: center;
+	text-decoration: none;
+	transition: 0.2s all;
+}
+
+.conical-gauge-wrapper .controls .control::-moz-focus-inner {
+	border: 0;
+}
+
+.conical-gauge-wrapper .controls .control:first-child {
+	border-radius: 7px 0 0 7px;
+}
+
+.conical-gauge-wrapper .controls .control:not(:first-child) {
+	margin-left: -2px;
+}
+
+.conical-gauge-wrapper .controls .control:last-child {
+	border-radius: 0 7px 7px 0;
+}
+
+.conical-gauge-wrapper .controls .control:focus {
+	background-color: #7199e3;
+	border-color: #7199e3;
+	box-shadow: none;
+	color: #fff;
+	outline: none;
+}
+
+.conical-gauge-wrapper .controls .control:active {
+	background-color: #467adb;
+}
