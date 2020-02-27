@@ -881,7 +881,7 @@ function send(event, data = null) {
 function init_dash() {
 	log('init_dash()');
 
-	gauge_create('engine-throttle-pedal',                   'DK %', 0, 100,  5, gauge_sizes.landscape4);
+	gauge_create('engine-throttle-pedal',                   'Ped %', 0, 100,  5, gauge_sizes.landscape4);
 	// gauge_create('engine-rpm',                              'RPM',  0, 7000, 5, gauge_sizes.landscape4);
 	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
 	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
