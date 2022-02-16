@@ -716,7 +716,7 @@ function gauge_redraw(gauge_id_dot, value) {
 }
 
 
-// For gauges where a high value is bad
+// For gauges where a high value is undesirable
 function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
 	const config = {
 		size,
@@ -739,6 +739,46 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_
 	} ];
 
 	log('[gauge_create] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
+
+// For gauges where both low and high values are undesirable
+function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, ticks = 10, size = gauge_sizes.landscape2) {
+	const config = {
+		size,
+		label,
+		min,
+		max,
+		minorTicks : ticks,
+	};
+
+	const range = config.max - config.min;
+
+	config.yellowZones = [
+		{
+			from : config.min + range * 0.1,
+			to   : config.min + range * 0.2,
+		},
+		{
+			from : config.min + range * 0.8,
+			to   : config.min + range * 0.9,
+		},
+	];
+
+	config.redZones = [
+		{
+			from : config.min,
+			to   : config.min + range * 0.1,
+		},
+		{
+			from : config.min + range * 0.9,
+			to   : config.max,
+		},
+	];
+
+	log('[gauge_create_lowHigh] ' + name);
 
 	gauges[name] = new Gauge(name + '-container', config);
 	gauges[name].render();
@@ -771,7 +811,7 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size =
 		to   : config.max,
 	} ];
 
-	log('[gauge_create] ' + name);
+	log('[gauge_create_temp] ' + name);
 
 	gauges[name] = new Gauge(name + '-container', config);
 	gauges[name].render();
@@ -886,8 +926,9 @@ function init_dash() {
 	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
 	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
 
-	gauge_create('engine-lambda-lambda', 'λ', 0.5, 1.5, 10, gauge_sizes.landscape4);
-	gauge_create('engine-lambda-warmup', '%', 0.0, 1.0, 10, gauge_sizes.landscape4);
+	gauge_create_lowHigh('engine-lambda-lambda', 'λ');
+
+	gauge_create_reverse('engine-lambda-warmup', '%', 0.0, 1.0, 10, gauge_sizes.landscape2);
 
 	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
@@ -896,17 +937,12 @@ function init_dash() {
 	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
 
-	gauge_create_temp('temperature-coolant-c',  'Clnt °C',   0, 100, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-oil-c',      'Oil °C',    0, 100, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-intake-c',   'IAT °C',  -20,  40, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-coolant-c',  'Clnt °C',  50, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-oil-c',      'Oil °C',   50, 100, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-intake-c',   'IAT °C',    0,  40, 5, gauge_sizes.landscape4);
 	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-exterior-c', 'Atm °C',  -20,  40, 5, gauge_sizes.landscape4);
-	gauge_create_temp('system-temperature',     'CPU °C',    5,  80, 5, gauge_sizes.landscape4);
 
-	gauge_create('engine-atmospheric_pressure-psi', 'Atm psi', 13,  15, 5, gauge_sizes.landscape4);
 	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
-	// gauge_create('gpio-relay_0',                    'Audio',    0,   1, 1);
-	// gauge_create('gpio-relay_1',                    'Pi fan',   0,   1, 1);
 	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
 	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
 	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
@@ -917,7 +953,6 @@ function init_dash() {
 	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
 
 	// gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
-
 
 	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
 	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);

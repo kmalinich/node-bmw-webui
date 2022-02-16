@@ -40,9 +40,6 @@
 			<span class="d3-gauge" id="temperature-oil-c-container"></span>
 			<span class="d3-gauge" id="temperature-intake-c-container"></span>
 			<span class="d3-gauge" id="temperature-exhaust-c-container"></span>
-			<span class="d3-gauge" id="temperature-exterior-c-container"></span>
-			<span class="d3-gauge" id="engine-atmospheric_pressure-psi-container"></span>
-			<span class="d3-gauge" id="system-temperature-container"></span>
 
 			<!-- Ignition/power/voltage/etc -->
 			<h3>Voltage/power</h3>
@@ -60,9 +57,6 @@
 			<hr>
 			<i class="material-icons position-absolute">computer</i>
 			<span class="d3-gauge" id="system-cpu-load_pct-container"></span>
-			<!--
-			<span class="d3-gauge" id="system-cpu-speed-container"></span>
-			-->
 			<span class="d3-gauge" id="obc-average_speed-mph-container"></span>
 			<span class="d3-gauge" id="obc-consumption-c1-mpg-container"></span>
 			<span class="d3-gauge" id="obc-consumption-c2-mpg-container"></span>
