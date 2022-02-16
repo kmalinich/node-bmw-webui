@@ -17,6 +17,12 @@
 			<span class="d3-gauge" id="engine-torque_value-after_interventions-container"></span>
 			<span class="d3-gauge" id="engine-horsepower-after_interventions-container"></span>
 
+			<h3>Lambda</h3>
+			<hr>
+			<i class="material-icons position-absolute">track_changes</i>
+			<span class="d3-gauge" id="engine-lambda-lambda-container"></span>
+			<span class="d3-gauge" id="engine-lambda-warmup-container"></span>
+
 			<h3>Torque %</h3>
 			<hr>
 			<i class="material-icons position-absolute">track_changes</i>
@@ -26,12 +32,6 @@
 			<span class="d3-gauge" id="engine-torque-output-container"></span>
 			<span class="d3-gauge" id="engine-torque-before_interventions-container"></span>
 			<span class="d3-gauge" id="engine-torque-after_interventions-container"></span>
-
-			<h3>Lambda</h3>
-			<hr>
-			<i class="material-icons position-absolute">track_changes</i>
-			<span class="d3-gauge" id="engine-lambda-lambda-container"></span>
-			<span class="d3-gauge" id="engine-lambda-warmup-container"></span>
 
 			<h3>Temperatures</h3>
 			<hr>

@@ -886,6 +886,9 @@ function init_dash() {
 	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
 	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
 
+	gauge_create('engine-lambda-lambda', 'λ', 0.5, 1.5, 10, gauge_sizes.landscape4);
+	gauge_create('engine-lambda-warmup', '%', 0.0, 1.0, 10, gauge_sizes.landscape4);
+
 	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
