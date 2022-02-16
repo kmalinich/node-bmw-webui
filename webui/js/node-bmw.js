@@ -717,13 +717,13 @@ function gauge_redraw(gauge_id_dot, value) {
 
 
 // For gauges where a high value is undesirable
-function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
+function gauge_create(name, label, min = 0, max = 100, minorTicks = 10, size = gauge_sizes.small) {
 	const config = {
 		size,
 		label,
 		min,
 		max,
-		minorTicks : ticks,
+		minorTicks,
 	};
 
 	const range = config.max - config.min;
@@ -745,13 +745,13 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_
 }
 
 // For gauges where both low and high values are undesirable
-function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, ticks = 5, size = gauge_sizes.landscape2) {
+function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, minorTicks = 5, size = gauge_sizes.landscape2) {
 	const config = {
 		size,
 		label,
 		min,
 		max,
-		minorTicks : ticks,
+		minorTicks,
 	};
 
 	const range = config.max - config.min;
@@ -784,14 +784,42 @@ function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, ticks = 5, si
 	gauges[name].render();
 }
 
-// For temperature gauges
-function gauge_create_temp(name, label, min = -20, max = 110, ticks = 5, size = gauge_sizes.landscape4) {
+// For gauges where a low value is undesirable
+function gauge_create_reverse(name, label, min = 0, max = 100, minorTicks = 10, size = gauge_sizes.small) {
 	const config = {
 		size,
 		label,
 		min,
 		max,
-		minorTicks : ticks,
+		minorTicks,
+	};
+
+	const range = config.max - config.min;
+
+	config.redZones = [ {
+		from : config.min,
+		to   : config.min + range * 0.1,
+	} ];
+
+	config.yellowZones = [ {
+		from : config.min + range * 0.1,
+		to   : config.min + range * 0.2,
+	} ];
+
+	log('[gauge_create_reverse] ' + name);
+
+	gauges[name] = new Gauge(name + '-container', config);
+	gauges[name].render();
+}
+
+// For temperature gauges
+function gauge_create_temp(name, label, min = -20, max = 110, minorTicks = 5, size = gauge_sizes.landscape4) {
+	const config = {
+		size,
+		label,
+		min,
+		max,
+		minorTicks,
 	};
 
 	const range = config.max - config.min;
@@ -802,45 +830,16 @@ function gauge_create_temp(name, label, min = -20, max = 110, ticks = 5, size = 
 	} ];
 
 	config.yellowZones = [ {
-		from : config.min + range * 0.9,
-		to   : config.min + range * 0.95,
+		from : config.min + range * 0.8,
+		to   : config.min + range * 0.9,
 	} ];
 
 	config.redZones = [ {
-		from : config.min + range * 0.95,
+		from : config.min + range * 0.9,
 		to   : config.max,
 	} ];
 
 	log('[gauge_create_temp] ' + name);
-
-	gauges[name] = new Gauge(name + '-container', config);
-	gauges[name].render();
-}
-
-
-// For gauges where a low value is bad
-function gauge_create_reverse(name, label, min = 0, max = 100, ticks = 10, size = gauge_sizes.small) {
-	const config = {
-		size,
-		label,
-		min,
-		max,
-		minorTicks : ticks,
-	};
-
-	const range = config.max - config.min;
-
-	config.yellowZones = [ {
-		from : config.min + range * 0.1,
-		to   : config.min + range * 0.2,
-	} ];
-
-	config.redZones = [ {
-		from : config.min,
-		to   : config.min + range * 0.1,
-	} ];
-
-	log('[gauge_create_reverse] ' + name);
 
 	gauges[name] = new Gauge(name + '-container', config);
 	gauges[name].render();
@@ -937,20 +936,20 @@ function init_dash() {
 	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
 
-	gauge_create_temp('temperature-coolant-c',  'Clnt °C',  50, 100);
-	gauge_create_temp('temperature-oil-c',      'Oil °C',   50, 100);
-	gauge_create_temp('temperature-intake-c',   'IAT °C',    0,  40);
-	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900);
+	gauge_create_temp('temperature-coolant-c',  'Coolant', 60, 100);
+	gauge_create_temp('temperature-oil-c',      'Oil',     60, 100);
+	gauge_create_temp('temperature-intake-c',   'IAT',      0,  40);
+	gauge_create_temp('temperature-exhaust-c',  'EGT',    300, 900);
 
 	gauge_create('engine-aux_fan_speed', 'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
 
-	gauge_create_lowHigh('dme-voltage',             'DME V', 12, 16, 5, gauge_sizes.landscape4);
-	gauge_create_lowHigh('lcm-voltage-terminal_30', 'LCM V', 12, 16, 5, gauge_sizes.landscape4);
+	gauge_create_lowHigh('dme-voltage',             'DME', 12, 16, 5, gauge_sizes.landscape4);
+	gauge_create_lowHigh('lcm-voltage-terminal_30', 'LCM', 12, 16, 5, gauge_sizes.landscape4);
 
-	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-rear-left',   'WS RL', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-rear-right',  'WS RR', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-front-left',  'FL', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-front-right', 'FR', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-rear-left',   'RL', 0, 240, 5, gauge_sizes.medium);
+	gauge_create('vehicle-wheel_speed-rear-right',  'RR', 0, 240, 5, gauge_sizes.medium);
 
 	// gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
 
@@ -961,7 +960,7 @@ function init_dash() {
 	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
 	gauge_create_reverse('fuel-pump-percent',      'EKP %',  0, 100);
 
-	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
+	gauge_create('vehicle-steering-angle', '°', -675, 675, 5);
 }
 
 function init_listeners() {
