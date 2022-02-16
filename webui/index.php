@@ -47,16 +47,12 @@
 			<i class="material-icons position-absolute">power_settings_new</i>
 			<span class="d3-gauge" id="dme-voltage-container"></span>
 			<span class="d3-gauge" id="lcm-voltage-terminal_30-container"></span>
-			<span class="d3-gauge" id="vehicle-ignition_level-container"></span>
-			<!-- <span class="d3-gauge" id="gpio-relay_0-container"></span> -->
-			<!-- <span class="d3-gauge" id="gpio-relay_1-container"></span> -->
 			<span class="d3-gauge" id="engine-aux_fan_speed-container"></span>
 
 			<!-- OBC data -->
 			<h3>OBC</h3>
 			<hr>
 			<i class="material-icons position-absolute">computer</i>
-			<span class="d3-gauge" id="system-cpu-load_pct-container"></span>
 			<span class="d3-gauge" id="obc-average_speed-mph-container"></span>
 			<span class="d3-gauge" id="obc-consumption-c1-mpg-container"></span>
 			<span class="d3-gauge" id="obc-consumption-c2-mpg-container"></span>

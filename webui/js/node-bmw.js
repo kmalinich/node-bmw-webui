@@ -745,7 +745,7 @@ function gauge_create(name, label, min = 0, max = 100, ticks = 10, size = gauge_
 }
 
 // For gauges where both low and high values are undesirable
-function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, ticks = 10, size = gauge_sizes.landscape2) {
+function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, ticks = 5, size = gauge_sizes.landscape2) {
 	const config = {
 		size,
 		label,
@@ -785,7 +785,7 @@ function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, ticks = 10, s
 }
 
 // For temperature gauges
-function gauge_create_temp(name, label, min = -20, max = 110, ticks = 10, size = gauge_sizes.small) {
+function gauge_create_temp(name, label, min = -20, max = 110, ticks = 5, size = gauge_sizes.landscape4) {
 	const config = {
 		size,
 		label,
@@ -928,7 +928,7 @@ function init_dash() {
 
 	gauge_create_lowHigh('engine-lambda-lambda', 'λ');
 
-	gauge_create_reverse('engine-lambda-warmup', '%', 0.0, 1.0, 10, gauge_sizes.landscape2);
+	gauge_create_reverse('engine-lambda-warmup', '%', 0.0, 1.0, 5, gauge_sizes.landscape2);
 
 	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
@@ -937,15 +937,15 @@ function init_dash() {
 	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
 
-	gauge_create_temp('temperature-coolant-c',  'Clnt °C',  50, 100, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-oil-c',      'Oil °C',   50, 100, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-intake-c',   'IAT °C',    0,  40, 5, gauge_sizes.landscape4);
-	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900, 5, gauge_sizes.landscape4);
+	gauge_create_temp('temperature-coolant-c',  'Clnt °C',  50, 100);
+	gauge_create_temp('temperature-oil-c',      'Oil °C',   50, 100);
+	gauge_create_temp('temperature-intake-c',   'IAT °C',    0,  40);
+	gauge_create_temp('temperature-exhaust-c',  'EGT °C',  300, 900);
 
-	gauge_create('engine-aux_fan_speed',            'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
-	gauge_create('dme-voltage',                     'DME V',    8,  16, 5);
-	gauge_create('lcm-voltage-terminal_30',         'LCM V',    8,  16, 5);
-	gauge_create('vehicle-ignition_level',          'Ignition', 0,   7, 2);
+	gauge_create('engine-aux_fan_speed', 'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
+
+	gauge_create('dme-voltage',             'DME V', 10, 15, 5);
+	gauge_create('lcm-voltage-terminal_30', 'LCM V', 10, 15, 5);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 5, gauge_sizes.medium);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 5, gauge_sizes.medium);
@@ -962,8 +962,6 @@ function init_dash() {
 	gauge_create_reverse('fuel-pump-percent',      'EKP %',  0, 100);
 
 	gauge_create('vehicle-steering-angle', 'STR °', -675, 675, 5);
-
-	gauge_create('system-cpu-load_pct', 'CPU %');
 }
 
 function init_listeners() {
