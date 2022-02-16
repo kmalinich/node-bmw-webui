@@ -944,8 +944,8 @@ function init_dash() {
 
 	gauge_create('engine-aux_fan_speed', 'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
 
-	gauge_create('dme-voltage',             'DME V', 10, 15, 5);
-	gauge_create('lcm-voltage-terminal_30', 'LCM V', 10, 15, 5);
+	gauge_create_lowHigh('dme-voltage',             'DME V', 12, 16, 5, gauge_sizes.landscape4);
+	gauge_create_lowHigh('lcm-voltage-terminal_30', 'LCM V', 12, 16, 5, gauge_sizes.landscape4);
 
 	gauge_create('vehicle-wheel_speed-front-left',  'WS FL', 0, 240, 5, gauge_sizes.medium);
 	gauge_create('vehicle-wheel_speed-front-right', 'WS FR', 0, 240, 5, gauge_sizes.medium);
