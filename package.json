@@ -4,25 +4,25 @@
 		"url": "https://github.com/kmalinich/node-bmw-webui/issues"
 	},
 	"dependencies": {
-		"bootstrap-material-design": "^4.1.2",
-		"d3": "^5.15.0",
+		"bootstrap-material-design": "^4.1.3",
+		"d3": "^6.7.0",
 		"datatables": "^1.10.18",
 		"font-awesome": "^4.7.0",
 		"gauge-chart-js": "^1.1.0",
 		"glyphicons": "^0.2.0",
-		"moment": "^2.24.0",
-		"nouislider": "^14.1.1",
+		"moment": "^2.29.1",
+		"nouislider": "^15.1.1",
 		"popper.js": "^1.16.1",
-		"socket.io-client": "^2.3.0"
+		"socket.io-client": "^4.1.2"
 	},
 	"description": "node-bmw webUI code",
 	"devDependencies": {
-		"eslint": "^6.8.0",
-		"eslint-config-esnext": "^4.0.0",
-		"eslint-plugin-import": "^2.20.0",
-		"eslint-plugin-node": "^11.0.0",
-		"eslint-plugin-promise": "^4.2.1",
-		"eslint-plugin-standard": "^4.0.1"
+		"eslint": "^7.27.0",
+		"eslint-config-esnext": "^4.1.0",
+		"eslint-plugin-import": "^2.23.3",
+		"eslint-plugin-node": "^11.1.0",
+		"eslint-plugin-promise": "^5.1.0",
+		"eslint-plugin-standard": "^4.1.0"
 	},
 	"homepage": "https://github.com/kmalinich/node-bmw-webui#readme",
 	"keywords": [
