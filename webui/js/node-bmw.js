@@ -927,9 +927,11 @@ function init_dash() {
 
 	gauge_create_lowHigh('engine-lambda-lambda', 'λ', 0.75, 1.25, 5, gauge_sizes.landscape4);
 
-	gauge_create('vehicle-dsc-torque_reduction_1',     'Reduce1 %', 0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('vehicle-dsc-torque_reduction_2',     'Reduce2 %', 0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('vehicle-dsc-torque_intervention_asc',    'ASC %',    0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('vehicle-dsc-torque_intervention_asc_lm', 'ASC LM %', 0, 100, 10, gauge_sizes.landscape4);
+	gauge_create('vehicle-dsc-torque_intervention_msr',    'MSR %',    0, 100, 10, gauge_sizes.landscape4);
+
+	// gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-output',               'Out %',     0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
 	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);

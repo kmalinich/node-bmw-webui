@@ -33,9 +33,9 @@
 			<h3>Torque %</h3>
 			<hr>
 			<i class="material-icons position-absolute">track_changes</i>
-			<span class="d3-gauge" id="vehicle-dsc-torque_reduction_1-container"></span>
-			<span class="d3-gauge" id="vehicle-dsc-torque_reduction_2-container"></span>
-			<span class="d3-gauge" id="engine-torque-loss-container"></span>
+			<span class="d3-gauge" id="vehicle-dsc-torque_intervention_asc-container"></span>
+			<span class="d3-gauge" id="vehicle-dsc-torque_intervention_asc_lm-container"></span>
+			<span class="d3-gauge" id="vehicle-dsc-torque_intervention_msr-container"></span>
 			<span class="d3-gauge" id="engine-torque-output-container"></span>
 			<span class="d3-gauge" id="engine-torque-before_interventions-container"></span>
 			<span class="d3-gauge" id="engine-torque-after_interventions-container"></span>
