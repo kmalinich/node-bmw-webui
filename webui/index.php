@@ -77,6 +77,53 @@
 		window.page_view = 'dash';
 	</script>
 
+	<script type="text/javascript">
+		function respondToVisibility(element, callback) {
+			let options = {
+				threshold : [0],
+			};
+
+			let observer = new IntersectionObserver((entries, observer) => {
+				entries.forEach(entry => {
+					callback(entry.intersectionRatio > 0);
+				});
+			}, options);
+
+			observer.observe(element);
+		}
+
+		respondToVisibility(document.getElementById('engine-throttle-pedal-container'),                   visible => { console.log('engine-throttle-pedal                   : %o', visible ); });
+		// respondToVisibility(document.getElementById('engine-rpm-container'),                              visible => { console.log('engine-rpm                              : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-torque_value-after_interventions-container'), visible => { console.log('engine-torque_value-after_interventions : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-horsepower-after_interventions-container'),   visible => { console.log('engine-horsepower-after_interventions   : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-lambda-lambda-container'),                    visible => { console.log('engine-lambda-lambda                    : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-dsc-torque_intervention_asc-container'),     visible => { console.log('vehicle-dsc-torque_intervention_asc     : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-dsc-torque_intervention_asc_lm-container'),  visible => { console.log('vehicle-dsc-torque_intervention_asc_lm  : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-dsc-torque_intervention_msr-container'),     visible => { console.log('vehicle-dsc-torque_intervention_msr     : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-torque-output-container'),                    visible => { console.log('engine-torque-output                    : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-torque-before_interventions-container'),      visible => { console.log('engine-torque-before_interventions      : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-torque-after_interventions-container'),       visible => { console.log('engine-torque-after_interventions       : %o', visible ); });
+		respondToVisibility(document.getElementById('temperature-coolant-c-container'),                   visible => { console.log('temperature-coolant-c                   : %o', visible ); });
+		respondToVisibility(document.getElementById('temperature-oil-c-container'),                       visible => { console.log('temperature-oil-c                       : %o', visible ); });
+		respondToVisibility(document.getElementById('temperature-intake-c-container'),                    visible => { console.log('temperature-intake-c                    : %o', visible ); });
+		respondToVisibility(document.getElementById('temperature-exhaust-c-container'),                   visible => { console.log('temperature-exhaust-c                   : %o', visible ); });
+		respondToVisibility(document.getElementById('dme-voltage-container'),                             visible => { console.log('dme-voltage                             : %o', visible ); });
+		respondToVisibility(document.getElementById('lcm-voltage-terminal_30-container'),                 visible => { console.log('lcm-voltage-terminal_30                 : %o', visible ); });
+		respondToVisibility(document.getElementById('engine-aux_fan_speed-container'),                    visible => { console.log('engine-aux_fan_speed                    : %o', visible ); });
+		respondToVisibility(document.getElementById('obc-average_speed-mph-container'),                   visible => { console.log('obc-average_speed-mph                   : %o', visible ); });
+		respondToVisibility(document.getElementById('obc-consumption-c1-mpg-container'),                  visible => { console.log('obc-consumption-c1-mpg                  : %o', visible ); });
+		respondToVisibility(document.getElementById('obc-consumption-c2-mpg-container'),                  visible => { console.log('obc-consumption-c2-mpg                  : %o', visible ); });
+		// respondToVisibility(document.getElementById('fuel-consumption-container'),                        visible => { console.log('fuel-consumption                        : %o', visible ); });
+		respondToVisibility(document.getElementById('fuel-level-container'),                              visible => { console.log('fuel-level                              : %o', visible ); });
+		respondToVisibility(document.getElementById('fuel-pump-percent-container'),                       visible => { console.log('fuel-pump-percent                       : %o', visible ); });
+		respondToVisibility(document.getElementById('obc-range-mi-container'),                            visible => { console.log('obc-range-mi                            : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-wheel_speed-front-left-container'),          visible => { console.log('vehicle-wheel_speed-front-left          : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-wheel_speed-front-right-container'),         visible => { console.log('vehicle-wheel_speed-front-right         : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-wheel_speed-rear-left-container'),           visible => { console.log('vehicle-wheel_speed-rear-left           : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-wheel_speed-rear-right-container'),          visible => { console.log('vehicle-wheel_speed-rear-right          : %o', visible ); });
+		respondToVisibility(document.getElementById('vehicle-steering-angle-container'),                  visible => { console.log('vehicle-steering-angle                  : %o', visible ); });
+	</script>
+
 	<?php include './include/js.php'; ?>
 
 	<script type="text/javascript">
