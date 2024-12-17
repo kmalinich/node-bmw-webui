@@ -78,50 +78,58 @@
 	</script>
 
 	<script type="text/javascript">
-		function respondToVisibility(element, callback) {
+		function respondToVisibility(elementId, callback) {
+			const element = document.getElementById(`${elementId}-container`);
+
 			let options = {
 				threshold : [0],
 			};
 
 			let observer = new IntersectionObserver((entries, observer) => {
 				entries.forEach(entry => {
-					callback(entry.intersectionRatio > 0);
+					let visible = (entry.intersectionRatio > 0);
+					if (visible === true) {
+						send('websocket-dash-subscribe', elementId);
+					}
+					else {
+						send('websocket-dash-unsubscribe', elementId);
+					}
+
+					return visible;
 				});
 			}, options);
 
 			observer.observe(element);
 		}
 
-		respondToVisibility(document.getElementById('engine-throttle-pedal-container'),                   visible => { console.log('engine-throttle-pedal                   : %o', visible ); });
-		// respondToVisibility(document.getElementById('engine-rpm-container'),                              visible => { console.log('engine-rpm                              : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-torque_value-after_interventions-container'), visible => { console.log('engine-torque_value-after_interventions : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-horsepower-after_interventions-container'),   visible => { console.log('engine-horsepower-after_interventions   : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-lambda-lambda-container'),                    visible => { console.log('engine-lambda-lambda                    : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-dsc-torque_intervention_asc-container'),     visible => { console.log('vehicle-dsc-torque_intervention_asc     : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-dsc-torque_intervention_asc_lm-container'),  visible => { console.log('vehicle-dsc-torque_intervention_asc_lm  : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-dsc-torque_intervention_msr-container'),     visible => { console.log('vehicle-dsc-torque_intervention_msr     : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-torque-output-container'),                    visible => { console.log('engine-torque-output                    : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-torque-before_interventions-container'),      visible => { console.log('engine-torque-before_interventions      : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-torque-after_interventions-container'),       visible => { console.log('engine-torque-after_interventions       : %o', visible ); });
-		respondToVisibility(document.getElementById('temperature-coolant-c-container'),                   visible => { console.log('temperature-coolant-c                   : %o', visible ); });
-		respondToVisibility(document.getElementById('temperature-oil-c-container'),                       visible => { console.log('temperature-oil-c                       : %o', visible ); });
-		respondToVisibility(document.getElementById('temperature-intake-c-container'),                    visible => { console.log('temperature-intake-c                    : %o', visible ); });
-		respondToVisibility(document.getElementById('temperature-exhaust-c-container'),                   visible => { console.log('temperature-exhaust-c                   : %o', visible ); });
-		respondToVisibility(document.getElementById('dme-voltage-container'),                             visible => { console.log('dme-voltage                             : %o', visible ); });
-		respondToVisibility(document.getElementById('lcm-voltage-terminal_30-container'),                 visible => { console.log('lcm-voltage-terminal_30                 : %o', visible ); });
-		respondToVisibility(document.getElementById('engine-aux_fan_speed-container'),                    visible => { console.log('engine-aux_fan_speed                    : %o', visible ); });
-		respondToVisibility(document.getElementById('obc-average_speed-mph-container'),                   visible => { console.log('obc-average_speed-mph                   : %o', visible ); });
-		respondToVisibility(document.getElementById('obc-consumption-c1-mpg-container'),                  visible => { console.log('obc-consumption-c1-mpg                  : %o', visible ); });
-		respondToVisibility(document.getElementById('obc-consumption-c2-mpg-container'),                  visible => { console.log('obc-consumption-c2-mpg                  : %o', visible ); });
-		// respondToVisibility(document.getElementById('fuel-consumption-container'),                        visible => { console.log('fuel-consumption                        : %o', visible ); });
-		respondToVisibility(document.getElementById('fuel-level-container'),                              visible => { console.log('fuel-level                              : %o', visible ); });
-		respondToVisibility(document.getElementById('fuel-pump-percent-container'),                       visible => { console.log('fuel-pump-percent                       : %o', visible ); });
-		respondToVisibility(document.getElementById('obc-range-mi-container'),                            visible => { console.log('obc-range-mi                            : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-wheel_speed-front-left-container'),          visible => { console.log('vehicle-wheel_speed-front-left          : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-wheel_speed-front-right-container'),         visible => { console.log('vehicle-wheel_speed-front-right         : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-wheel_speed-rear-left-container'),           visible => { console.log('vehicle-wheel_speed-rear-left           : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-wheel_speed-rear-right-container'),          visible => { console.log('vehicle-wheel_speed-rear-right          : %o', visible ); });
-		respondToVisibility(document.getElementById('vehicle-steering-angle-container'),                  visible => { console.log('vehicle-steering-angle                  : %o', visible ); });
+		respondToVisibility('engine-throttle-pedal',                   visible => { console.log('engine-throttle-pedal                   : %o', visible ); });
+		respondToVisibility('engine-torque_value-after_interventions', visible => { console.log('engine-torque_value-after_interventions : %o', visible ); });
+		respondToVisibility('engine-horsepower-after_interventions',   visible => { console.log('engine-horsepower-after_interventions   : %o', visible ); });
+		respondToVisibility('engine-lambda-lambda',                    visible => { console.log('engine-lambda-lambda                    : %o', visible ); });
+		respondToVisibility('vehicle-dsc-torque_intervention_asc',     visible => { console.log('vehicle-dsc-torque_intervention_asc     : %o', visible ); });
+		respondToVisibility('vehicle-dsc-torque_intervention_asc_lm',  visible => { console.log('vehicle-dsc-torque_intervention_asc_lm  : %o', visible ); });
+		respondToVisibility('vehicle-dsc-torque_intervention_msr',     visible => { console.log('vehicle-dsc-torque_intervention_msr     : %o', visible ); });
+		respondToVisibility('engine-torque-output',                    visible => { console.log('engine-torque-output                    : %o', visible ); });
+		respondToVisibility('engine-torque-before_interventions',      visible => { console.log('engine-torque-before_interventions      : %o', visible ); });
+		respondToVisibility('engine-torque-after_interventions',       visible => { console.log('engine-torque-after_interventions       : %o', visible ); });
+		respondToVisibility('temperature-coolant-c',                   visible => { console.log('temperature-coolant-c                   : %o', visible ); });
+		respondToVisibility('temperature-oil-c',                       visible => { console.log('temperature-oil-c                       : %o', visible ); });
+		respondToVisibility('temperature-intake-c',                    visible => { console.log('temperature-intake-c                    : %o', visible ); });
+		respondToVisibility('temperature-exhaust-c',                   visible => { console.log('temperature-exhaust-c                   : %o', visible ); });
+		respondToVisibility('dme-voltage',                             visible => { console.log('dme-voltage                             : %o', visible ); });
+		respondToVisibility('lcm-voltage-terminal_30',                 visible => { console.log('lcm-voltage-terminal_30                 : %o', visible ); });
+		respondToVisibility('engine-aux_fan_speed',                    visible => { console.log('engine-aux_fan_speed                    : %o', visible ); });
+		respondToVisibility('obc-average_speed-mph',                   visible => { console.log('obc-average_speed-mph                   : %o', visible ); });
+		respondToVisibility('obc-consumption-c1-mpg',                  visible => { console.log('obc-consumption-c1-mpg                  : %o', visible ); });
+		respondToVisibility('obc-consumption-c2-mpg',                  visible => { console.log('obc-consumption-c2-mpg                  : %o', visible ); });
+		respondToVisibility('fuel-level',                              visible => { console.log('fuel-level                              : %o', visible ); });
+		respondToVisibility('fuel-pump-percent',                       visible => { console.log('fuel-pump-percent                       : %o', visible ); });
+		respondToVisibility('obc-range-mi',                            visible => { console.log('obc-range-mi                            : %o', visible ); });
+		respondToVisibility('vehicle-wheel_speed-front-left',          visible => { console.log('vehicle-wheel_speed-front-left          : %o', visible ); });
+		respondToVisibility('vehicle-wheel_speed-front-right',         visible => { console.log('vehicle-wheel_speed-front-right         : %o', visible ); });
+		respondToVisibility('vehicle-wheel_speed-rear-left',           visible => { console.log('vehicle-wheel_speed-rear-left           : %o', visible ); });
+		respondToVisibility('vehicle-wheel_speed-rear-right',          visible => { console.log('vehicle-wheel_speed-rear-right          : %o', visible ); });
+		respondToVisibility('vehicle-steering-angle',                  visible => { console.log('vehicle-steering-angle                  : %o', visible ); });
 	</script>
 
 	<?php include './include/js.php'; ?>
