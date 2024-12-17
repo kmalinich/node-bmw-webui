@@ -42,7 +42,8 @@
 			<i class="material-icons position-absolute">power_settings_new</i>
 			<span class="d3-gauge" id="dme-voltage-container"></span>
 			<span class="d3-gauge" id="lcm-voltage-terminal_30-container"></span>
-			<span class="d3-gauge" id="engine-aux_fan_speed-container"></span>
+			<span class="d3-gauge" id="engine-ac-request-container"></span>
+			<span class="d3-gauge" id="engine-ac-torque-container"></span>
 
 			<!-- OBC data -->
 			<h3>OBC</h3>

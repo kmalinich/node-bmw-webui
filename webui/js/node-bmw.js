@@ -941,7 +941,8 @@ function init_dash() {
 	gauge_create_temp('temperature-intake-c',   'IAT',      0,  40);
 	gauge_create_temp('temperature-exhaust-c',  'EGT',    300, 900);
 
-	gauge_create('engine-aux_fan_speed', 'Aux fan',  0, 100, 5, gauge_sizes.landscape4);
+	gauge_create('engine-ac-request', 'A/C request', 0, 100, 5, gauge_sizes.landscape4);
+	gauge_create('engine-ac-torque',  'A/C torque',  0, 100, 5, gauge_sizes.landscape4);
 
 	gauge_create_lowHigh('dme-voltage',             'DME', 12, 16, 5, gauge_sizes.landscape4);
 	gauge_create_lowHigh('lcm-voltage-terminal_30', 'LCM', 12, 16, 5, gauge_sizes.landscape4);
