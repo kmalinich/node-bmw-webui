@@ -20,9 +20,16 @@ function gauge_redraw(gauge_id_dot, value) {
 
 	if (typeof gauges[gauge_id_dash] === 'undefined') return false;
 
-	if (typeof gauges[gauge_id_dash].redraw !== 'function') return false;
 
-	gauges[gauge_id_dash].redraw(value);
+	switch (window.dashVersion) {
+		case 1 :
+			if (typeof gauges[gauge_id_dash].redraw !== 'function') return false;
+			gauges[gauge_id_dash].redraw(value);
+			break;
+		case 2 :
+			if (typeof gauges[gauge_id_dash].refresh !== 'function') return false;
+			gauges[gauge_id_dash].refresh(value);
+	}
 
 	return true;
 }
@@ -232,7 +239,8 @@ function respondToVisibility(elementId) {
 }
 
 function initDashVisibility() {
-	const gaugeElements = document.getElementsByClassName('d3-gauge');
+	console.log('[dash] initDashVisibility()');
+	const gaugeElements = document.getElementsByClassName('bmw-gauge');
 
 	for (const gaugeElement of gaugeElements) {
 		const gaugeElementId = gaugeElement.id;

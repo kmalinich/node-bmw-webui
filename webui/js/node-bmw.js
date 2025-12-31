@@ -9,12 +9,9 @@ let socket;
 // Toggle debug console output on and off
 function debug_toggle() {
 	window.socket_debug = !window.socket_debug;
-	log('[debug_toggle] window.socket_debug = ' + window.socket_debug);
+	console.log('[node-bmw] [debug_toggle] window.socket_debug = ' + window.socket_debug);
 }
 
-function log(msg) {
-	console.log('[node-bmw] %s', msg);
-}
 
 function get_type(object) {
 	const type = typeof object;
@@ -699,7 +696,7 @@ function on_status_tx(data) {
 	if (window.socket_debug === true) console.log('[node-bmw] on_status_tx()', data);
 
 	if (window.pageView !== 'dash') return;
-	if (window.dashVersion !== 1) return;
+	// if (window.dashVersion !== 1) return;
 
 	const prefix = 'status.' + data.key.stub;
 
@@ -779,7 +776,7 @@ function init_listeners() {
 
 // Dashboard websocket
 function init_websocket() {
-	log('init_websocket()');
+	console.log('[node-bmw] init_websocket()');
 
 	ws_set_status('connecting');
 
@@ -788,7 +785,7 @@ function init_websocket() {
 
 	socket.on('connect', () => {
 		ws_set_status('connect');
-		log('connected');
+		console.log('[node-bmw][socket.onConnect] connected');
 		send('status-request', 'all');
 
 		if (window.pageView === 'dash') {
@@ -798,12 +795,12 @@ function init_websocket() {
 
 	socket.on('error', (error) => {
 		ws_set_status('error');
-		log('error');
+		console.log('[node-bmw][socket.onError]');
 		console.error(error);
 	});
 
 	socket.on('disconnect', () => {
-		log('disconnected');
+		console.log('[node-bmw][socket.onDisconnect] disconnected');
 		ws_set_status('disconnect');
 	});
 
