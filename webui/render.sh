@@ -42,47 +42,55 @@ mapfile -t ARRAY_OLD_FILES < <(find . -iname '*.br' -o -iname '*.gz' -o -iname '
 rm -f "${ARRAY_OLD_FILES[@]}"
 
 
-for FILE_PHP in ./*.php; do
-	[[ "${FILE_PHP}" == *"*"* ]] && continue
+_render() {
+	for FILE_PHP in ./*.php; do
+		[[ "${FILE_PHP}" == *"*"* ]] && continue
 
-	echo "INF : Rendering '${FILE_PHP}'"
+		echo "INF : Rendering '${FILE_PHP}'"
 
-	FILE_HTML="${FILE_PHP/\.php/}.html"
+		FILE_HTML="${FILE_PHP/\.php/}.html"
 
-	case "${USE_TIDY}" in
-		0) php "${FILE_PHP}" > "${FILE_HTML}" ;;
-		1) php "${FILE_PHP}" | tidy -i -w 200 -ashtml -utf8 2> /dev/null > "${FILE_HTML}" ;;
-	esac
+		case "${USE_TIDY}" in
+			0) php "${FILE_PHP}" > "${FILE_HTML}" ;;
+			1) php "${FILE_PHP}" | tidy -i -w 200 -ashtml -utf8 2> /dev/null > "${FILE_HTML}" ;;
+		esac
 
-	unset FILE_HTML FILE_PHP
-done
-echo
+		unset FILE_HTML FILE_PHP
+	done
+	echo
+}
+
+_compress() {
+	for FILE_COMPRESS in ./*.html ./css/*.css /css/*.css.map ./images/*.svg ./js/*.js ./js/*.js.map; do
+		[[      "${FILE_COMPRESS}" == *"*"* ]] && continue
+		[[ ! -s "${FILE_COMPRESS}"          ]] && continue
+
+		FILE_BR="${FILE_COMPRESS}.br"
+		FILE_GZ="${FILE_COMPRESS}.gz"
+
+		if [[ "${USE_BROTLI}" == "1" || "${USE_GZIP}" == "1" ]]; then
+			echo "INF : Compressing '${FILE_COMPRESS}'"
+		fi
+
+		if [[ "${USE_BROTLI}" == "1" ]]; then
+			[[ -s "${FILE_BR}" ]] && rm -f "${FILE_BR}"
+			brotli --keep --lgwin=0 --quality=11 "${FILE_COMPRESS}"
+		fi
+
+		if [[ "${USE_GZIP}" == "1" ]]; then
+			[[ -s "${FILE_GZ}" ]] && rm -f "${FILE_GZ}"
+			gzip --best --force --keep "${FILE_COMPRESS}"
+		fi
+
+		unset FILE_BR FILE_COMPRESS FILE_GZ
+	done
+	echo
+}
 
 
-for FILE_COMPRESS in ./*.html ./css/*.css /css/*.css.map ./images/*.svg ./js/*.js ./js/*.js.map; do
-	[[      "${FILE_COMPRESS}" == *"*"* ]] && continue
-	[[ ! -s "${FILE_COMPRESS}"          ]] && continue
+_render
+# _compress
 
-	FILE_BR="${FILE_COMPRESS}.br"
-	FILE_GZ="${FILE_COMPRESS}.gz"
-
-	if [[ "${USE_BROTLI}" == "1" || "${USE_GZIP}" == "1" ]]; then
-		echo "INF : Compressing '${FILE_COMPRESS}'"
-	fi
-
-	if [[ "${USE_BROTLI}" == "1" ]]; then
-		[[ -s "${FILE_BR}" ]] && rm -f "${FILE_BR}"
-		brotli --keep --lgwin=0 --quality=11 "${FILE_COMPRESS}"
-	fi
-
-	if [[ "${USE_GZIP}" == "1" ]]; then
-		[[ -s "${FILE_GZ}" ]] && rm -f "${FILE_GZ}"
-		gzip --best --force --keep "${FILE_COMPRESS}"
-	fi
-
-	unset FILE_BR FILE_COMPRESS FILE_GZ
-done
-echo
 
 if id www-data > /dev/null 2>&1; then
 	echo "INF : Setting ownership to www-data"

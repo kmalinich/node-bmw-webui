@@ -1,6 +1,11 @@
-const gauge = new Gauge({
-	container : document.querySelector('#engine-throttle-pedal-container'),
-	color     : '#0f0',
-});
+import JustGage from './justgage.esm.js';
 
-gauge.setValue(50);
+
+const gauge = new JustGage({
+	id    : 'engine-throttle-pedal-container',
+	title : 'Throttle',
+	label : '%',
+	value : 50,
+	min   : 0,
+	max   : 100,
+});
