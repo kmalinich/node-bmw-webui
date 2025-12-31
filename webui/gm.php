@@ -13,7 +13,7 @@
 
 			<div class="row">
 				<div class="col-xs-12">
-					<button class="btn btn-raised btn-lg btn-primary btn-block btn-lg" id="btn-gm-unlock" onclick="javascript:gm_cl('toggle');"><i class="fa fa-unlock-alt"></i> Central locking</button>
+					<button class="btn btn-raised btn-lg btn-primary btn-block btn-lg" id="btn-gm-unlock" onclick="javascript:gm_locks('toggle');"><i class="fa fa-unlock-alt"></i> Central locking</button>
 				</div>
 			</div>
 			<hr>
@@ -56,5 +56,7 @@
 
 		</div>
 	</body>
+
 	<?php include './include/js.php'; ?>
+	<script src="js/node-bmw.js"></script>
 </html>

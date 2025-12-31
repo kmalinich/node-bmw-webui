@@ -4,7 +4,6 @@
 window.socket_debug = false;
 
 let socket;
-const gauges = [];
 
 
 // Toggle debug console output on and off
@@ -65,17 +64,6 @@ const form2json = elements => [].reduce.call(elements, (data, element) => {
 
 	return data;
 }, {});
-
-
-const gauge_sizes = {
-	small  : 254,
-	medium : 254,
-	large  : 372,
-	xl     : 385,
-
-	landscape2 : 490,
-	landscape4 : 254,
-};
 
 
 // Clean all the text strings
@@ -151,6 +139,7 @@ function hdmi_command(command) {
 
 function form_gm() {
 	console.log($('#form-gm').serialize());
+
 	$.ajax({
 		url      : '/api/client/gm',
 		type     : 'POST',
@@ -249,17 +238,12 @@ function form_lcm() {
 }
 
 // Central locking/unlocking
-function gm_cl(action) {
-	console.log('gm_cl(%s);', action);
+function gm_locks(action) {
+	console.log('gm_locks(%s);', action);
 
 	$.ajax({
-		url      : '/api/client/gm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			'command'        : 'locks',
-			'command-action' : action,
-		},
+		url     : '/api/client/gm/locks',
+		type    : 'POST',
 		success : (return_data) => {
 			console.log(return_data);
 		},
@@ -269,11 +253,8 @@ function gm_cl(action) {
 // AJAX for GM interior_light
 function gm_interior_light(value) {
 	$.ajax({
-		url      : '/api/client/gm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'interior-light=' + value,
-		success  : (return_data) => {
+		url     : `/api/client/gm/interior-light/${value}`,
+		success : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -284,29 +265,14 @@ function gm_windows(window, action) {
 	console.log('gm_windows(%s, %s);', window, action);
 
 	$.ajax({
-		url      : '/api/client/gm',
+		url      : '/api/client/gm/windows',
 		type     : 'POST',
 		dataType : 'json',
 		data     : {
 			window,
-			'window-action' : action,
+			action,
 		},
 		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
-}
-
-// AJAX for LCM dimmer
-function lcm_dimmer(value) {
-	console.log('lcm_dimmer(%s);', value);
-
-	$.ajax({
-		url      : '/api/client/lcm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'lcm-dimmer=' + value,
-		success  : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -336,6 +302,22 @@ function gm_get() {
 			'command' : 'io-status',
 		},
 		success : (return_data) => {
+			console.log(return_data);
+		},
+	});
+}
+
+
+// AJAX for LCM dimmer
+function lcm_dimmer(value) {
+	console.log('lcm_dimmer(%s);', value);
+
+	$.ajax({
+		url      : '/api/client/lcm',
+		type     : 'POST',
+		dataType : 'json',
+		data     : 'lcm-dimmer=' + value,
+		success  : (return_data) => {
 			console.log(return_data);
 		},
 	});
@@ -703,147 +685,6 @@ function ws_ibus() {
 	});
 }
 
-function gauge_redraw(gauge_id_dot, value) {
-	const gauge_id_dash = gauge_id_dot.replace(/status\./g, '').replace(/\./g, '-');
-
-	if (typeof gauges[gauge_id_dash] === 'undefined') return false;
-
-	if (typeof gauges[gauge_id_dash].redraw !== 'function') return false;
-
-	gauges[gauge_id_dash].redraw(value);
-
-	return true;
-}
-
-
-// For gauges where a high value is undesirable
-function gauge_create(name, label, min = 0, max = 100, minorTicks = 10, size = gauge_sizes.small) {
-	const config = {
-		size,
-		label,
-		min,
-		max,
-		minorTicks,
-	};
-
-	const range = config.max - config.min;
-
-	config.yellowZones = [ {
-		from : config.min + range * 0.8,
-		to   : config.min + range * 0.9,
-	} ];
-
-	config.redZones = [ {
-		from : config.min + range * 0.9,
-		to   : config.max,
-	} ];
-
-	log('[gauge_create] ' + name);
-
-	gauges[name] = new Gauge(name + '-container', config);
-	gauges[name].render();
-}
-
-// For gauges where both low and high values are undesirable
-function gauge_create_lowHigh(name, label, min = 0.75, max = 1.25, minorTicks = 5, size = gauge_sizes.landscape2) {
-	const config = {
-		size,
-		label,
-		min,
-		max,
-		minorTicks,
-	};
-
-	const range = config.max - config.min;
-
-	config.yellowZones = [
-		{
-			from : config.min + range * 0.1,
-			to   : config.min + range * 0.2,
-		},
-		{
-			from : config.min + range * 0.8,
-			to   : config.min + range * 0.9,
-		},
-	];
-
-	config.redZones = [
-		{
-			from : config.min,
-			to   : config.min + range * 0.1,
-		},
-		{
-			from : config.min + range * 0.9,
-			to   : config.max,
-		},
-	];
-
-	log('[gauge_create_lowHigh] ' + name);
-
-	gauges[name] = new Gauge(name + '-container', config);
-	gauges[name].render();
-}
-
-// For gauges where a low value is undesirable
-function gauge_create_reverse(name, label, min = 0, max = 100, minorTicks = 10, size = gauge_sizes.small) {
-	const config = {
-		size,
-		label,
-		min,
-		max,
-		minorTicks,
-	};
-
-	const range = config.max - config.min;
-
-	config.redZones = [ {
-		from : config.min,
-		to   : config.min + range * 0.1,
-	} ];
-
-	config.yellowZones = [ {
-		from : config.min + range * 0.1,
-		to   : config.min + range * 0.2,
-	} ];
-
-	log('[gauge_create_reverse] ' + name);
-
-	gauges[name] = new Gauge(name + '-container', config);
-	gauges[name].render();
-}
-
-// For temperature gauges
-function gauge_create_temp(name, label, min = -20, max = 110, minorTicks = 5, size = gauge_sizes.landscape4) {
-	const config = {
-		size,
-		label,
-		min,
-		max,
-		minorTicks,
-	};
-
-	const range = config.max - config.min;
-
-	config.blueZones = [ {
-		from : config.min,
-		to   : config.min + range * 0.2,
-	} ];
-
-	config.yellowZones = [ {
-		from : config.min + range * 0.8,
-		to   : config.min + range * 0.9,
-	} ];
-
-	config.redZones = [ {
-		from : config.min + range * 0.9,
-		to   : config.max,
-	} ];
-
-	log('[gauge_create_temp] ' + name);
-
-	gauges[name] = new Gauge(name + '-container', config);
-	gauges[name].render();
-}
 
 
 function on_config_tx(data) {
@@ -855,9 +696,10 @@ function on_log_tx(data) {
 }
 
 function on_status_tx(data) {
-	if (window.socket_debug === true) console.log('on_status_tx()', data);
+	if (window.socket_debug === true) console.log('[node-bmw] on_status_tx()', data);
 
-	if (window.page_view !== 'dash') return;
+	if (window.pageView !== 'dash') return;
+	if (window.dashVersion !== 1) return;
 
 	const prefix = 'status.' + data.key.stub;
 
@@ -917,53 +759,6 @@ function send(event, data = null) {
 }
 
 
-function init_dash() {
-	log('init_dash()');
-
-	gauge_create('engine-throttle-pedal',                   'Ped %', 0, 100,  5, gauge_sizes.landscape4);
-	// gauge_create('engine-rpm',                              'RPM',  0, 7000, 5, gauge_sizes.landscape4);
-	gauge_create('engine-torque_value-after_interventions', 'lb-ft', 0, 400, 5, gauge_sizes.landscape4);
-	gauge_create('engine-horsepower-after_interventions',   'HP',    0, 400, 5, gauge_sizes.landscape4);
-
-	gauge_create_lowHigh('engine-lambda-lambda', 'λ', 0.75, 1.25, 5, gauge_sizes.landscape4);
-
-	gauge_create('vehicle-dsc-torque_intervention_asc',    'ASC %',    0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('vehicle-dsc-torque_intervention_asc_lm', 'ASC LM %', 0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('vehicle-dsc-torque_intervention_msr',    'MSR %',    0, 100, 10, gauge_sizes.landscape4);
-
-	// gauge_create('engine-torque-loss',                 'Loss %',    0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-output',               'Out %',     0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-before_interventions', 'Before %',  0, 100, 10, gauge_sizes.landscape4);
-	gauge_create('engine-torque-after_interventions',  'After %',   0, 100, 10, gauge_sizes.landscape4);
-
-	gauge_create_temp('temperature-coolant-c',  'Coolant', 60, 100);
-	gauge_create_temp('temperature-oil-c',      'Oil',     60, 100);
-	gauge_create_temp('temperature-intake-c',   'IAT',      0,  40);
-	gauge_create_temp('temperature-exhaust-c',  'EGT',    300, 900);
-
-	gauge_create('engine-ac-request', 'A/C request', 0, 100, 5, gauge_sizes.landscape4);
-	gauge_create('engine-ac-torque',  'A/C torque',  0, 100, 5, gauge_sizes.landscape4);
-
-	gauge_create_lowHigh('dme-voltage',             'DME', 12, 16, 5, gauge_sizes.landscape4);
-	gauge_create_lowHigh('lcm-voltage-terminal_30', 'LCM', 12, 16, 5, gauge_sizes.landscape4);
-
-	gauge_create('vehicle-wheel_speed-front-left',  'FL', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-front-right', 'FR', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-rear-left',   'RL', 0, 240, 5, gauge_sizes.medium);
-	gauge_create('vehicle-wheel_speed-rear-right',  'RR', 0, 240, 5, gauge_sizes.medium);
-
-	// gauge_create('fuel-consumption', 'Fuel cons', 0, 100);
-
-	gauge_create_reverse('obc-average_speed-mph',  'MPH',    0,  85);
-	gauge_create_reverse('obc-consumption-c1-mpg', 'MPG1',   0,  35);
-	gauge_create_reverse('obc-consumption-c2-mpg', 'MPG2',   0,  35);
-	gauge_create_reverse('obc-range-mi',           'Range',  0, 500);
-	gauge_create_reverse('fuel-level',             'Fuel %', 0, 100, 2);
-	gauge_create_reverse('fuel-pump-percent',      'EKP %',  0, 100);
-
-	gauge_create('vehicle-steering-angle', '°', -675, 675, 5);
-}
-
 function init_listeners() {
 	const buttons = {
 		obc : {
@@ -978,41 +773,6 @@ function init_listeners() {
 
 	if (buttons.obc.reset !== null) {
 		buttons.obc.reset.addEventListener('pointerup', () => { obc_reset(); });
-	}
-}
-
-function respondToVisibility(elementId) {
-	const element = document.getElementById(`${elementId}-container`);
-
-	let options = {
-		threshold : [0],
-	};
-
-	let observer = new IntersectionObserver((entries, observer) => {
-		entries.forEach(entry => {
-			let visible = (entry.intersectionRatio > 0);
-
-			if (visible === true) {
-				send('websocket-dash-subscribe', elementId);
-			}
-			else {
-				send('websocket-dash-unsubscribe', elementId);
-			}
-
-			console.log('[visible] %s : %o', elementId, visible);
-		});
-	}, options);
-
-	observer.observe(element);
-}
-
-function initDashVisibility() {
-	const gaugeElements = document.getElementsByClassName('d3-gauge');
-
-	for (const gaugeElement of gaugeElements) {
-		const gaugeElementId = gaugeElement.id.replace('-container', '');
-		console.log('[initDashVisibility] gaugeElementId: %o', gaugeElementId);
-		respondToVisibility(gaugeElementId);
 	}
 }
 
@@ -1031,7 +791,7 @@ function init_websocket() {
 		log('connected');
 		send('status-request', 'all');
 
-		if (window.page_view === 'dash') {
+		if (window.pageView === 'dash') {
 			initDashVisibility();
 		}
 	});

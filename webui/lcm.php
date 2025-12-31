@@ -450,9 +450,10 @@
 				<button class="btn btn-raised btn-block btn-lg btn-danger"  id="form-lcm-reset"  type="reset" >Reset</button>
 			</form>
 		</div>
-
-		<?php include './include/js.php'; ?>
 	</body>
+
+	<?php include './include/js.php'; ?>
+	<script src="js/node-bmw.js"></script>
 </html>
 
 <!--

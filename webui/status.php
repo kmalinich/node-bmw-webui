@@ -189,8 +189,8 @@
 				</div>
 			</div>
 		</div>
-
 	</body>
 
 	<?php include './include/js.php'; ?>
+	<script src="js/node-bmw.js"></script>
 </html>

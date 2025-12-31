@@ -9,5 +9,7 @@
 			<h1 class="title">node-bmw</h1>
 		</div>
 	</body>
+
 	<?php include './include/js.php'; ?>
+	<script src="js/node-bmw.js"></script>
 </html>
