@@ -146,10 +146,10 @@ function Gauge(placeholderName, configuration) {
 
 		const pointerPath = this.buildPointerPath(midValue);
 
-		const pointerLine = d3.svg.line()
+		const pointerLine = d3.line()
 			.x((d) => d.x)
 			.y((d) => d.y)
-			.interpolate('basis');
+			.curve(d3.curveBasis);
 
 		pointerContainer.selectAll('path')
 			.data([ pointerPath ])
@@ -211,7 +211,7 @@ function Gauge(placeholderName, configuration) {
 
 		this.body.append('svg:path')
 			.style('fill', color)
-			.attr('d', d3.svg.arc()
+			.attr('d', d3.arc()
 				.startAngle(this.valueToRadians(start))
 				.endAngle(this.valueToRadians(end))
 				.innerRadius(0.79 * this.config.radius)
