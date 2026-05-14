@@ -19,7 +19,8 @@
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"eslint": "^10.3.0",
-		"eslint-plugin-promise": "^7.3.0"
+		"eslint-plugin-promise": "^7.3.0",
+		"globals": "^17.6.0"
 	},
 	"homepage": "https://github.com/kmalinich/node-bmw-webui#readme",
 	"keywords": [
