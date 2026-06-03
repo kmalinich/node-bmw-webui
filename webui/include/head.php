@@ -31,8 +31,8 @@
 -->
 
 <link rel="stylesheet" type="text/css" href="css/material-icons.css">
-<link rel="stylesheet" type="text/css" href="css/bootstrap-material-design.min.css">
 <link rel="stylesheet" type="text/css" href="css/nouislider.min.css"/>
+<link rel="stylesheet" type="text/css" href="css/mdb.min.css">
 <link rel="stylesheet" type="text/css" href="css/node-bmw.css">
 
 <link rel="manifest" href="manifest.json">

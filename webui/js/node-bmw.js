@@ -65,213 +65,131 @@ const form2json = elements => [].reduce.call(elements, (data, element) => {
 
 // Clean all the text strings
 function clean_class_all() {
-	// This is really dumb and there is a better way
-	clean_class('#engine-running');
-	clean_class('#engine-speed');
-	clean_class('#doors-front-left');
-	clean_class('#doors-front-right');
-	clean_class('#doors-hood');
-	clean_class('#doors-rear-left');
-	clean_class('#doors-rear-right');
-	clean_class('#doors-trunk');
-	clean_class('#obc-aux-heat-timer-1');
-	clean_class('#obc-aux-heat-timer-2');
-	clean_class('#obc-coding-unit-cons');
-	clean_class('#obc-coding-unit-distance');
-	clean_class('#obc-coding-unit-speed');
-	clean_class('#obc-coding-unit-temp');
-	clean_class('#obc-coding-unit-time');
-	clean_class('#obc-consumption-1');
-	clean_class('#obc-consumption-1-unit');
-	clean_class('#obc-consumption-2');
-	clean_class('#obc-consumption-2-unit');
-	clean_class('#obc-date');
-	clean_class('#obc-distance');
-	clean_class('#obc-distance-unit');
-	clean_class('#obc-range');
-	clean_class('#obc-range-unit');
-	clean_class('#obc-average-speed');
-	clean_class('#obc-average-speed-unit');
-	clean_class('#obc-speedlimit');
-	clean_class('#obc-speedlimit-unit');
-	clean_class('#obc-stopwatch');
-	clean_class('#obc-temp-exterior');
-	clean_class('#obc-temp-exterior-unit');
-	clean_class('#obc-time');
-	clean_class('#obc-timer');
-	clean_class('#temperature-coolant');
-	clean_class('#temperature-coolant-unit');
-	clean_class('#vehicle-handbrake');
-	clean_class('#vehicle-ignition');
-	clean_class('#vehicle-reverse');
-	clean_class('#vehicle-speed');
-	clean_class('#vehicle-speed-unit');
-	clean_class('#windows-front-left');
-	clean_class('#windows-front-right');
-	clean_class('#windows-rear-left');
-	clean_class('#windows-rear-right');
-	clean_class('#windows-roof');
+	// This is really dumb and there are so many better ways
+	clean_class('engine-running');
+	clean_class('engine-speed');
+	clean_class('doors-front-left');
+	clean_class('doors-front-right');
+	clean_class('doors-hood');
+	clean_class('doors-rear-left');
+	clean_class('doors-rear-right');
+	clean_class('doors-trunk');
+	clean_class('obc-aux-heat-timer-1');
+	clean_class('obc-aux-heat-timer-2');
+	clean_class('obc-coding-unit-cons');
+	clean_class('obc-coding-unit-distance');
+	clean_class('obc-coding-unit-speed');
+	clean_class('obc-coding-unit-temp');
+	clean_class('obc-coding-unit-time');
+	clean_class('obc-consumption-1');
+	clean_class('obc-consumption-1-unit');
+	clean_class('obc-consumption-2');
+	clean_class('obc-consumption-2-unit');
+	clean_class('obc-date');
+	clean_class('obc-distance');
+	clean_class('obc-distance-unit');
+	clean_class('obc-range');
+	clean_class('obc-range-unit');
+	clean_class('obc-average-speed');
+	clean_class('obc-average-speed-unit');
+	clean_class('obc-speedlimit');
+	clean_class('obc-speedlimit-unit');
+	clean_class('obc-stopwatch');
+	clean_class('obc-temp-exterior');
+	clean_class('obc-temp-exterior-unit');
+	clean_class('obc-time');
+	clean_class('obc-timer');
+	clean_class('temperature-coolant');
+	clean_class('temperature-coolant-unit');
+	clean_class('vehicle-handbrake');
+	clean_class('vehicle-ignition');
+	clean_class('vehicle-reverse');
+	clean_class('vehicle-speed');
+	clean_class('vehicle-speed-unit');
+	clean_class('windows-front-left');
+	clean_class('windows-front-right');
+	clean_class('windows-rear-left');
+	clean_class('windows-rear-right');
+	clean_class('windows-roof');
 	// clean_class('');
 }
 
 // Remove all color-coded CSS classes from a text id
 function clean_class(id) {
-	$(id).removeClass('text-danger').removeClass('text-success').removeClass('text-warning').removeClass('text-primary').removeClass('text-info').text('');
+	console.log('clean_class(%o)', id);
+	const elem = document.getElementById(id);
+
+	// LOL, typescript does exist
+	if (typeof elem === 'undefined' || elem === null) return;
+
+	elem.classList.remove('text-danger');
+	elem.classList.remove('text-success');
+	elem.classList.remove('text-warning');
+	elem.classList.remove('text-primary');
+	elem.classList.remove('text-info');
+	elem.innerHTML = '';
 }
 
 
 function hdmi_command(command) {
-	$.ajax({
-		url      : '/api/client/hdmi',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			command,
-		},
-		success : (return_data) => {
-			console.log(return_data);
-		},
+	fetch('/api/client/hdmi', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
+		body    : JSON.stringify({ command }),
 	});
 }
 
-function form_gm() {
-	console.log($('#form-gm').serialize());
-
-	$.ajax({
-		url      : '/api/client/gm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : $('#form-gm').serialize(),
-		success  : (return_data) => {
-			console.log(return_data);
-		},
-	});
-}
-
-
-// Prepare IKE page
-function prepare_ike() {
-	prepare_ike_backlight();
-}
-
-// Initialize IKE backlight slider
-function prepare_ike_backlight() {
-	$('#slider-ike-backlight').on('slideStart', (data) => {
-		console.log('ike_backlight_slideStart: %s', data.value);
-		ike_backlight(data.value);
-	});
-
-	$('#slider-ike-backlight').on('slideStop', (data) => {
-		console.log('ike_backlight_slidestop: %s', data.value);
-		ike_backlight(data.value);
-	});
-}
-
-function ike_backlight(value) {
-	console.log('ike_backlight(%s);', value);
-
-	$.ajax({
-		url      : '/api/client/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'ike-backlight=' + value,
-		success  : (return_data) => {
-			console.log(return_data);
-		},
-	});
-}
 
 function ike_set_clock() {
-	$.ajax({
-		url     : '/api/client/obc/set/clock',
-		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	fetch('/api/client/obc/set/clock');
 }
 
 function ike_text() {
-	$.ajax({
-		url     : '/api/client/ike/text/normal/' + $('#ike-text').val(),
-		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	const ikeText = document.getElementById('ike-text').innerText;
+	fetch(`/api/client/ike/text/normal/${ikeText}`);
 }
 
 function obc_get() {
-	$.ajax({
-		url     : '/api/client/obc/get/' + $('#select-obc-value').val(),
-		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	const obcValue = document.getElementById('select-obc-value').innerText;
+	fetch(`/api/client/obc/get/${obcValue}`);
 }
 
 function obc_reset() {
-	$.ajax({
-		url     : '/api/client/obc/reset/' + $('#select-obc-value').val(),
-		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	const obcValue = document.getElementById('select-obc-value').innerText;
+	fetch(`/api/client/obc/reset/${obcValue}`);
 }
 
 
 function form_lcm() {
-	$.ajax({
-		contentType : 'application/json',
-		dataType    : 'json',
-
-		data : JSON.stringify(form2json(document.getElementsByName('form-lcm')[0])),
-
-		success : (return_data) => {
-			console.log(return_data);
-		},
-
-		type : 'POST',
-		url  : '/api/client/lcm/io-encode',
+	fetch('/api/client/lcm/io-encode', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
+		body    : JSON.stringify(form2json(document.getElementsByName('form-lcm')[0])),
 	});
 }
 
 // Central locking/unlocking
-function gm_locks(action) {
-	console.log('gm_locks(%s);', action);
-
-	$.ajax({
-		url     : '/api/client/gm/locks',
-		type    : 'POST',
-		success : (return_data) => {
-			console.log(return_data);
-		},
+function gm_locks() {
+	// TODO: This one is an oddball, it just toggles the door locks
+	fetch('/api/client/gm/locks', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
 	});
 }
 
 // AJAX for GM interior_light
 function gm_interior_light(value) {
-	$.ajax({
-		url     : `/api/client/gm/interior-light/${value}`,
-		success : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	fetch(`/api/client/gm/interior-light/${value}`);
 }
 
 // GM window control
 function gm_windows(window, action) {
 	console.log('gm_windows(%s, %s);', window, action);
 
-	$.ajax({
-		url      : '/api/client/gm/windows',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			window,
-			action,
-		},
-		success : (return_data) => {
-			console.log(return_data);
-		},
+	fetch('/api/client/gm/windows', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
+		body    : JSON.stringify({ action, window }),
 	});
 }
 
@@ -279,28 +197,16 @@ function gm_windows(window, action) {
 function gm_get() {
 	console.log('gm_get()');
 
-	$.ajax({
-		url      : '/api/client/gm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			'command' : 'door-status',
-		},
-		success : (return_data) => {
-			console.log(return_data);
-		},
+	fetch('/api/client/gm', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
+		body    : JSON.stringify({ command : 'door-status' }),
 	});
 
-	$.ajax({
-		url      : '/api/client/gm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : {
-			'command' : 'io-status',
-		},
-		success : (return_data) => {
-			console.log(return_data);
-		},
+	fetch('/api/client/gm', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
+		body    : JSON.stringify({ command : 'io-status' }),
 	});
 }
 
@@ -308,31 +214,18 @@ function gm_get() {
 // AJAX for LCM dimmer
 function lcm_dimmer(value) {
 	console.log('lcm_dimmer(%s);', value);
-
-	$.ajax({
-		url      : '/api/client/lcm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'lcm-dimmer=' + value,
-		success  : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	fetch(`/api/client/lcm/dimmer/${value}`);
 }
 
 // Get LCM IO status
 function lcm_get() {
 	console.log('lcm_get()');
 
-	$.ajax({
-		url      : '/api/client/lcm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'lcm-get=true',
-		success  : (return_data) => {
-			console.log(return_data);
-		},
-	});
+	fetch('/api/client/lcm/get/io-status');
+	fetch('/api/client/lcm/get/light-status');
+	fetch('/api/client/lcm/get/vehicledata');
+	fetch('/api/client/lcm/get/coding');
+	fetch('/api/client/lcm/get/dimmer');
 }
 
 
@@ -343,7 +236,7 @@ function prepare_gm() {
 
 // Initialize GM interior_light slider
 function prepare_gm_interior_light() {
-	const slider = $('#slider-gm-interior-light')[0];
+	const slider = document.getElementById('slider-gm-interior-light');
 
 	noUiSlider.create(slider, {
 		start   : 0,
@@ -369,7 +262,7 @@ function prepare_lcm() {
 
 // Initialize LCM dimmer slider
 function prepare_lcm_dimmer() {
-	const slider = $('#slider-lcm-dimmer')[0];
+	const slider = document.getElementById('slider-lcm-dimmer');
 
 	noUiSlider.create(slider, {
 		start   : 0,
@@ -389,13 +282,10 @@ function prepare_lcm_dimmer() {
 
 
 // Get status object
-function status() {
-	$.ajax({
-		url      : '/api/client/status',
-		type     : 'GET',
-		dataType : 'json',
-		success  : status_apply,
-	});
+async function status() {
+	const response = await fetch('/api/client/status');
+	const data = await response.json();
+	status_apply(data);
 }
 
 // Take status object, parse, and display
@@ -406,12 +296,15 @@ function status_apply(return_data) {
 	clean_class_all();
 
 	// Time and date
-	$('#obc-time').text(return_data.obc.time);
-	$('#obc-date').text(return_data.obc.date);
+	document.getElementById('obc-time').innerText = return_data.obc.time;
+	document.getElementById('obc-date').innerText = return_data.obc.date;
 
 
 	// Engine status
-	$('#engine-speed').text(return_data.engine.speed);
+	const engineSpeedElement = document.getElementById('engine-speed');
+	if (typeof engineSpeedElement?.innerText === 'string') {
+		engineSpeedElement.innerText = return_data.engine.speed;
+	}
 
 	let engine_class = 'danger';
 	let engine_text  = 'off';
@@ -421,7 +314,9 @@ function status_apply(return_data) {
 		engine_text  = 'running';
 	}
 
-	$('#engine-running').text('Engine ' + engine_text).addClass('text-' + engine_class);
+	const engineRunningElement = document.getElementById('engine-running');
+	engineRunningElement.innerText = 'Engine ' + engine_text;
+	engineRunningElement.classList.add('text-' + engine_class);
 
 
 	/*
@@ -433,20 +328,23 @@ function status_apply(return_data) {
 		return_data.coding.unit.temp = 'c';
 	}
 
-	$('#temperature-coolant-unit').text(return_data.coding.unit.temp.toUpperCase());
-	$('#obc-temp-exterior-unit').text(return_data.coding.unit.temp.toUpperCase());
+	document.getElementById('temperature-coolant-unit').innerText = return_data.coding.unit.temp.toUpperCase();
+	document.getElementById('obc-temp-exterior-unit').innerText = return_data.coding.unit.temp.toUpperCase();
 
-	if (return_data.coding.unit.temp === 'c') {
-		$('#temperature-coolant').text(return_data.temperature.coolant.c);
-		$('#obc-temp-exterior').text(return_data.temperature.exterior.obc.c);
-	}
-	else if (return_data.coding.unit.temp === 'f') {
-		$('#temperature-coolant').text(return_data.temperature.coolant.f);
-		$('#obc-temp-exterior').text(return_data.temperature.exterior.obc.f);
+	switch (return_data.coding.unit.temp) {
+		case 'c' : {
+			document.getElementById('temperature-coolant').innerText = return_data.temperature.coolant.c;
+			document.getElementById('obc-temp-exterior').innerText = return_data.temperature.exterior.obc.c;
+			break;
+		}
+		case 'f' : {
+			document.getElementById('temperature-coolant').innerText = return_data.temperature.coolant.f;
+			document.getElementById('obc-temp-exterior').innerText = return_data.temperature.exterior.obc.f;
+		}
 	}
 
-	$('#vehicle-odometer-mi').text(return_data.vehicle.odometer.mi);
-	$('#vehicle-vin').text(return_data.vehicle.vin);
+	document.getElementById('vehicle-odometer-mi').innerText = return_data.vehicle.odometer.mi;
+	document.getElementById('vehicle-vin').innerText = return_data.vehicle.vin;
 
 
 	// Handbrake
@@ -458,7 +356,9 @@ function status_apply(return_data) {
 		handbrake_text  = 'on';
 	}
 
-	$('#vehicle-handbrake').text('Handbrake ' + handbrake_text).addClass('text-' + handbrake_class);
+	const vehicleHandbrakeElement = document.getElementById('vehicle-handbrake');
+	vehicleHandbrakeElement.innerText = `Handbrake ${handbrake_text}`;
+	vehicleHandbrakeElement.classList.add(`text-${handbrake_class}`);
 
 
 	// Reverse
@@ -470,7 +370,9 @@ function status_apply(return_data) {
 		reverse_text  = 'engaged';
 	}
 
-	$('#vehicle-reverse').text('Reverse gear ' + reverse_text).addClass('text-' + reverse_class);
+	const vehicleReverseElement = document.getElementById('vehicle-reverse');
+	vehicleReverseElement.innerText = `Reverse ${reverse_text}`;
+	vehicleReverseElement.classList.add(`text-${reverse_class}`);
 
 
 	// Ignition
@@ -482,7 +384,9 @@ function status_apply(return_data) {
 		case 'start'     : ignition_class = 'warning';
 	}
 
-	$('#vehicle-ignition').text('Ignition ' + return_data.vehicle.ignition).addClass('text-' + ignition_class);
+	const vehicleIgnitionElement = document.getElementById('vehicle-ignition');
+	vehicleIgnitionElement.innerText = `Ignition ${return_data.vehicle.ignition}`;
+	vehicleIgnitionElement.classList.add(`text-${ignition_class}`);
 
 
 	// Door status
@@ -502,13 +406,13 @@ function status_apply(return_data) {
 	if (return_data.doors.rear_left)   doors.rear.left   = 'open';
 	if (return_data.doors.rear_right)  doors.rear.right  = 'open';
 
-	$('#doors-hood').text('Hood ' + doors.hood);
-	$('#doors-trunk').text('Trunk ' + doors.trunk);
+	document.getElementById('doors-hood').innerText  = 'Hood ' + doors.hood;
+	document.getElementById('doors-trunk').innerText = 'Trunk ' + doors.trunk;
 
-	$('#doors-front-left').text('Door ' + doors.front.left);
-	$('#doors-front-right').text('Door ' + doors.front.right);
-	$('#doors-rear-left').text('Door ' + doors.rear.left);
-	$('#doors-rear-right').text('Door ' + doors.rear.right);
+	document.getElementById('doors-front-left').innerText  = 'Door ' + doors.front.left;
+	document.getElementById('doors-front-right').innerText = 'Door ' + doors.front.right;
+	document.getElementById('doors-rear-left').innerText   = 'Door ' + doors.rear.left;
+	document.getElementById('doors-rear-right').innerText  = 'Door ' + doors.rear.right;
 
 
 	// Window status
@@ -526,161 +430,146 @@ function status_apply(return_data) {
 	if (return_data.windows.rear_left)   windows.rear.left   = 'open';
 	if (return_data.windows.rear_right)  windows.rear.right  = 'open';
 
-	$('#doors-roof').text('Roof ' + doors.roof);
-	$('#doors-trunk').text('Trunk ' + doors.trunk);
-
-	$('#windows-front-left').text('Window ' + windows.front.left);
-	$('#windows-front-right').text('Window ' + windows.front.right);
-	$('#windows-rear-left').text('Window ' + windows.rear.left);
-	$('#windows-rear-right').text('Window ' + windows.rear.right);
+	document.getElementById('windows-roof').innerText        = 'Roof ' + windows.roof;
+	document.getElementById('windows-front-left').innerText  = 'Window ' + windows.front.left;
+	document.getElementById('windows-front-right').innerText = 'Window ' + windows.front.right;
+	document.getElementById('windows-rear-left').innerText   = 'Window ' + windows.rear.left;
+	document.getElementById('windows-rear-right').innerText  = 'Window ' + windows.rear.right;
 
 
 	// Interior lighting
 	let interior_lights_text = 'off';
 	if (return_data.lights.interior) interior_lights_text = 'on';
-	$('#lights-interior').text('Interior lights ' + interior_lights_text);
+	document.getElementById('lights-interior').innerText = 'Interior lights ' + interior_lights_text;
 
 
 	// Central locking
 	let locked_text = 'Unlocked';
 	if (return_data.vehicle.locked) locked_text = 'Locked';
-	$('#vehicle-locked').text(locked_text);
+	document.getElementById('vehicle-locked').innerText = locked_text;
 
 
 	// Current, average, and limit speed
 	if (typeof return_data.coding.unit.speed !== 'string' && return_data.coding.unit.speed === null) return_data.coding.unit.speed = 'mph';
 
-	$('#vehicle-speed-unit').text(return_data.coding.unit.speed.toUpperCase());
-	$('#obc-average-speed-unit').text(return_data.coding.unit.speed.toUpperCase());
-	$('#obc-speedlimit-unit').text(return_data.coding.unit.speed.toUpperCase());
-	$('#obc-speedlimit').text(return_data.obc.speedlimit);
+	document.getElementById('vehicle-speed-unit').innerText = return_data.coding.unit.speed.toUpperCase();
+	document.getElementById('obc-average-speed-unit').innerText = return_data.coding.unit.speed.toUpperCase();
+	document.getElementById('obc-speedlimit-unit').innerText = return_data.coding.unit.speed.toUpperCase();
+	document.getElementById('obc-speedlimit').innerText = return_data.obc.speedlimit;
 
-	$('#vehicle-speed').text(return_data.vehicle.speed[return_data.coding.unit.speed]);
-	$('#obc-average-speed').text(return_data.obc.average_speed[return_data.coding.unit.speed]);
+	document.getElementById('vehicle-speed').innerText = return_data.vehicle.speed[return_data.coding.unit.speed];
+	document.getElementById('obc-average-speed').innerText = return_data.obc.average_speed[return_data.coding.unit.speed];
 
 
 	// Distance to arrival and range to empty
-	$('#obc-distance-unit').text(return_data.coding.unit.distance);
-	$('#obc-range-unit').text(return_data.coding.unit.distance);
-	$('#obc-distance').text(return_data.obc.distance);
+	document.getElementById('obc-distance-unit').innerText = return_data.coding.unit.distance;
+	document.getElementById('obc-range-unit').innerText = return_data.coding.unit.distance;
+	document.getElementById('obc-distance').innerText = return_data.obc.distance;
 
-	$('#obc-range').text(return_data.obc.range[return_data.coding.unit.distance]);
+	document.getElementById('obc-range').innerText = return_data.obc.range[return_data.coding.unit.distance];
 
 
 	// Fuel consumption
-	$('#obc-consumption-1-unit').text(return_data.coding.unit.cons);
-	$('#obc-consumption-2-unit').text(return_data.coding.unit.cons);
+	document.getElementById('obc-consumption-1-unit').innerText = return_data.coding.unit.cons;
+	document.getElementById('obc-consumption-2-unit').innerText = return_data.coding.unit.cons;
 
-	$('#obc-consumption-1').text(return_data.obc.consumption.c1[return_data.coding.unit.cons]);
-	$('#obc-consumption-2').text(return_data.obc.consumption.c2[return_data.coding.unit.cons]);
+	document.getElementById('obc-consumption-1').innerText = return_data.obc.consumption.c1[return_data.coding.unit.cons];
+	document.getElementById('obc-consumption-2').innerText = return_data.obc.consumption.c2[return_data.coding.unit.cons];
 
 
 	// Stopwatch, timer, aux heat timers
-	$('#obc-aux-heat-timer-1').text(return_data.obc.aux_heat_timer.t1);
-	$('#obc-aux-heat-timer-2').text(return_data.obc.aux_heat_timer.t2);
-	$('#obc-stopwatch').text(return_data.obc.stopwatch);
-	$('#obc-timer').text(return_data.obc.timer);
+	document.getElementById('obc-aux-heat-timer-1').innerText = return_data.obc.aux_heat_timer.t1;
+	document.getElementById('obc-aux-heat-timer-2').innerText = return_data.obc.aux_heat_timer.t2;
+	document.getElementById('obc-stopwatch').innerText = return_data.obc.stopwatch;
+	document.getElementById('obc-timer').innerText = return_data.obc.timer;
 
 
 	// Coding data
-	$('#obc-coding-unit-cons').text(return_data.coding.unit.cons);
-	$('#obc-coding-unit-distance').text(return_data.coding.unit.distance);
-	$('#obc-coding-unit-speed').text(return_data.coding.unit.speed);
-	$('#obc-coding-unit-temp').text(return_data.coding.unit.temp);
-	$('#obc-coding-unit-time').text(return_data.coding.unit.time);
+	document.getElementById('obc-coding-unit-cons').innerText = return_data.coding.unit.cons;
+	document.getElementById('obc-coding-unit-distance').innerText = return_data.coding.unit.distance;
+	document.getElementById('obc-coding-unit-speed').innerText = return_data.coding.unit.speed;
+	document.getElementById('obc-coding-unit-temp').innerText = return_data.coding.unit.temp;
+	document.getElementById('obc-coding-unit-time').innerText = return_data.coding.unit.time;
 }
 
+// Data refresh from OBC/IKE
 function obc_refresh(callback) {
-	// Data refresh from OBC/IKE
-	$.ajax({
-		url      : '/api/ike',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'obc-get=all',
-		success  : (return_data) => {
-			console.log(return_data);
-			if (typeof callback === 'function') callback();
-		},
-	});
+	fetch('/api/client/obc/get-all');
 }
 
 function lcm_pulse() {
 	// Pulse clamps 15, 30A, 30B, once
-	$.ajax({
-		url      : '/api/lcm',
-		type     : 'POST',
-		dataType : 'json',
-		data     : 'clamp_15=on&clamp_30a=on&clamp_30b=on',
-		success  : (return_data) => {
-			console.log(return_data);
-		},
+	fetch('/api/client/lcm/io-encode', {
+		method  : 'POST',
+		headers : { 'content-type': 'application/json' },
+		body    : JSON.stringify({ clamp_15 : true, clamp_30a : true, clamp_30b : true }),
 	});
 }
 
 
 // Live IBUS data websocket
-function ws_ibus() {
-	// Open WebSocket
-	const socket = io();
-
-	socket.on('connect', () => {
-		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').removeClass('text-danger').addClass('text-success').text('Socket connected');
-	});
-
-	socket.on('error', (error) => {
-		console.error(error);
-		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').addClass('text-danger').removeClass('text-success').text('Socket error');
-	});
-
-	socket.on('disconnect', () => {
-		$('#ws-bus-header').removeClass('text-warning').removeClass('text-danger').addClass('text-warning').removeClass('text-success').text('Socket disconnected');
-	});
-
-	socket.on('data-receive', (data) => {
-		let msg_fmt     = '';
-		const timestamp = moment().format('h:mm:ss a');
-
-		// Format the message
-		data.msg.forEach((bit) => {
-			// Convert it to hexadecimal
-			msg_fmt += i2s(bit, false) + ' ';
-		});
-
-		// Add a new row to the table
-		let tr = '';
-		tr += '<tr>';
-		tr += '<td>' + timestamp + '</td>';
-		tr += '<td>' + data.bus + '</td>';
-		tr += '<td>' + data.src.name + '</td>';
-		tr += '<td>' + data.dst.name + '</td>';
-		tr += '<td>' + msg_fmt + '</td>';
-		tr += '</tr>';
-
-		$('#ws-bus-table tbody').prepend(tr);
-	});
-
-	// Assemble and send data from form below table
-	$('#ws-bus-send').click(() => {
-		const data_send = {};
-
-		// Parse incoming data
-		data_send.src = $('#ws-bus-src').val();
-		data_send.dst = $('#ws-bus-dst').val();
-
-		// Create the message array by removing whitespaces and splitting by comma
-		data_send.msg = $('#ws-bus-msg').val().replace(' ', '').replace('0x', '').split(',');
-
-		// Format the message
-		const msg_array = [];
-		for (let i = 0; i < data_send.msg.length; i++) {
-			// Convert it to hexadecimal
-			msg_array.push(parseInt(data_send.msg[i], 16));
-		}
-		data_send.msg = msg_array;
-
-		socket.emit('data-send', data_send);
-	});
-}
+// function ws_ibus() {
+// 	// Open WebSocket
+// 	const socket = io();
+//
+// 	socket.on('connect', () => {
+// 		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').removeClass('text-danger').addClass('text-success').text('Socket connected');
+// 	});
+//
+// 	socket.on('error', (error) => {
+// 		console.error(error);
+// 		$('#ws-bus-header').removeClass('text-warning').removeClass('text-success').addClass('text-danger').removeClass('text-success').text('Socket error');
+// 	});
+//
+// 	socket.on('disconnect', () => {
+// 		$('#ws-bus-header').removeClass('text-warning').removeClass('text-danger').addClass('text-warning').removeClass('text-success').text('Socket disconnected');
+// 	});
+//
+// 	socket.on('data-receive', (data) => {
+// 		let msg_fmt     = '';
+// 		const timestamp = moment().format('h:mm:ss a');
+//
+// 		// Format the message
+// 		data.msg.forEach((bit) => {
+// 			// Convert it to hexadecimal
+// 			msg_fmt += i2s(bit, false) + ' ';
+// 		});
+//
+// 		// Add a new row to the table
+// 		let tr = '';
+// 		tr += '<tr>';
+// 		tr += '<td>' + timestamp + '</td>';
+// 		tr += '<td>' + data.bus + '</td>';
+// 		tr += '<td>' + data.src.name + '</td>';
+// 		tr += '<td>' + data.dst.name + '</td>';
+// 		tr += '<td>' + msg_fmt + '</td>';
+// 		tr += '</tr>';
+//
+// 		$('#ws-bus-table tbody').prepend(tr);
+// 	});
+//
+// 	// Assemble and send data from form below table
+// 	$('#ws-bus-send').click(() => {
+// 		const data_send = {};
+//
+// 		// Parse incoming data
+// 		data_send.src = $('#ws-bus-src').val();
+// 		data_send.dst = $('#ws-bus-dst').val();
+//
+// 		// Create the message array by removing whitespaces and splitting by comma
+// 		data_send.msg = $('#ws-bus-msg').val().replace(' ', '').replace('0x', '').split(',');
+//
+// 		// Format the message
+// 		const msg_array = [];
+// 		for (let i = 0; i < data_send.msg.length; i++) {
+// 			// Convert it to hexadecimal
+// 			msg_array.push(parseInt(data_send.msg[i], 16));
+// 		}
+// 		data_send.msg = msg_array;
+//
+// 		socket.emit('data-send', data_send);
+// 	});
+// }
 
 
 
@@ -784,7 +673,7 @@ function init_websocket() {
 	socket = io();
 
 	socket.on('connect', () => {
-		ws_set_status('connect');
+		ws_set_status('connected');
 		console.log('[node-bmw][socket.onConnect] connected');
 		send('status-request', 'all');
 
@@ -810,25 +699,38 @@ function init_websocket() {
 }
 
 function ws_set_status(status) {
+	console.log('ws_set_status(%o)', status);
+	const wsStatusElement = document.getElementById('status-ws');
+
+
+	if (typeof wsStatusElement?.classList !== 'object') return;
+
+	wsStatusElement.classList.remove('btn-danger');
+	wsStatusElement.classList.remove('btn-success');
+	wsStatusElement.classList.remove('btn-warning');
+
+	let statusClass = 'btn-warning';
 	switch (status) {
-		case 'connect'    : $('#status-ws').removeClass('btn-danger').addClass('btn-success').removeClass('btn-warning'); break;
-		case 'error'      : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		case 'disconnect' : $('#status-ws').addClass('btn-danger').removeClass('btn-success').removeClass('btn-warning'); break;
-		default           : $('#status-ws').removeClass('btn-danger').removeClass('btn-success').addClass('btn-warning');
+		case 'connected'  : statusClass = 'btn-success'; break;
+		case 'error'      : statusClass = 'btn-danger';  break;
+		case 'disconnect' : statusClass = 'btn-danger';
 	}
 
+	let statusText = 'Connecting';
 	switch (status) {
-		case 'connect'    : $('#status-ws').text('Connected');    break;
-		case 'error'      : $('#status-ws').text('Error');        break;
-		case 'disconnect' : $('#status-ws').text('Disconnected'); break;
-		default           :	$('#status-ws').text('Connecting');
+		case 'connected'  : statusText = 'Connected';    break;
+		case 'error'      : statusText = 'Error';        break;
+		case 'disconnect' : statusText = 'Disconnected';
 	}
+
+	console.log('ws_set_status(%o) :: %s :: %s', status, statusClass, statusText);
+
+	wsStatusElement.classList.add(statusClass);
+	wsStatusElement.innerText = statusText;
 }
 
 
-$(() => {
-	$('body').bootstrapMaterialDesign();
+// document.querySelector('body').bootstrapMaterialDesign();
 
-	init_listeners();
-	init_websocket();
-});
+init_listeners();
+init_websocket();
