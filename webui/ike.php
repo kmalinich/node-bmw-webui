@@ -10,7 +10,7 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col">
-					<button class="btn btn-block btn-raised btn-primary" id="btn-ike-set-clock" onclick="javascript:ike_set_clock();">Set OBC clock</button>
+					<button class="btn btn-block btn-raised btn-primary" id="btn-ike-set-clock" onclick="javascript:ike_set_clock();" data-mdb-ripple-init>Set OBC clock</button>
 					<hr>
 				</div>
 			</div>
@@ -55,10 +55,10 @@
 
 			<div class="row">
 				<div class="col">
-					<button class="btn btn-block btn-raised btn-danger" id="btn-obc-value-reset" type="button">Reset</button>
+					<button id="btn-obc-value-reset" class="btn btn-block btn-raised btn-danger" type="button" data-mdb-ripple-init>Reset</button>
 				</div>
 				<div class="col">
-					<button class="btn btn-block btn-raised btn-primary" id="btn-obc-value-get" type="button">Get</button>
+					<button id="btn-obc-value-get" class="btn btn-block btn-raised btn-primary" type="button" data-mdb-ripple-init>Get</button>
 				</div>
 			</div>
 
@@ -74,10 +74,10 @@
 
 			<div class="row">
 				<div class="col">
-					<button class="btn btn-block btn-raised btn-warning" type="reset">Clear</button>
+					<button id="btn-ike-text-clear" class="btn btn-block btn-raised btn-warning" type="reset" data-mdb-ripple-init>Clear</button>
 				</div>
 				<div class="col">
-					<button class="btn btn-block btn-raised btn-primary" type="submit">Send</button>
+					<button id="btn-ike-text-send" class="btn btn-block btn-raised btn-primary" type="submit" data-mdb-ripple-init>Send</button>
 				</div>
 			</div>
 		</div>

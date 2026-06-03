@@ -249,8 +249,6 @@ function initDashVisibility() {
 	}
 }
 
-$(() => {
-	if (window.dashVersion === 1) initDashV1();
+if (window.dashVersion === 1) initDashV1();
 
-	window.gauges = gauges;
-});
+window.gauges = gauges;

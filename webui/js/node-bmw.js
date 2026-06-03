@@ -145,17 +145,17 @@ function ike_set_clock() {
 }
 
 function ike_text() {
-	const ikeText = document.getElementById('ike-text').innerText;
+	const ikeText = document.getElementById('ike-text').value;
 	fetch(`/api/client/ike/text/normal/${ikeText}`);
 }
 
 function obc_get() {
-	const obcValue = document.getElementById('select-obc-value').innerText;
+	const obcValue = document.getElementById('select-obc-value').value;
 	fetch(`/api/client/obc/get/${obcValue}`);
 }
 
 function obc_reset() {
-	const obcValue = document.getElementById('select-obc-value').innerText;
+	const obcValue = document.getElementById('select-obc-value').value;
 	fetch(`/api/client/obc/reset/${obcValue}`);
 }
 
@@ -647,19 +647,21 @@ function send(event, data = null) {
 
 function init_listeners() {
 	const buttons = {
+		ike : {
+			clear : document.getElementById('btn-ike-text-clear'),
+			send  : document.getElementById('btn-ike-text-send'),
+		},
 		obc : {
 			get   : document.getElementById('btn-obc-value-get'),
 			reset : document.getElementById('btn-obc-value-reset'),
 		},
 	};
 
-	if (buttons.obc.get !== null) {
-		buttons.obc.get.addEventListener('pointerup', () => { obc_get(); });
-	}
+	if (buttons.ike.clear !== null) buttons.ike.clear.addEventListener('mousedown', () => { document.getElementById('ike-text').value = ''; });
+	if (buttons.ike.send  !== null) buttons.ike.send.addEventListener('mousedown',  () => { ike_text(); });
 
-	if (buttons.obc.reset !== null) {
-		buttons.obc.reset.addEventListener('pointerup', () => { obc_reset(); });
-	}
+	if (buttons.obc.get   !== null) buttons.obc.get.addEventListener('mousedown',   () => { obc_get(); });
+	if (buttons.obc.reset !== null) buttons.obc.reset.addEventListener('mousedown', () => { obc_reset(); });
 }
 
 
