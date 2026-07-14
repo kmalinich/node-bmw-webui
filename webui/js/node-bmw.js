@@ -92,8 +92,8 @@ function clean_class_all() {
 	clean_class('obc-range-unit');
 	clean_class('obc-average-speed');
 	clean_class('obc-average-speed-unit');
-	clean_class('obc-speedlimit');
-	clean_class('obc-speedlimit-unit');
+	clean_class('obc-limit');
+	clean_class('obc-limit-unit');
 	clean_class('obc-stopwatch');
 	clean_class('obc-temp-exterior');
 	clean_class('obc-temp-exterior-unit');
@@ -452,44 +452,51 @@ function status_apply(return_data) {
 	// Current, average, and limit speed
 	if (typeof return_data.coding.unit.speed !== 'string' && return_data.coding.unit.speed === null) return_data.coding.unit.speed = 'mph';
 
+	document.getElementById('vehicle-speed').innerText      = return_data.vehicle.speed[return_data.coding.unit.speed];
 	document.getElementById('vehicle-speed-unit').innerText = return_data.coding.unit.speed.toUpperCase();
-	document.getElementById('obc-average-speed-unit').innerText = return_data.coding.unit.speed.toUpperCase();
-	document.getElementById('obc-speedlimit-unit').innerText = return_data.coding.unit.speed.toUpperCase();
-	document.getElementById('obc-speedlimit').innerText = return_data.obc.speedlimit;
 
-	document.getElementById('vehicle-speed').innerText = return_data.vehicle.speed[return_data.coding.unit.speed];
-	document.getElementById('obc-average-speed').innerText = return_data.obc.average_speed[return_data.coding.unit.speed];
+	document.getElementById('obc-average-speed').innerText      = return_data.obc.average_speed[return_data.coding.unit.speed];
+	document.getElementById('obc-average-speed-unit').innerText = return_data.coding.unit.speed.toUpperCase();
+
+	document.getElementById('obc-limit').innerText      = return_data.obc.limit;
+	document.getElementById('obc-limit-unit').innerText = return_data.coding.unit.speed.toUpperCase();
 
 
 	// Distance to arrival and range to empty
 	document.getElementById('obc-distance-unit').innerText = return_data.coding.unit.distance;
-	document.getElementById('obc-range-unit').innerText = return_data.coding.unit.distance;
-	document.getElementById('obc-distance').innerText = return_data.obc.distance;
+	document.getElementById('obc-distance').innerText      = return_data.obc.distance;
 
-	document.getElementById('obc-range').innerText = return_data.obc.range[return_data.coding.unit.distance];
+	document.getElementById('obc-range').innerText      = return_data.obc.range[return_data.coding.unit.distance];
+	document.getElementById('obc-range-unit').innerText = return_data.coding.unit.distance;
 
 
 	// Fuel consumption
+	document.getElementById('obc-consumption-1').innerText      = return_data.obc.consumption.c1[return_data.coding.unit.cons];
 	document.getElementById('obc-consumption-1-unit').innerText = return_data.coding.unit.cons;
-	document.getElementById('obc-consumption-2-unit').innerText = return_data.coding.unit.cons;
 
-	document.getElementById('obc-consumption-1').innerText = return_data.obc.consumption.c1[return_data.coding.unit.cons];
-	document.getElementById('obc-consumption-2').innerText = return_data.obc.consumption.c2[return_data.coding.unit.cons];
+	document.getElementById('obc-consumption-2').innerText      = return_data.obc.consumption.c2[return_data.coding.unit.cons];
+	document.getElementById('obc-consumption-2-unit').innerText = return_data.coding.unit.cons;
 
 
 	// Stopwatch, timer, aux heat timers
 	document.getElementById('obc-aux-heat-timer-1').innerText = return_data.obc.aux_heat_timer.t1;
 	document.getElementById('obc-aux-heat-timer-2').innerText = return_data.obc.aux_heat_timer.t2;
-	document.getElementById('obc-stopwatch').innerText = return_data.obc.stopwatch;
-	document.getElementById('obc-timer').innerText = return_data.obc.timer;
+	document.getElementById('obc-stopwatch').innerText        = return_data.obc.stopwatch;
+
+	let obcTimerValue = 0;
+	if (return_data.obc.timer !== null) {
+		obcTimerValue = return_data.obc.timer;
+	}
+
+	document.getElementById('obc-timer').innerText = obcTimerValue;
 
 
 	// Coding data
-	document.getElementById('obc-coding-unit-cons').innerText = return_data.coding.unit.cons;
+	document.getElementById('obc-coding-unit-cons').innerText     = return_data.coding.unit.cons;
 	document.getElementById('obc-coding-unit-distance').innerText = return_data.coding.unit.distance;
-	document.getElementById('obc-coding-unit-speed').innerText = return_data.coding.unit.speed;
-	document.getElementById('obc-coding-unit-temp').innerText = return_data.coding.unit.temp;
-	document.getElementById('obc-coding-unit-time').innerText = return_data.coding.unit.time;
+	document.getElementById('obc-coding-unit-speed').innerText    = return_data.coding.unit.speed;
+	document.getElementById('obc-coding-unit-temp').innerText     = return_data.coding.unit.temp;
+	document.getElementById('obc-coding-unit-time').innerText     = return_data.coding.unit.time;
 }
 
 // Data refresh from OBC/IKE

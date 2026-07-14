@@ -92,7 +92,7 @@
 
 						<div class="col">
 							<h5>Speed limit</h5>
-							<h6><span id="obc-speedlimit"></span> <span id="obc-speedlimit-unit"></span></h6>
+							<h6><span id="obc-limit"></span> <span id="obc-limit-unit"></span></h6>
 							<!--
 							<h5></h5>
 							<h6><span id="obc-"></span></h6>
